@@ -1,0 +1,2507 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Faster Payments Use Case Evaluator &mdash; U.S. Faster Payments Council</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Montserrat:wght@700;800&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Lato',-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;background:#FFFFFF;color:#3d3d3d;-webkit-font-smoothing:antialiased}
+.page{max-width:880px;margin:0 auto;padding:28px 24px 60px}
+.fpc-hdr{display:flex;align-items:center;justify-content:space-between;padding-bottom:16px;margin-bottom:24px;border-bottom:3px solid #00529B}
+.hdr-left{display:flex;align-items:center;gap:12px}
+.hdr-title{font-size:15px;font-weight:700;color:#00529B;letter-spacing:.01em;font-family:'Montserrat',-apple-system,BlinkMacSystemFont,sans-serif}
+.hdr-sub{font-size:12px;color:#666666;margin-top:2px}
+.hdr-badge{font-size:11px;color:#FFFFFF;background:#046a38;padding:5px 12px;border-radius:4px;font-weight:600;letter-spacing:.02em}
+.btnpdf{padding:9px 22px;border-radius:6px;border:none;background:#046a38;color:#FFFFFF;font-size:14px;font-weight:600;cursor:pointer;font-family:inherit}
+.btnpdf:hover:not(:disabled){background:#035430}
+.btnpdf:disabled{opacity:.6;cursor:not-allowed}
+.prog{display:flex;align-items:center;margin-bottom:2rem}
+.pbn{display:flex;align-items:center;gap:6px}
+.pbc{width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;border:1px solid #CCCCCC;color:#666666;flex-shrink:0}
+.pbc.a{background:#E8F1F8;color:#00529B;border-color:#00529B}
+.pbc.d{background:#EDF5EA;color:#046a38;border-color:#046a38}
+.pbl{font-size:12px;color:#999999}
+.pbl.a{color:#00529B;font-weight:600}
+.pbl.d{color:#046a38}
+.pbln{flex:1;height:1px;background:#E5E5E5;margin:0 8px}
+.step{display:none}.step.on{display:block}
+h3.sh{margin:0 0 8px;font-size:26px;font-weight:700;color:#00529B;font-family:'Montserrat',-apple-system,BlinkMacSystemFont,sans-serif;padding-bottom:10px;border-bottom:3px solid #046a38}
+p.ss{margin:6px 0 1.75rem;font-size:15px;color:#3d3d3d;line-height:1.65}
+.slbl{font-size:12.5px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:#046a38;margin:1.5rem 0 .65rem;padding-left:10px;border-left:3px solid #046a38}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.g4{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:8px}
+.oc{position:relative;display:flex;flex-direction:column}
+.oc input[type=radio]{position:absolute;opacity:0;width:0;height:0}
+.oc label{display:flex;flex:1;flex-direction:column;gap:4px;padding:13px 16px;border:1.5px solid #E5E5E5;border-radius:8px;cursor:pointer;background:#FFFFFF}
+.oc label:hover{border-color:#CCCCCC;background:#F5F7FA}
+.oc input[type=radio]:checked+label{border-color:#00529B;background:#00529B}
+.onn{font-size:15px;font-weight:600;display:block;color:#222222}
+.ons{font-size:12px;color:#666666;display:block}
+.oc input[type=radio]:checked+label .onn{color:#FFFFFF}
+.oc input[type=radio]:checked+label .ons{color:rgba(255,255,255,0.8)}
+.mod-box{background:#F2F2F2;border-radius:10px;padding:20px 22px;margin-bottom:1.25rem}
+.mod-box .slbl{margin-top:0;margin-bottom:.65rem}
+.rc{position:relative}
+.rc input[type=checkbox]{position:absolute;opacity:0;width:0;height:0}
+.rc label{display:flex;align-items:flex-start;gap:12px;padding:13px 16px;border:1.5px solid #E5E5E5;border-radius:8px;cursor:pointer;background:#FFFFFF}
+.rc label:hover{border-color:#CCCCCC;background:#F5F7FA}
+.rc input[type=checkbox]:checked+label{border-color:#00529B;background:#00529B}
+.rc-nm{font-size:14px;font-weight:600;color:#222222;display:block}
+.rc-ds{font-size:12px;color:#666666;display:block;margin-top:2px}
+.rc input[type=checkbox]:checked+label .rc-nm{color:#FFFFFF}
+.rc input[type=checkbox]:checked+label .rc-ds{color:rgba(255,255,255,0.75)}
+.rcl{display:flex;flex-direction:column;gap:8px}
+.note-box{background:#E8F1F8;border:1px solid #b8d4ee;border-radius:6px;padding:10px 14px;font-size:12px;color:#00529B;margin-bottom:1rem;line-height:1.6}
+.warn-box{background:#FFF3CD;border:1px solid #ffc107;border-radius:6px;padding:10px 14px;font-size:12px;color:#856404;margin-bottom:1rem;line-height:1.6}
+.nav-row{display:flex;gap:8px;margin-top:1.75rem;align-items:center}
+.btnn{padding:11px 28px;border-radius:8px;border:none;background:#00529B;color:#FFFFFF;font-size:15px;font-weight:600;cursor:pointer;font-family:inherit}
+.btnn:hover{background:#003d75}
+.sort-btn{padding:5px 12px;border-radius:5px;border:1.5px solid #CCCCCC;background:#FFFFFF;color:#666666;font-size:12px;font-weight:600;cursor:pointer;font-family:inherit}
+.sort-btn:hover{border-color:#00529B;color:#00529B}
+.sort-btn.sort-active{border-color:#00529B;background:#00529B;color:#FFFFFF}
+.btnb{padding:9px 16px;border-radius:6px;border:1px solid #CCCCCC;background:transparent;color:#666666;font-size:14px;cursor:pointer;font-family:inherit}
+.btnb:hover{background:#F5F7FA}
+.btnrs{font-size:12px;background:none;border:1px solid #CCCCCC;padding:6px 12px;border-radius:6px;cursor:pointer;color:#666666;font-family:inherit}
+.btnrs:hover{background:#F5F7FA}
+.vm{font-size:12px;color:#C0392B;margin-left:auto;display:none}
+.sn{font-size:12px;color:#999999;margin-top:10px;line-height:1.6}
+.ai-row{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:6px}
+.ai-row label{font-size:14px;color:#666666;white-space:nowrap}
+.ai-inp{padding:8px 12px;border:1px solid #CCCCCC;border-radius:6px;font-size:14px;background:#FFFFFF;color:#222222;width:140px;font-family:inherit}
+.ai-inp:focus{outline:none;border-color:#00529B}
+.rev-tier{font-size:12px;font-weight:600;color:#046a38;padding:4px 10px;background:#EDF5EA;border-radius:4px}
+.tip{display:inline-flex;align-items:center;justify-content:center;width:14px;height:14px;border-radius:50%;background:#AAAAAA;color:#FFFFFF;font-size:9px;font-weight:700;cursor:default;vertical-align:middle;margin-left:4px;flex-shrink:0;position:relative;text-transform:none;letter-spacing:0}
+.tip::before{content:attr(data-tip);position:absolute;bottom:calc(100% + 7px);left:50%;transform:translateX(-50%);background:#222222;color:#FFFFFF;border-radius:5px;padding:8px 11px;font-size:11px;line-height:1.55;white-space:normal;width:240px;z-index:9999;display:none;font-weight:400;text-align:left;box-shadow:0 2px 8px rgba(0,0,0,.25);pointer-events:none}
+.tip::after{content:'';position:absolute;bottom:calc(100% + 2px);left:50%;transform:translateX(-50%);border:5px solid transparent;border-top-color:#222222;display:none;pointer-events:none}
+.tip:hover::before,.tip:hover::after{display:block}
+
+/* ── Use case cards (Step 3) ── */
+.uc-card{border:1.5px solid #E5E5E5;border-radius:10px;overflow:hidden;margin-bottom:10px;background:#FFFFFF;transition:border-color .15s}
+.uc-card.selected{border-color:#00529B}
+.uc-card.strong{border-left:4px solid #046a38}
+.uc-card.good{border-left:4px solid #00529B}
+.uc-card.potential{border-left:4px solid #AAAAAA}
+.uc-hdr{display:flex;align-items:center;gap:10px;padding:13px 16px;cursor:pointer;user-select:none}
+.uc-hdr:hover{background:#F5F7FA}
+.uc-card.selected .uc-hdr{background:#00529B}
+.uc-dir{font-size:10px;font-weight:700;letter-spacing:.06em;padding:3px 7px;border-radius:3px;flex-shrink:0}
+.dir-send{background:#EDF5EA;color:#046a38}
+.dir-recv{background:#E8F1F8;color:#00529B}
+.dir-both{background:#FFF3CD;color:#856404}
+.uc-card.selected .dir-send,.uc-card.selected .dir-recv,.uc-card.selected .dir-both{background:rgba(255,255,255,0.2);color:#FFFFFF}
+.uc-title{font-size:15px;font-weight:700;color:#222222;flex:1}
+.uc-card.selected .uc-title{color:#FFFFFF}
+.fit-badge{font-size:11px;font-weight:700;padding:3px 9px;border-radius:10px;flex-shrink:0;white-space:nowrap}
+.fit-strong{background:#EDF5EA;color:#046a38}
+.fit-good{background:#E8F1F8;color:#00529B}
+.fit-potential{background:#F2F2F2;color:#999999}
+.uc-card.selected .fit-badge{background:rgba(255,255,255,0.2);color:#FFFFFF}
+.uc-toggle{font-size:18px;color:#CCCCCC;flex-shrink:0;line-height:1;margin-left:4px}
+.uc-card.selected .uc-toggle{color:rgba(255,255,255,0.7)}
+.uc-body{display:none;padding:16px 18px;border-top:1px solid #E5E5E5;background:#FAFAFA}
+.uc-card.selected .uc-body{border-top-color:#4A9BDE}
+.uc-card.open .uc-body{display:block}
+.uc-desc{font-size:13px;color:#555555;line-height:1.65;margin-bottom:14px}
+.uc-drivers{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px}
+.uc-driver{font-size:11px;background:#E8F1F8;color:#00529B;padding:3px 10px;border-radius:3px;font-weight:600}
+.uc-inputs{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px}
+.uc-field{display:flex;flex-direction:column;gap:4px}
+.uc-lbl{font-size:12px;font-weight:600;color:#444444}
+.uc-iw{position:relative}
+.uc-pfx{position:absolute;left:9px;top:50%;transform:translateY(-50%);font-size:12px;color:#999999;pointer-events:none}
+.uc-sfx{position:absolute;right:9px;top:50%;transform:translateY(-50%);font-size:12px;color:#999999;pointer-events:none}
+.uc-inp{width:100%;padding:7px 10px;border:1px solid #CCCCCC;border-radius:6px;font-size:13px;background:#FFFFFF;color:#222222;font-family:inherit}
+.uc-inp.has-pfx{padding-left:22px}
+.uc-inp.has-sfx{padding-right:28px}
+.uc-inp:focus{outline:none;border-color:#00529B}
+.uc-defaults-btn{font-size:11px;color:#00529B;background:#FFFFFF;border:1px solid #00529B;border-radius:4px;padding:3px 8px;cursor:pointer;white-space:nowrap;font-family:inherit}
+.uc-defaults-btn:hover{background:#E8F1F8}
+.uc-est-preview{margin-top:10px;background:#EDF5EA;border:1px solid #c5e0b4;border-radius:6px;padding:10px 14px;font-size:13px;color:#046a38;display:none}
+.uc-est-preview strong{font-size:16px}
+.uc-est-preview .est-comps{margin-top:6px;display:flex;flex-direction:column;gap:3px}
+.uc-est-preview .est-comp{font-size:11px;color:#3a5c1a;display:flex;justify-content:space-between}
+
+/* ── Results (Step 4) ── */
+.mets{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin-bottom:1.25rem}
+.met{background:#F2F2F2;border-radius:6px;padding:13px 14px 11px;border:1px solid #E5E5E5}
+.ml{font-size:12px;font-weight:500;color:#666666;margin-bottom:5px;line-height:1.3}
+.mv{font-size:16px;font-weight:700;line-height:1.3;color:#222222}
+.ms{font-size:11px;color:#999999;margin-top:3px}
+.res-card{border:1.5px solid #E5E5E5;border-radius:10px;overflow:hidden;margin-bottom:12px;background:#FFFFFF}
+.res-hdr{display:flex;align-items:center;gap:10px;padding:13px 16px;background:#F5F7FA;border-bottom:1px solid #E5E5E5}
+.res-rank{width:26px;height:26px;border-radius:50%;background:#00529B;color:#FFFFFF;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.res-rank.top{background:#046a38}
+.res-title{font-size:15px;font-weight:700;color:#222222;flex:1}
+.res-value{font-size:18px;font-weight:700;color:#046a38;white-space:nowrap}
+.res-value.zero{color:#999999;font-size:14px}
+.res-value.emerging-val{color:#856404}
+.res-body{padding:14px 16px}
+.res-comps{display:flex;flex-direction:column;gap:5px;margin-bottom:10px}
+.res-comp{display:flex;align-items:center;gap:8px}
+.res-comp-lbl{font-size:12px;color:#555555;flex:1}
+.res-comp-bar-wrap{width:120px;background:#E5E5E5;border-radius:3px;height:6px;flex-shrink:0}
+.res-comp-bar{height:6px;border-radius:3px;background:#00529B}
+.res-comp-val{font-size:12px;font-weight:600;color:#222222;width:80px;text-align:right;flex-shrink:0}
+.res-action{font-size:12px;color:#3d3d3d;background:#F2F2F2;border-radius:6px;padding:8px 12px;line-height:1.6}
+.res-action-lbl{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:#046a38;margin-bottom:5px;display:flex;align-items:center;gap:4px}
+.res-action strong{color:#00529B}
+.fit-score-row{display:flex;align-items:center;gap:6px;margin-bottom:8px}
+.fit-score-label{font-size:11px;color:#666666}
+.fit-score-bar-wrap{flex:1;background:#E5E5E5;border-radius:3px;height:5px}
+.fit-score-bar{height:5px;border-radius:3px}
+.fit-score-val{font-size:11px;font-weight:600;width:36px;text-align:right}
+.rp{padding:16px 20px;border:1px solid #E5E5E5;border-top:3px solid #046a38;border-radius:8px;margin-bottom:1.25rem;background:#F2F2F2}
+.rpt{font-size:16px;font-weight:700;margin-bottom:14px;color:#046a38;font-family:'Montserrat',-apple-system,BlinkMacSystemFont,sans-serif}
+.rec-item{display:flex;gap:10px;margin-bottom:12px;font-size:13px;line-height:1.65;color:#3d3d3d;align-items:flex-start}
+.rec-item:last-child{margin-bottom:0}
+.rec-num{font-size:13px;font-weight:700;color:#00529B;min-width:20px;flex-shrink:0}
+.disc{font-size:11px;color:#999999;line-height:1.6;margin-bottom:1.25rem;padding:10px 14px;border:1px solid #E5E5E5;border-radius:6px;background:#F5F7FA}
+.ftr{display:flex;justify-content:space-between;align-items:center;padding-top:1rem;border-top:1px solid #E5E5E5}
+.ftrc{font-size:12px;color:#999999}
+.cnote{font-size:11px;color:#999999;margin-bottom:8px;font-style:italic}
+.chart-wrap{position:relative;height:260px;margin-bottom:1.5rem}
+.no-uc-msg{text-align:center;padding:40px 20px;color:#999999;font-size:14px}
+
+/* ── Score summary panel ── */
+.score-panel{padding:16px 20px;border:1px solid #E5E5E5;border-top:3px solid #00529B;border-radius:8px;margin-bottom:1.25rem;background:#F2F2F2}
+.score-panel-title{font-size:15px;font-weight:700;margin-bottom:12px;color:#00529B;font-family:'Montserrat',-apple-system,BlinkMacSystemFont,sans-serif}
+
+/* ── Print / PDF ── */
+@media print{
+  .nav-row,.ftr .btnrs,.btnpdf{display:none!important}
+  .step{display:block!important}
+  #step1,#step2,#step3{display:none!important}
+  #step4{display:block!important}
+  .page{padding:0}
+  .fpc-hdr{border-bottom-width:2px}
+}
+
+/* ── Free tier styles ── */
+.free-notice-bar{background:#FFF8E7;border:1px solid #F0C040;border-radius:6px;padding:10px 16px;margin-bottom:16px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.free-notice-text{font-size:13px;color:#5a3e00;flex:1;min-width:180px;line-height:1.5}
+.free-notice-btn{font-size:12px;font-weight:700;padding:7px 16px;border-radius:6px;border:1.5px solid #856404;color:#856404;background:#FFFFFF;cursor:pointer;text-decoration:none;white-space:nowrap;font-family:inherit;display:inline-block;flex-shrink:0}
+.free-notice-btn:hover{background:#FFF3CD}
+.free-lock-note{background:#FFF8E7;border:1px solid #F0C040;border-left:3px solid #856404;border-radius:6px;padding:10px 14px;font-size:12px;color:#5a3e00;margin-bottom:1rem;line-height:1.6}
+.flow-inp.is-locked{border-color:#F0C040!important;background:#FFF8E7!important;color:#5a3e00!important;cursor:not-allowed!important}
+.free-tune-lock{background:#FFF8E7;border:1px solid #F0C040;border-radius:8px;padding:20px 18px;text-align:center;font-size:13px;color:#5a3e00;line-height:1.6;margin-bottom:12px}
+.free-tune-lock strong{color:#5a3e00}
+.free-comp-lock{display:flex;align-items:center;gap:8px;padding:5px 0;border-bottom:1px solid #F5F5F5}
+.free-comp-lock:last-child{border-bottom:none}
+.free-comp-lock-lbl{font-size:12px;color:#888;flex:1}
+.free-comp-lock-badge{font-size:10px;font-weight:700;color:#856404;background:#FFF3CD;border:1px solid #F0C040;border-radius:3px;padding:2px 8px;white-space:nowrap;flex-shrink:0}
+.free-uncertainty-note{font-size:12px;color:#856404;background:#FFF8E7;border:1px solid #F0C040;border-radius:5px;padding:8px 12px;margin-bottom:12px;line-height:1.5}
+.free-member-cta{background:#00529B;border-radius:10px;padding:24px 28px;margin-top:1.5rem;margin-bottom:1.25rem}
+.free-member-cta-title{font-size:17px;font-weight:700;color:#FFFFFF;margin-bottom:6px;font-family:'Montserrat',-apple-system,BlinkMacSystemFont,sans-serif}
+.free-member-cta-sub{font-size:13px;color:rgba(255,255,255,.85);margin-bottom:14px;line-height:1.6}
+.free-member-cta-list{list-style:none;margin-bottom:18px;padding:0}
+.free-member-cta-list li{font-size:13px;color:rgba(255,255,255,.9);margin-bottom:7px;display:flex;align-items:flex-start;gap:8px;line-height:1.5}
+.free-member-cta-check{color:#7BC8A4;font-weight:700;flex-shrink:0}
+.free-member-cta-btn{display:inline-block;padding:11px 24px;border-radius:8px;background:#FFFFFF;color:#00529B;font-size:14px;font-weight:700;text-decoration:none;font-family:'Montserrat',-apple-system,BlinkMacSystemFont,sans-serif}
+.free-member-cta-btn:hover{background:#E8F1F8}
+.free-member-cta-contact{font-size:12px;color:rgba(255,255,255,.6);margin-top:12px}
+.free-member-cta-contact a{color:rgba(255,255,255,.8);text-decoration:underline}
+/* PDF email modal */
+.pdf-modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:9999;display:flex;align-items:center;justify-content:center;padding:16px}
+.pdf-modal{background:#FFFFFF;border-radius:12px;padding:28px 32px;width:100%;max-width:420px;box-shadow:0 8px 40px rgba(0,0,0,.3)}
+.pdf-modal-title{font-size:18px;font-weight:700;color:#00529B;margin-bottom:6px;font-family:'Montserrat',-apple-system,BlinkMacSystemFont,sans-serif}
+.pdf-modal-sub{font-size:13px;color:#555;margin-bottom:18px;line-height:1.6}
+.pdf-modal-input{width:100%;padding:10px 14px;border:1.5px solid #CCCCCC;border-radius:6px;font-size:14px;font-family:inherit;margin-bottom:6px;box-sizing:border-box}
+.pdf-modal-input:focus{outline:none;border-color:#00529B}
+.pdf-modal-privacy{font-size:11px;color:#999;margin-bottom:16px;line-height:1.5}
+.pdf-modal-privacy a{color:#00529B}
+.pdf-modal-actions{display:flex;gap:8px}
+.pdf-modal-submit{flex:1;padding:11px;border-radius:8px;border:none;background:#046a38;color:#FFFFFF;font-size:14px;font-weight:600;cursor:pointer;font-family:inherit}
+.pdf-modal-submit:hover{background:#035430}
+.pdf-modal-cancel{padding:11px 18px;border-radius:8px;border:1px solid #CCCCCC;background:transparent;color:#666;font-size:14px;cursor:pointer;font-family:inherit}
+.pdf-modal-cancel:hover{background:#F5F7FA}
+/* ── Mobile ── */
+@media(max-width:640px){
+  .page{padding:14px 12px 40px}
+  .fpc-hdr{flex-wrap:wrap;gap:8px;padding-bottom:12px;margin-bottom:16px}
+  .hdr-title{font-size:13px}
+  .hdr-sub{font-size:11px}
+  .hdr-badge{font-size:10px;padding:3px 8px}
+  .pbl{display:none}
+  .pbln{margin:0 4px}
+  h3.sh{font-size:20px;padding-bottom:8px}
+  p.ss{font-size:13px;margin-bottom:1.25rem}
+  .g2,.g4{grid-template-columns:1fr 1fr}
+  .onn{font-size:13px}
+  .ons{font-size:11px}
+  .oc label{padding:10px 12px}
+  .mets{grid-template-columns:repeat(auto-fit,minmax(120px,1fr))}
+  .mv{font-size:14px}
+  .uc-inputs{grid-template-columns:1fr}
+  .nav-row{flex-wrap:wrap}
+  .btnn{flex:1;min-width:120px;font-size:14px;padding:11px 16px}
+  .ftr{flex-direction:column;gap:8px;align-items:flex-start}
+  .res-comp-bar-wrap{width:70px}
+  .res-comp-val{width:60px}
+  .flow-grid{grid-template-columns:1fr}
+  .flow-hdr-row,.flow-row{grid-template-columns:90px 1fr 1fr}
+  .pain-grid{grid-template-columns:1fr}
+}
+/* ── Payment flow volume grid (Step 2) ── */
+.flow-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:4px}
+.flow-quad{background:#F8FAFB;border:1px solid #DDE5EE;border-radius:8px;padding:16px}
+.flow-quad-hdr{font-size:13px;font-weight:700;color:#00529B;margin:0 0 3px}
+.flow-quad-sub{font-size:12px;color:#888;margin:0 0 10px;line-height:1.4}
+.flow-hdr-row,.flow-row{display:grid;grid-template-columns:110px 1fr 1fr;gap:8px;align-items:center}
+.flow-hdr-row{margin-bottom:5px}
+.flow-col-hdr{font-size:11px;color:#999;text-align:center;font-weight:600}
+.flow-row{margin-bottom:6px}
+.flow-lbl{font-size:13px;color:#444}
+.flow-inp{padding:6px 8px;border:1px solid #CCC;border-radius:5px;font-size:13px;width:100%;font-family:inherit;box-sizing:border-box;text-align:right}
+.flow-inp:focus{outline:none;border-color:#00529B}
+.flow-inp.has-val{border-color:#046a38;background:#F5FBF5}
+.flow-inp.is-estimated{border-color:#4A9BDE;background:#EEF5FC;color:#00529B}
+/* ── Grouped pain points ── */
+.pain-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;align-items:start}
+.pain-group{display:flex;flex-direction:column;gap:8px}
+.pain-grp-hdr{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:#00529B;padding-bottom:6px;border-bottom:2px solid #DDE5EE;margin-bottom:2px}
+
+/* ── Step 3 redesign ── */
+.s3-bar-wrap{margin-bottom:14px}
+.s3-bar-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:#046a38;margin-bottom:8px;display:flex;align-items:center;gap:6px}
+.s3-active-bar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;min-height:36px}
+.s3-pill-group{display:flex;flex-direction:column;gap:6px}
+.s3-pill-group-pills{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+#s3ActiveBar{display:flex;flex-direction:column;gap:10px}
+.s3-pill{display:inline-flex;align-items:center;gap:7px;padding:7px 14px;border-radius:24px;font-size:13px;font-weight:600;cursor:pointer;border:none;font-family:inherit;transition:background .15s,box-shadow .15s;user-select:none;line-height:1.3}
+.s3-pill.active{background:#00529B;color:#FFFFFF}
+.s3-pill.active.tuning{background:#003d75;box-shadow:0 0 0 3px rgba(0,82,155,0.25)}
+.s3-pill.active:hover{background:#003d75}
+.s3-pill-val{font-size:11px;opacity:.8;font-weight:400}
+.s3-pill-x{font-size:15px;line-height:1;opacity:.65;padding:0 2px;cursor:pointer}
+.s3-pill-x:hover{opacity:1}
+.s3-empty-bar{font-size:13px;color:#999;font-style:italic;padding:4px 0}
+.s3-tune-panel{border:1.5px solid #00529B;border-radius:10px;background:#FFFFFF;overflow:hidden;margin-bottom:16px;display:none}
+.s3-tune-panel.open{display:block}
+.s3-tune-hdr{display:flex;align-items:center;gap:10px;padding:12px 16px;background:#E8F1F8;border-bottom:1px solid #C5D9EE;flex-wrap:wrap}
+.s3-tune-title{font-size:14px;font-weight:700;color:#00529B;flex:1;min-width:120px}
+.s3-tune-body{padding:14px 18px}
+.s3-tune-tagline{font-size:13px;color:#555;line-height:1.6;margin-bottom:14px}
+.s3-tune-est{margin-top:10px;background:#EDF5EA;border:1px solid #c5e0b4;border-radius:6px;padding:10px 14px;font-size:13px;color:#046a38}
+.s3-tune-est strong{font-size:15px}
+.s3-tune-est .est-comps{margin-top:6px;display:flex;flex-direction:column;gap:3px}
+.s3-tune-est .est-comp{font-size:11px;color:#3a5c1a;display:flex;justify-content:space-between;gap:8px}
+.s3-chart-section{margin-bottom:1.25rem}
+.s3-section{margin-top:1.25rem}
+.s3-section-hdr{display:flex;align-items:center;justify-content:space-between;padding:9px 14px;background:#F5F7FA;border:1px solid #E5E5E5;border-radius:8px;cursor:pointer;user-select:none;margin-bottom:8px}
+.s3-section-title{font-size:13px;font-weight:700;color:#444}
+.s3-section-count{font-size:12px;color:#999;margin-left:6px;font-weight:400}
+.s3-section-tog{font-size:14px;color:#999}
+.s3-section-body{display:none}
+.s3-section-body.open{display:block}
+.s3-add-card{border:1.5px solid #E5E5E5;border-radius:8px;padding:12px 14px;margin-bottom:8px;background:#FFFFFF;overflow:hidden}
+.s3-add-card.good-fit{border-left:4px solid #00529B}
+.s3-add-card.potential-fit{border-left:4px solid #CCCCCC}
+.s3-add-top{display:flex;align-items:flex-start;gap:10px}
+.s3-add-info{flex:1;min-width:0}
+.s3-add-name{font-size:14px;font-weight:700;color:#222;line-height:1.3}
+.s3-add-tagline{font-size:12px;color:#666;margin-top:3px;line-height:1.4}
+.s3-add-actions{display:flex;flex-direction:column;align-items:flex-end;gap:5px;flex-shrink:0}
+.s3-add-btn{font-size:12px;font-weight:600;padding:6px 12px;border-radius:16px;border:1.5px solid #046a38;color:#046a38;background:#FFFFFF;cursor:pointer;white-space:nowrap;font-family:inherit;transition:all .15s}
+.s3-add-btn:hover{background:#EDF5EA}
+.s3-add-btn.added{border-color:#00529B;color:#00529B;background:#E8F1F8}
+.s3-expand-btn{font-size:11px;color:#00529B;background:none;border:none;cursor:pointer;font-family:inherit;padding:0;text-decoration:underline;white-space:nowrap}
+.s3-add-body{display:none;border-top:1px solid #EEEEEE;margin-top:10px;padding-top:12px}
+.s3-add-body.open{display:block}
+@media(max-width:640px){.s3-add-actions{flex-direction:row;align-items:center}.s3-tune-hdr{gap:6px}}
+/* ── FPC resource & work group boxes ── */
+.fpc-res-box{background:#F0F5FB;border:1px solid #C5D9EE;border-radius:6px;padding:10px 14px;margin-top:12px}
+.fpc-res-hdr{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:#00529B;margin-bottom:8px;display:flex;align-items:center;gap:5px}
+.fpc-res-list{display:flex;flex-direction:column;gap:5px}
+.fpc-res-link{font-size:12px;color:#00529B;text-decoration:none;display:flex;align-items:flex-start;gap:6px;line-height:1.45}
+.fpc-res-link:hover{text-decoration:underline}
+.fpc-res-arrow{flex-shrink:0;opacity:.7;font-size:11px;margin-top:1px}
+.fpc-wg-box{background:#EDF5EA;border:1px solid #c5e0b4;border-radius:6px;padding:10px 14px;margin-top:8px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.fpc-wg-text{font-size:12px;color:#3a5c1a;line-height:1.5;flex:1;min-width:160px}
+.fpc-wg-btn{font-size:12px;font-weight:600;padding:6px 14px;border-radius:16px;border:1.5px solid #046a38;color:#046a38;background:#FFFFFF;cursor:pointer;white-space:nowrap;text-decoration:none;display:inline-block;font-family:inherit}
+.fpc-wg-btn:hover{background:#EDF5EA}
+/* ── Emerging use cases ── */
+.fit-emerging{background:#FFF3CD;color:#856404}
+.emerging-badge{font-size:10px;font-weight:700;padding:2px 7px;border-radius:3px;background:#FFF3CD;color:#856404;border:1px solid #F0C040;flex-shrink:0;white-space:nowrap}
+.emerging-notice{background:#FFF8E7;border:1px solid #F0C040;border-left:3px solid #D4A017;border-radius:6px;padding:10px 14px;margin-bottom:12px;font-size:12px;color:#5a3e00;line-height:1.6;display:flex;align-items:flex-start;gap:8px}
+.emerging-notice a{color:#856404;font-weight:600}
+.emerging-notice a:hover{text-decoration:underline}
+.s3-pill.emerging{background:#856404;color:#FFFFFF}
+.s3-pill.emerging.tuning{background:#5C4200;box-shadow:0 0 0 3px rgba(133,100,4,0.25)}
+.s3-pill.emerging:hover{background:#5C4200}
+.met.emerging-met{background:#FFF8E7;border-color:#F0C040}
+.met.emerging-met .ml{color:#856404}
+.met.emerging-met .mv{color:#5a3e00}
+.met.emerging-met .ms{color:#856404;opacity:.8}
+.chart-legend{display:flex;gap:16px;flex-wrap:wrap;margin-top:6px;padding-left:2px}
+.chart-legend-item{display:flex;align-items:center;gap:5px;font-size:11px;color:#555}
+.chart-legend-swatch{width:11px;height:11px;border-radius:2px;flex-shrink:0}
+/* ── Summary metric tiles ── */
+.mets{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:8px;margin-bottom:1.25rem}
+/* ── Benefits group (dollar + hours together) ── */
+.res-benefits{background:#F5F7FA;border:1.5px solid #DDE5EE;border-radius:8px;padding:10px 14px;margin-bottom:10px}
+.res-benefits-ttl{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:#00529B;margin-bottom:8px;display:flex;align-items:center;gap:5px}
+.res-benefits .res-comps{margin-bottom:0}
+.res-benefits .res-hours{background:transparent;border:none;border-top:1px solid #D5DFE8;border-radius:0;padding:7px 0 0;margin-top:7px}
+.res-benefits .res-hours .res-hours-hdr{color:#3a5c1a}
+/* ── Hours saved display ── */
+.res-hours{margin-top:10px;background:#F5F7FA;border:1px solid #E5E5E5;border-radius:6px;padding:9px 12px}
+.res-hours-hdr{font-size:12px;font-weight:700;color:#444;margin-bottom:5px;display:flex;align-items:center;gap:5px}
+.res-hours-comp{display:flex;justify-content:space-between;font-size:11px;color:#666;padding:2px 0;border-top:1px solid #EEEEEE;margin-top:3px}
+.res-hours-comp:first-child{border-top:none;margin-top:0}
+.s3-tune-est .hours-row{margin-top:6px;padding-top:6px;border-top:1px solid #c5e0b4;font-size:12px;color:#3a5c1a;display:flex;align-items:center;gap:5px}
+</style>
+</head>
+<body>
+<div class="page">
+
+<!-- Back to hub -->
+<a href="../index.html" style="display:inline-flex;align-items:center;gap:4px;font-size:12px;color:#999999;text-decoration:none;margin-bottom:10px" onmouseover="this.style.color='#00529B'" onmouseout="this.style.color='#999999'"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M9 6H3M5 3L2 6l3 3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg> All Tools</a>
+<!-- Header -->
+<div class="fpc-hdr">
+  <div class="hdr-left">
+    <img id="hdrLogo" style="height:144px;width:auto;max-width:240px;object-fit:contain;flex-shrink:0;display:none">
+    <div>
+      <div class="hdr-title">Faster Payments Use Case Evaluator</div>
+    </div>
+  </div>
+  <div style="display:flex;align-items:center;gap:10px">
+    <button type="button" class="btnpdf" id="btnPDF" style="display:none" onclick="showPDFEmailModal()">&#8595; Export PDF</button>
+    <div class="hdr-badge">BETA &mdash; For Reviewer Feedback</div>
+  </div>
+</div>
+
+<!-- Free tier notice bar -->
+<div class="free-notice-bar">
+  <span class="free-notice-text">You're using the <strong>free version</strong> of the FPC Use Case Evaluator, which uses industry benchmark data. The members-only version allows users to input actual data and to receive more customized results.</span>
+  <a href="https://fasterpaymentscouncil.org/members" target="_blank" rel="noopener" class="free-notice-btn">FPC Member? Log In &rarr;</a>
+</div>
+
+<!-- Progress bar -->
+<div class="prog" id="pg"></div>
+
+<!-- Step headings -->
+<h3 class="sh" id="stt"></h3>
+<p class="ss" id="sts"></p>
+
+<!-- ═══════════════════════════════════════════ STEP 1 ═══ -->
+<div class="step" id="step1">
+
+  <div class="mod-box">
+    <p class="slbl">Industry / Sector</p>
+    <div class="g2" id="industryGrid"></div>
+  </div>
+
+  <div class="mod-box">
+    <p class="slbl">Annual Revenue</p>
+    <div id="revenueInputRow"></div>
+    <p class="sn" id="revNote">Enter in millions &mdash; e.g., 5 for $5M, 500 for $500M, 5000 for $5B, 15000 for $15B. Used to calibrate default volume and dollar estimates for each use case.</p>
+  </div>
+
+</div>
+
+<!-- ═══════════════════════════════════════════ STEP 2 ═══ -->
+<div class="step" id="step2">
+
+  <div class="mod-box">
+    <p class="slbl">Monthly payment volumes <span style="font-weight:400;letter-spacing:0;text-transform:none;font-size:12px;color:#999999">&mdash; enter what applies; leave blank to skip</span></p>
+    <p class="sn" style="margin-bottom:10px">Enter your approximate monthly dollar volume and transaction count for each payment flow. These are used to calibrate use case estimates in the next step &mdash; greater detail yields more accurate projections.</p>
+    <div id="methodList"></div>
+  </div>
+
+  <div class="mod-box">
+    <p class="slbl">Current pain points <span style="font-weight:400;letter-spacing:0;text-transform:none;font-size:12px;color:#999999">&mdash; select all that apply</span></p>
+    <div class="rcl" id="painList"></div>
+  </div>
+
+</div>
+
+<!-- ═══════════════════════════════════════════ STEP 3 ═══ -->
+<div class="step" id="step3">
+  <!-- Active use case pills -->
+  <div class="s3-bar-wrap">
+    <div class="s3-bar-label">
+      <svg viewBox="0 0 14 14" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><polyline points="1.5,7 5,10.5 12.5,3"/></svg>
+      Active use cases included in estimate
+    </div>
+    <p style="font-size:12px;color:#888;margin-bottom:10px">Click any use case to expand it and fine-tune the inputs that drive the estimate.</p>
+    <div id="s3ActiveBar"></div>
+  </div>
+  <!-- Fine-tune panel -->
+  <div id="s3TunePanel" class="s3-tune-panel"></div>
+  <!-- Live chart -->
+  <div id="s3ChartSection" class="s3-chart-section" style="display:none">
+    <p class="cnote">Estimated annual value &mdash; based on your inputs and industry benchmarks. All figures carry an inherent &plusmn;20% uncertainty range. Click any use case pill above to fine-tune its inputs.</p>
+    <div class="chart-wrap" id="s3ChartWrap" style="position:relative;height:200px"><canvas id="s3Chart" role="img" aria-label="Bar chart of estimated annual value by use case"></canvas></div>
+    <div id="s3ChartLegend" class="chart-legend"></div>
+  </div>
+  <!-- Good fits / potential fits below -->
+  <div id="s3Additional"></div>
+</div>
+
+<!-- ═══════════════════════════════════════════ STEP 4 ═══ -->
+<div class="step" id="step4">
+  <div class="mets" id="summaryMetrics"></div>
+  <div id="uncertaintyNote"></div>
+  <p class="cnote">Estimates represent projected annual value range based on your inputs and industry benchmarks.</p>
+  <div class="chart-wrap" id="s4ChartWrap"><canvas id="resultsChart" role="img" aria-label="Bar chart showing estimated annual value by use case"></canvas></div>
+  <div id="s4ChartLegend" class="chart-legend" style="margin-bottom:.75rem"></div>
+  <div id="s4SortBar" style="display:none;align-items:center;gap:8px;margin-bottom:12px">
+    <span style="font-size:12px;color:#666666">Sort by:</span>
+    <button id="sortByValue" class="sort-btn sort-active" onclick="setResultSort('value')">$ Estimated Value</button>
+    <button id="sortByFit"   class="sort-btn"             onclick="setResultSort('fit')">Fit Score</button>
+  </div>
+  <div id="resultCards"></div>
+  <div class="rp"><div class="rpt">&#128161; Recommended next steps</div><div id="recommendations"></div></div>
+  <div id="memberCTA"></div>
+  <div class="disc">Projections are estimates derived from industry benchmarks and the inputs you provided. Actual results will vary based on implementation approach, vendor selection, adoption rates, and market conditions. Payment processing cost savings reflect the incremental cost difference for volume processed via instant payment rails. Instant payments are intended to complement existing payment methods, not replace them. Float and working capital figures assume a 5.5% cost of funds. This tool is for strategic planning purposes only and does not constitute financial or investment advice. Provided by the U.S. Faster Payments Council &mdash; fasterpaymentscouncil.org.</div>
+  <div class="ftr"><span class="ftrc">U.S. Faster Payments Council &middot; fasterpaymentscouncil.org</span><button type="button" id="btnRs" class="btnrs">&#8635; Start over</button></div>
+</div>
+
+<!-- Navigation -->
+<div class="nav-row">
+  <button type="button" class="btnb" id="btnB" style="display:none">&#8592; Back</button>
+  <button type="button" class="btnrs" id="btnSO" style="display:none">&#8635; Start over</button>
+  <button type="button" class="btnn" id="btnN" style="display:none">Next &#8594;</button>
+  <span class="vm" id="vm"></span>
+</div>
+
+</div><!-- /.page -->
+
+<!-- PDF email capture modal -->
+<div id="pdfEmailModal" class="pdf-modal-overlay" style="display:none" onclick="if(event.target===this)closePDFModal()">
+  <div class="pdf-modal">
+    <div class="pdf-modal-title">Get your results as a PDF</div>
+    <p class="pdf-modal-sub">Enter your email and we'll generate your PDF summary. We'll also send you FPC resources relevant to your results.</p>
+    <form name="pdf-email-capture" method="POST" data-netlify="true" netlify-honeypot="bot-field" onsubmit="handlePDFEmailSubmit(event)">
+      <input type="hidden" name="form-name" value="pdf-email-capture">
+      <input type="hidden" name="tool" value="Use Case Evaluator">
+      <input type="hidden" name="industry" id="pdfIndustryField" value="">
+      <input type="hidden" name="revenue_tier" id="pdfRevTierField" value="">
+      <p style="display:none"><input name="bot-field"></p>
+      <input type="email" name="email" id="pdfEmailInput" class="pdf-modal-input" placeholder="you@yourorganization.com" required>
+      <p class="pdf-modal-privacy">We'll use your email to send you FPC resources related to your results. <a href="https://fasterpaymentscouncil.org/privacy-policy" target="_blank" rel="noopener">Privacy policy</a>.</p>
+      <div class="pdf-modal-actions">
+        <button type="submit" class="pdf-modal-submit">Generate PDF &rarr;</button>
+        <button type="button" class="pdf-modal-cancel" onclick="closePDFModal()">Cancel</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script>
+// ─────────────────────────────────────────────────────────
+// FREE TIER FLAG
+// ─────────────────────────────────────────────────────────
+const FREE_TIER  = true;
+const MEMBER_URL = 'https://fasterpaymentscouncil.org/members';
+
+// ─────────────────────────────────────────────────────────
+// DATA
+// ─────────────────────────────────────────────────────────
+const INDUSTRIES = [
+  { id:'retail',        name:'Retail / E-commerce',          sub:'Consumer sales, online marketplaces' },
+  { id:'manufacturing', name:'Manufacturing / Distribution',  sub:'B2B supply chain, wholesale' },
+  { id:'healthcare',    name:'Healthcare',                    sub:'Providers, payers, health systems' },
+  { id:'gig_staffing',  name:'Gig / Staffing / HR',          sub:'Contractors, temp workers, platforms' },
+  { id:'real_estate',   name:'Real Estate / Title',           sub:'Brokers, title companies, escrow' },
+  { id:'insurance',     name:'Insurance',                     sub:'P&C, life, specialty carriers' },
+  { id:'government',    name:'Government / Public Sector',    sub:'Federal, state, local agencies' },
+  { id:'professional',  name:'Professional Services',         sub:'Legal, consulting, accounting, tech, associations' },
+  { id:'utilities',     name:'Utilities & Subscription Services', sub:'Utilities, SaaS, recurring billing, landlords, property mgmt' },
+  { id:'transport',     name:'Transportation & Logistics',    sub:'Freight, carriers, owner-operators, delivery platforms' }
+];
+
+// Revenue tier thresholds (millions) and reference midpoints for default scaling
+const TIER_BOUNDS  = { sm:[0,10],    md:[10,100],   lg:[100,1000],  xl:[1000,10000],  xxl:[10000,Infinity] };
+const TIER_REF_REV = { sm:5,         md:40,         lg:400,         xl:3000,          xxl:25000 };
+const TIER_LABELS  = { sm:'Small business / agency', md:'Mid-size organization', lg:'Large organization', xl:'Enterprise', xxl:'Global Enterprise' };
+
+function getSizeTier(revM) {
+  if (!revM || revM <= 0) return null;
+  if (revM < 10)    return 'sm';
+  if (revM < 100)   return 'md';
+  if (revM < 1000)  return 'lg';
+  if (revM < 10000) return 'xl';
+  return 'xxl';
+}
+
+// Scale a use case's tier defaults proportionally to the actual entered revenue
+function getScaledDefaults(uc, revM) {
+  const tier = getSizeTier(revM);
+  if (!tier) return {};
+  const base = uc.defaults[tier] || {};
+  const refRev = TIER_REF_REV[tier];
+  const scale = revM / refRev;
+  const result = {};
+  uc.inputs.forEach(inp => {
+    const val = base[inp.id];
+    if (val === undefined) return;
+    // Percentages and day-counts don't scale with revenue
+    if (inp.sfx === '%' || inp.sfx === 'days' || inp.sfx === '/hr' || inp.sfx === '/emp') {
+      result[inp.id] = val;
+    } else {
+      // Round counts to whole numbers; round dollar amounts to nearest $100
+      const scaled = val * scale;
+      result[inp.id] = (inp.pfx === '$') ? Math.round(scaled / 100) * 100 : Math.round(scaled);
+    }
+  });
+  return result;
+}
+
+const PAINS = [
+  { id:'high_costs',       name:'High payment processing costs',              ds:'Checks, wires, or card fees are a meaningful expense line' },
+  { id:'missed_discounts', name:'Missing early payment discounts',            ds:'Suppliers offer 1–2% discounts for paying within 10 days' },
+  { id:'manual_recon',     name:'Manual reconciliation consuming staff time', ds:'Payment matching and posting require significant manual effort' },
+  { id:'worker_pay',       name:'Workers want faster access to pay',          ds:'Employees, contractors, or gig workers want same-day or on-demand pay' },
+  { id:'slow_refunds',     name:'Slow refunds or claim payouts',              ds:'Customers or claimants wait days for refunds, rebates, or insurance payments' },
+  { id:'slow_ar',          name:'Slow collections / high DSO',                ds:'Customers are slow to pay; outstanding invoices tie up cash' },
+  { id:'cash_flow',        name:'Cash flow gaps from payment timing',         ds:'Payments go out before receipts come in, creating liquidity pressure' },
+  { id:'liquidity',        name:'Pre-funding accounts due to settlement lags', ds:'Must hold excess cash to cover delayed settlement windows' }
+];
+
+// Inline SVG icons for pain group headers — stroke="currentColor" inherits .pain-grp-hdr color
+const PAIN_SVG = {
+  // Coin with dollar sign: circle + vertical bar + S-curve
+  cost:     `<svg viewBox="0 0 16 16" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="vertical-align:-1px;margin-right:5px"><circle cx="8" cy="8" r="6.25"/><line x1="8" y1="3.5" x2="8" y2="12.5"/><path d="M10.5 5.75H6.75a1.75 1.75 0 0 0 0 3.5h2.5a1.75 1.75 0 0 1 0 3.5H5.5"/></svg>`,
+  // Clock face: circle + hour hand pointing up + minute hand pointing to ~3:30
+  speed:    `<svg viewBox="0 0 16 16" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="vertical-align:-1px;margin-right:5px"><circle cx="8" cy="8" r="6.25"/><polyline points="8,4.5 8,8 11,9.5"/></svg>`,
+  // Circular arrows (refresh): two arcs with corner arrowheads
+  cashflow: `<svg viewBox="0 0 16 16" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="vertical-align:-1px;margin-right:5px"><path d="M2 4.5V2l2.5 2.5"/><path d="M14 11.5V14l-2.5-2.5"/><path d="M2 3.5A7 7 0 0 1 13.5 9"/><path d="M14 12.5A7 7 0 0 1 2.5 7"/></svg>`
+};
+
+const PAIN_GROUPS = [
+  { label:'Cost &amp; Efficiency',     icon:'cost',     ids:['high_costs','missed_discounts','manual_recon'] },
+  { label:'Speed &amp; Disbursements', icon:'speed',    ids:['worker_pay','slow_refunds'] },
+  { label:'Cash Flow &amp; Liquidity', icon:'cashflow', ids:['slow_ar','cash_flow','liquidity'] }
+];
+
+// ─────────────────────────────────────────────────────────
+// USE CASES
+// industryFit: 0–10 score per industry
+// painFit: pain point id → weight (0–4)
+// methodFit: payment method ids that boost score
+// ─────────────────────────────────────────────────────────
+const USE_CASES = [
+  {
+    id: 'supplier',
+    name: 'Supplier & Vendor Payments',
+    dir: 'send',
+    tagline: 'Pay suppliers instantly to capture early payment discounts and eliminate late fees.',
+    desc: 'Faster payment rails let you pay suppliers on the exact day you choose — capturing early payment discounts, avoiding late fees, and strengthening supplier relationships. Instant payments cost a fraction of checks or wires.',
+    drivers: ['Early payment discounts','Check & wire cost displacement','Late fee avoidance','Supplier relationship value'],
+    industryFit: { retail:8, manufacturing:10, healthcare:7, gig_staffing:5, real_estate:6, insurance:5, government:7, professional:7, utilities:7, transport:9 },
+    painFit: { high_costs:3, missed_discounts:4, worker_pay:0, slow_refunds:0, slow_ar:0, manual_recon:2, cash_flow:2, liquidity:2 },
+    methodFit: ['check','wire','ach'],
+    inputs: [
+      { id:'supp_count', label:'Outbound payments / month', pfx:'', sfx:'pmts', placeholder:'500', tip:'Total supplier and vendor payments sent per month.' },
+      { id:'supp_avg',   label:'Average payment size',      pfx:'$', sfx:'',    placeholder:'5000', tip:'Average dollar value per outbound supplier payment.' },
+      { id:'supp_chk',   label:'% currently by check',      pfx:'', sfx:'%',   placeholder:'30', tip:'Percentage of supplier payments currently made by paper check.' },
+      { id:'supp_disc',  label:'% of suppliers offering early-pay discounts', pfx:'', sfx:'%', placeholder:'20', tip:'Estimated share of suppliers offering 2/10 net 30 or similar early payment terms.' }
+    ],
+    defaults: { sm:{supp_count:80,supp_avg:2500,supp_chk:40,supp_disc:20}, md:{supp_count:500,supp_avg:5000,supp_chk:35,supp_disc:20}, lg:{supp_count:2500,supp_avg:20000,supp_chk:25,supp_disc:22}, xl:{supp_count:12000,supp_avg:60000,supp_chk:18,supp_disc:25}, xxl:{supp_count:100000,supp_avg:150000,supp_chk:12,supp_disc:28} },
+    calc(v) {
+      const cnt = +v.supp_count||0, avg = +v.supp_avg||0, chk = (+v.supp_chk||0)/100, disc = (+v.supp_disc||0)/100;
+      const annCnt = cnt*12, annVol = cnt*avg*12;
+      const discCapture   = annVol * disc * 0.015;
+      const chkDisplace   = annCnt * chk * 4.50;
+      const lateFee       = annVol * 0.05 * 0.01;
+      const hoursChk = annCnt * chk * (5/60);
+      return { total: discCapture+chkDisplace+lateFee, comps:[
+        { label:'Early payment discount capture', v: discCapture },
+        { label:'Check & wire displacement savings', v: chkDisplace },
+        { label:'Late payment fee avoidance', v: lateFee }
+      ], hours: hoursChk >= 1 ? { total: Math.round(hoursChk), comps:[
+        { label:'Check printing, signing & mailing time eliminated', hours: Math.round(hoursChk) }
+      ]} : null };
+    },
+    action: 'Pilot with your top 20% of suppliers by spend. Faster payments adoption can unlock more favorable contract terms with key suppliers. Estimated break-even on implementation: <strong>3–6 months</strong>.'
+  },
+  {
+    id: 'payroll_ewa',
+    name: 'Payroll & Earned Wage Access',
+    dir: 'send',
+    tagline: 'Offer employees same-day or on-demand access to earned wages via instant payment rails.',
+    desc: 'Earned Wage Access (EWA) programs allow employees to access wages they\'ve already earned before payday. Delivering via FedNow or RTP eliminates third-party EWA vendor fees and improves recruitment and retention among hourly and gig workers.',
+    drivers: ['EWA vendor fee elimination','Reduced employee turnover','Recruitment advantage','Payroll processing efficiency'],
+    industryFit: { retail:7, manufacturing:8, healthcare:7, gig_staffing:10, real_estate:4, insurance:4, government:6, professional:5, utilities:6, transport:8 },
+    painFit: { high_costs:2, missed_discounts:0, worker_pay:4, slow_refunds:0, slow_ar:0, manual_recon:1, cash_flow:2, liquidity:1 },
+    methodFit: ['check','ach'],
+    inputs: [
+      { id:'ewa_emp',      label:'Hourly / gig employees',           pfx:'', sfx:'emps',   placeholder:'200', tip:'Number of hourly, part-time, or gig workers who would use EWA.' },
+      { id:'ewa_wage',     label:'Average hourly wage',              pfx:'$', sfx:'/hr',   placeholder:'18', tip:'Average hourly rate across eligible employees.' },
+      { id:'ewa_turnover', label:'Annual turnover rate',             pfx:'', sfx:'%',      placeholder:'40', tip:'Annual turnover rate for hourly/gig staff (industry avg: 40–60%).' },
+      { id:'ewa_vendor',   label:'Current EWA vendor monthly fee',   pfx:'$', sfx:'/emp',  placeholder:'8', tip:'Monthly per-employee fee charged by your current EWA provider, or $0 if none.' }
+    ],
+    defaults: { sm:{ewa_emp:25,ewa_wage:16,ewa_turnover:40,ewa_vendor:0}, md:{ewa_emp:150,ewa_wage:18,ewa_turnover:40,ewa_vendor:8}, lg:{ewa_emp:800,ewa_wage:20,ewa_turnover:35,ewa_vendor:8}, xl:{ewa_emp:5000,ewa_wage:22,ewa_turnover:30,ewa_vendor:8}, xxl:{ewa_emp:50000,ewa_wage:24,ewa_turnover:28,ewa_vendor:8} },
+    calc(v) {
+      const emp = +v.ewa_emp||0, wage = +v.ewa_wage||0, turn = (+v.ewa_turnover||0)/100, vendor = +v.ewa_vendor||0;
+      const vendorSavings     = emp * vendor * 12;
+      const replacementCost   = wage * 40 * 1.5;
+      const retentionSavings  = emp * turn * 0.06 * replacementCost;
+      return { total: vendorSavings+retentionSavings, comps:[
+        { label:'EWA vendor fee elimination', v: vendorSavings },
+        { label:'Reduced turnover cost (6% improvement)', v: retentionSavings }
+      ]};
+    },
+    action: 'Start with a voluntary opt-in EWA pilot for hourly staff. Integrate with your payroll system and FedNow/RTP via your bank or payroll processor. Integration timeline varies by payroll system and banking partner.'
+  },
+  {
+    id: 'contractor',
+    name: 'Gig Worker & Contractor Payouts',
+    dir: 'send',
+    tagline: 'Add instant payments as an additional payout option for contractors and gig workers — delivering same-day finality alongside existing methods.',
+    desc: 'Platforms and businesses that pay independent contractors, gig workers, or freelancers can add instant payment rails as an additional disbursement channel. Instant payments complement existing payout methods by offering 24/7 availability and immediate finality — giving workers more choice and your operations more flexibility.',
+    drivers: ['Expanded payout channel options','Faster settlement vs. standard ACH','Contractor retention & satisfaction','Reduced failed payment rates'],
+    industryFit: { retail:6, manufacturing:4, healthcare:5, gig_staffing:10, real_estate:7, insurance:4, government:4, professional:8, utilities:6, transport:10 },
+    painFit: { high_costs:3, missed_discounts:0, worker_pay:4, slow_refunds:0, slow_ar:0, manual_recon:2, cash_flow:1, liquidity:0 },
+    methodFit: ['check','wire','card'],
+    inputs: [
+      { id:'gig_count', label:'Contractor payouts / month',        pfx:'',  sfx:'pmts', placeholder:'1000', tip:'Number of individual contractor or gig worker payments sent per month.' },
+      { id:'gig_avg',   label:'Average payout amount',             pfx:'$', sfx:'',     placeholder:'450',  tip:'Average dollar value per contractor payout.' },
+      { id:'gig_card',  label:'% via card rails (Instant Pay)',    pfx:'',  sfx:'%',    placeholder:'40',   tip:'Share of payouts sent via Visa Direct, Mastercard Send, or push-to-debit rails. Card-rail fees are typically 0.5–1.5% per payment — the differential vs. instant is approximately 0.9%.' },
+      { id:'gig_chk',   label:'% by paper check',                  pfx:'',  sfx:'%',    placeholder:'20',   tip:'Share of payouts mailed as paper checks. Fully-loaded check issuance cost is typically $4–6 per item.' },
+      { id:'gig_ach',   label:'% via standard ACH batch',          pfx:'',  sfx:'%',    placeholder:'40',   tip:'Share sent via standard next-day ACH credit. ACH is low-cost (~$0.20–0.50/item) but lacks instant finality. Instant payment savings here are primarily return-rate reduction and processing efficiency (~$0.25/payment). Card + check + ACH should sum to 100%.' }
+    ],
+    defaults: {
+      sm:  { gig_count:50,    gig_avg:400, gig_card:25, gig_chk:35, gig_ach:40 },
+      md:  { gig_count:500,   gig_avg:400, gig_card:40, gig_chk:20, gig_ach:40 },
+      lg:  { gig_count:3000,  gig_avg:500, gig_card:55, gig_chk:10, gig_ach:35 },
+      xl:  { gig_count:20000, gig_avg:600, gig_card:65, gig_chk:5,  gig_ach:30 },
+      xxl: { gig_count:200000,gig_avg:700, gig_card:70, gig_chk:3,  gig_ach:27 }
+    },
+    calc(v) {
+      const cnt  = +v.gig_count||0, avg = +v.gig_avg||0;
+      const card = (+v.gig_card||0)/100, chk = (+v.gig_chk||0)/100, ach = (+v.gig_ach||0)/100;
+      const annCnt = cnt * 12;
+      const cardSavings = annCnt * card * avg * 0.009;  // ~0.9% rate differential vs. Visa Direct / MC Send
+      const chkSavings  = annCnt * chk  * 4.50;         // $4.50 fully-loaded check issuance cost
+      const achSavings  = annCnt * ach  * 0.25;         // ~$0.25: ACH return avoidance + batch processing
+      const hoursChk = annCnt * chk * (5/60);
+      return { total: cardSavings + chkSavings + achSavings, comps:[
+        { label:'Card-rail fee savings (~0.9% vs. Visa Direct / MC Send)', v: cardSavings },
+        { label:'Check displacement ($4.50 / check fully loaded)', v: chkSavings },
+        { label:'ACH return reduction & processing efficiency (~$0.25 / payment)', v: achSavings }
+      ], hours: hoursChk >= 1 ? { total: Math.round(hoursChk), comps:[
+        { label:'Check printing, mailing & reconciliation time eliminated', hours: Math.round(hoursChk) }
+      ]} : null };
+    },
+    action: 'Evaluate FedNow/RTP send capability through your bank or a payment aggregator to add instant payments alongside your existing payout methods. Instant can be offered as a worker-selected option. Timeline varies depending on your banking partner\'s capabilities and existing payout infrastructure.'
+  },
+  {
+    id: 'refunds',
+    name: 'Customer Refunds & Disbursements',
+    dir: 'send',
+    tagline: 'Issue refunds, rebates, and disbursements instantly to improve satisfaction and reduce chargebacks.',
+    desc: 'Customers who receive instant refunds are significantly more likely to repurchase. Instant disbursements also reduce card chargebacks (each of which costs $25–$100 to process), and eliminate check issuance costs for high-volume refund programs.',
+    drivers: ['Check displacement savings','Chargeback reduction','Customer retention uplift','Staff processing time saved'],
+    industryFit: { retail:10, manufacturing:5, healthcare:8, gig_staffing:4, real_estate:5, insurance:9, government:8, professional:5, utilities:8, transport:3 },
+    painFit: { high_costs:2, missed_discounts:0, worker_pay:0, slow_refunds:4, slow_ar:0, manual_recon:2, cash_flow:1, liquidity:0 },
+    methodFit: ['check','wire'],
+    inputs: [
+      { id:'ref_count', label:'Refunds / disbursements per month', pfx:'', sfx:'pmts', placeholder:'300', tip:'Monthly number of outbound refunds, rebates, or customer disbursements.' },
+      { id:'ref_avg',   label:'Average refund amount',             pfx:'$', sfx:'',    placeholder:'85', tip:'Average dollar value per refund or disbursement.' },
+      { id:'ref_chk',   label:'% currently issued by check',       pfx:'', sfx:'%',   placeholder:'35', tip:'Share of refunds currently mailed as paper checks.' },
+      { id:'ref_chbk',  label:'Estimated monthly chargebacks',     pfx:'', sfx:'#',   placeholder:'15', tip:'Number of card chargebacks your organization processes per month (enter 0 if not applicable).' }
+    ],
+    defaults: { sm:{ref_count:50,ref_avg:75,ref_chk:40,ref_chbk:5}, md:{ref_count:300,ref_avg:90,ref_chk:35,ref_chbk:30}, lg:{ref_count:2000,ref_avg:100,ref_chk:25,ref_chbk:150}, xl:{ref_count:15000,ref_avg:120,ref_chk:15,ref_chbk:800}, xxl:{ref_count:150000,ref_avg:130,ref_chk:10,ref_chbk:8000} },
+    calc(v) {
+      const cnt = +v.ref_count||0, avg = +v.ref_avg||0, chk = (+v.ref_chk||0)/100, chbk = +v.ref_chbk||0;
+      const annCnt = cnt*12;
+      const chkSavings  = annCnt * chk * 4.50;
+      const chbkSavings = chbk * 0.20 * 45 * 12;
+      const retention   = annCnt * avg * 0.003;
+      const hoursChk  = annCnt * chk * (8/60);
+      const hoursChbk = chbk * 0.20 * 0.5 * 12;
+      const hoursTotal = hoursChk + hoursChbk;
+      const hoursComps = [
+        hoursChk  >= 1 ? { label:'Refund check handling & mailing time', hours: Math.round(hoursChk) }  : null,
+        hoursChbk >= 1 ? { label:'Chargeback dispute resolution time saved', hours: Math.round(hoursChbk) } : null
+      ].filter(Boolean);
+      return { total: chkSavings+chbkSavings+retention, comps:[
+        { label:'Check issuance cost displacement', v: chkSavings },
+        { label:'Chargeback reduction (20% prevention)', v: chbkSavings },
+        { label:'Customer retention value (0.3%)', v: retention }
+      ], hours: hoursTotal >= 1 ? { total: Math.round(hoursTotal), comps: hoursComps } : null };
+    },
+    action: 'Prioritize instant refunds for your highest-value customers first. Integrate via your existing banking portal or payment gateway. Instant payment coverage among U.S. bank account holders continues to grow — confirm current reach with your banking partner.'
+  },
+  {
+    id: 'claims',
+    name: 'Insurance & Benefit Claim Payouts',
+    dir: 'send',
+    tagline: 'Disburse claim payments and benefits instantly to policyholders and beneficiaries.',
+    desc: 'Instant claim payouts are a major policyholder satisfaction driver — industry surveys show faster claims settlement is among the top factors in renewal decisions. Replacing check-based disbursements also reduces uncashed check liability and manual handling costs.',
+    drivers: ['Check displacement savings','Policyholder retention','STP efficiency gains','Uncashed check liability reduction'],
+    industryFit: { retail:2, manufacturing:2, healthcare:7, gig_staffing:2, real_estate:3, insurance:10, government:8, professional:2, utilities:2, transport:3 },
+    painFit: { high_costs:3, missed_discounts:0, worker_pay:0, slow_refunds:4, slow_ar:0, manual_recon:3, cash_flow:0, liquidity:0 },
+    methodFit: ['check','wire'],
+    inputs: [
+      { id:'clm_count', label:'Claim payments issued / month', pfx:'', sfx:'claims', placeholder:'500', tip:'Number of individual claim or benefit payments disbursed per month.' },
+      { id:'clm_avg',   label:'Average claim payment amount',  pfx:'$', sfx:'',      placeholder:'1200', tip:'Average dollar value per claim or benefit payment.' },
+      { id:'clm_chk',   label:'% currently issued by check',  pfx:'', sfx:'%',      placeholder:'55', tip:'Share of claim payments currently disbursed via paper check.' },
+      { id:'clm_prem',  label:'Average annual premium per policy', pfx:'$', sfx:'', placeholder:'1800', tip:'Average annual premium. Used to estimate policyholder retention value.' }
+    ],
+    defaults: { sm:{clm_count:80,clm_avg:800,clm_chk:60,clm_prem:1200}, md:{clm_count:500,clm_avg:1200,clm_chk:55,clm_prem:1500}, lg:{clm_count:3000,clm_avg:2000,clm_chk:45,clm_prem:1800}, xl:{clm_count:20000,clm_avg:5000,clm_chk:35,clm_prem:2200}, xxl:{clm_count:200000,clm_avg:8000,clm_chk:25,clm_prem:2500} },
+    calc(v) {
+      const cnt = +v.clm_count||0, avg = +v.clm_avg||0, chk = (+v.clm_chk||0)/100, prem = +v.clm_prem||0;
+      const annCnt = cnt*12;
+      const chkSavings  = annCnt * chk * 4.50;
+      const stpSavings  = annCnt * 3 * (35/60);
+      const retention   = annCnt * 0.01 * prem * 0.25;
+      const hoursChk = annCnt * chk * (5/60);
+      const hoursSTP = annCnt * (3/60);
+      const hoursTotal = hoursChk + hoursSTP;
+      return { total: chkSavings+stpSavings+retention, comps:[
+        { label:'Check issuance cost displacement', v: chkSavings },
+        { label:'STP / manual handling savings (3 min/claim)', v: stpSavings },
+        { label:'Policyholder retention value (1% lift)', v: retention }
+      ], hours: hoursTotal >= 1 ? { total: Math.round(hoursTotal), comps:[
+        { label:'Check preparation & disbursement time eliminated', hours: Math.round(hoursChk) },
+        { label:'Manual claims processing eliminated (3 min/claim STP)', hours: Math.round(hoursSTP) }
+      ].filter(c => c.hours >= 1)} : null };
+    },
+    action: 'Start with fast-track claims under your deductible threshold where instant payment is unambiguously better. Integrate with your core claims system via your banking partner\'s API. A phased pilot starting with a defined claim type or dollar threshold typically yields the fastest time to value.'
+  },
+  {
+    id: 'real_estate',
+    name: 'Real Estate & Escrow Closings',
+    dir: 'send',
+    tagline: 'Replace wire transfers at closing with instant payments — faster, cheaper, and less fraud-prone.',
+    desc: 'Real estate closings currently rely on wire transfers that cost $20–$35 each and can be delayed by cutoff windows. Instant payments are available 24/7/365, cost less, and carry the same finality. Title companies and escrow agents can also reduce wire fraud exposure.',
+    drivers: ['Wire transfer cost savings','24/7 closing flexibility','Reduced wire fraud risk','Faster fund availability'],
+    industryFit: { retail:2, manufacturing:2, healthcare:2, gig_staffing:2, real_estate:10, insurance:4, government:5, professional:4, utilities:3, transport:1 },
+    painFit: { high_costs:3, missed_discounts:0, worker_pay:0, slow_refunds:2, slow_ar:1, manual_recon:2, cash_flow:2, liquidity:2 },
+    methodFit: ['wire','check'],
+    inputs: [
+      { id:'re_count',  label:'Closings or transactions / month', pfx:'', sfx:'txns', placeholder:'40', tip:'Number of real estate closings, escrow disbursements, or similar transactions per month.' },
+      { id:'re_avg',    label:'Average transaction amount',       pfx:'$', sfx:'',   placeholder:'350000', tip:'Average dollar value per closing or escrow disbursement.' },
+      { id:'re_wire',   label:'% currently via wire transfer',   pfx:'', sfx:'%',   placeholder:'85', tip:'Share of transactions currently executed as wire transfers.' },
+      { id:'re_wire_fee', label:'Wire fee charged per transaction', pfx:'$', sfx:'', placeholder:'28', tip:'Outgoing wire transfer fee charged by your bank per transaction.' }
+    ],
+    defaults: { sm:{re_count:10,re_avg:280000,re_wire:85,re_wire_fee:28}, md:{re_count:50,re_avg:380000,re_wire:85,re_wire_fee:28}, lg:{re_count:300,re_avg:500000,re_wire:85,re_wire_fee:25}, xl:{re_count:1500,re_avg:800000,re_wire:82,re_wire_fee:22}, xxl:{re_count:8000,re_avg:1000000,re_wire:80,re_wire_fee:20} },
+    calc(v) {
+      const cnt = +v.re_count||0, wire = (+v.re_wire||0)/100, fee = +v.re_wire_fee||28;
+      const annCnt = cnt*12;
+      const wireSavings = annCnt * wire * (fee - 0.10);
+      const staffSavings = annCnt * wire * 0.25 * (45/60);
+      const hoursWire = annCnt * wire * (15/60);
+      return { total: wireSavings+staffSavings, comps:[
+        { label:'Wire transfer fee displacement', v: wireSavings },
+        { label:'Staff time saved (15 min/wire coordination)', v: staffSavings }
+      ], hours: hoursWire >= 1 ? { total: Math.round(hoursWire), comps:[
+        { label:'Wire initiation & coordination time eliminated (15 min/wire)', hours: Math.round(hoursWire) }
+      ]} : null };
+    },
+    action: 'Work with your title insurance underwriter and banking partner to enable RTP or FedNow for closing disbursements. Key step: confirm your escrow software supports instant payment integration. <strong>Pilot on refinance closings first.</strong>'
+  },
+  {
+    id: 'ar',
+    name: 'B2B Receivables Acceleration',
+    dir: 'receive',
+    tagline: 'Get paid faster by business customers to reduce DSO and unlock working capital.',
+    desc: 'Accepting instant payments from your business customers reduces Days Sales Outstanding (DSO) — typically by 3–7 days. This frees working capital, reduces bad debt exposure, and lowers the cost of collections. Request for Payment (RFP) messaging makes the process frictionless for payers.',
+    drivers: ['Working capital freed (DSO reduction)','Collections cost reduction','Bad debt exposure reduction','Check deposit cost savings'],
+    industryFit: { retail:5, manufacturing:10, healthcare:8, gig_staffing:4, real_estate:7, insurance:6, government:7, professional:9, utilities:5, transport:8 },
+    painFit: { high_costs:2, missed_discounts:0, worker_pay:0, slow_refunds:0, slow_ar:4, manual_recon:3, cash_flow:4, liquidity:3 },
+    methodFit: ['check','ach_deb'],
+    inputs: [
+      { id:'ar_count',  label:'Invoices issued / month',        pfx:'', sfx:'invs', placeholder:'200', tip:'Number of B2B invoices or bills sent to customers per month.' },
+      { id:'ar_avg',    label:'Average invoice value',          pfx:'$', sfx:'',    placeholder:'8000', tip:'Average dollar value per invoice.' },
+      { id:'ar_dso',    label:'Current average DSO (days)',     pfx:'', sfx:'days', placeholder:'38', tip:'Your current Days Sales Outstanding — average days from invoice to receipt.' },
+      { id:'ar_chk',    label:'% of customers paying by check', pfx:'', sfx:'%',   placeholder:'35', tip:'Share of your B2B customers currently paying by paper check.' }
+    ],
+    defaults: { sm:{ar_count:30,ar_avg:3000,ar_dso:38,ar_chk:40}, md:{ar_count:200,ar_avg:8000,ar_dso:38,ar_chk:35}, lg:{ar_count:1000,ar_avg:30000,ar_dso:35,ar_chk:25}, xl:{ar_count:5000,ar_avg:80000,ar_dso:32,ar_chk:18}, xxl:{ar_count:40000,ar_avg:150000,ar_dso:30,ar_chk:12} },
+    calc(v) {
+      const cnt = +v.ar_count||0, avg = +v.ar_avg||0, dso = +v.ar_dso||38, chk = (+v.ar_chk||0)/100;
+      const annVol = cnt * avg * 12;
+      const annCnt = cnt * 12;
+      const dsoReduction = 5;
+      const outstandingFreed = annVol / 365 * dsoReduction;
+      const floatSavings    = outstandingFreed * 0.055;
+      const chkSavings      = annCnt * chk * 1.50;
+      const collSavings     = annCnt * 0.08 * 20 * 0.30;
+      const hoursChk  = annCnt * chk * (3/60);
+      const hoursColl = annCnt * 0.08 * 0.30 * (20/35);
+      const hoursTotal = hoursChk + hoursColl;
+      const hoursComps = [
+        hoursChk  >= 1 ? { label:'Check deposit & remittance posting time', hours: Math.round(hoursChk) }       : null,
+        hoursColl >= 1 ? { label:'Collections follow-up effort reduced (30%)', hours: Math.round(hoursColl) } : null
+      ].filter(Boolean);
+      return { total: floatSavings+chkSavings+collSavings, comps:[
+        { label:`Working capital freed (${dsoReduction}-day DSO reduction × 5.5% CoF)`, v: floatSavings },
+        { label:'Check deposit processing savings', v: chkSavings },
+        { label:'Collections effort reduction (30%)', v: collSavings }
+      ], hours: hoursTotal >= 1 ? { total: Math.round(hoursTotal), comps: hoursComps } : null };
+    },
+    action: 'Enable instant payment acceptance through your bank and add RFP messaging to invoices. Include a clear "Pay instantly" CTA in invoice emails. Start with your highest-balance customers — DSO improvement depends on the pace of customer adoption.'
+  },
+  {
+    id: 'consumer_pay',
+    name: 'Consumer Payment Acceptance',
+    dir: 'receive',
+    tagline: 'Expand consumer payment acceptance by adding instant account-to-account payments alongside your existing methods.',
+    desc: 'Adding instant payment acceptance gives consumers a new way to pay directly from their bank account. As FedNow and RTP adoption grows among consumers, businesses that offer this as an additional checkout option can meet customers where they are and benefit from faster settlement and irrevocable payment finality.',
+    drivers: ['New payment acceptance channel','Irrevocable payment finality','Faster funds availability','Expanded consumer payment choice'],
+    industryFit: { retail:10, manufacturing:3, healthcare:7, gig_staffing:4, real_estate:3, insurance:5, government:7, professional:5, utilities:6, transport:2 },
+    painFit: { high_costs:4, missed_discounts:0, worker_pay:0, slow_refunds:0, slow_ar:3, manual_recon:1, cash_flow:2, liquidity:1 },
+    methodFit: ['card'],
+    inputs: [
+      { id:'con_vol',       label:'Monthly consumer payment volume',         pfx:'$', sfx:'',    placeholder:'250000', tip:'Total dollar volume of consumer payments you receive per month (all methods combined).' },
+      { id:'con_txns',      label:'Monthly transaction count',               pfx:'',  sfx:'txns', placeholder:'3000',   tip:'Total number of individual consumer payment transactions per month.' },
+      { id:'con_card_rate', label:'Blended payment acceptance cost today',   pfx:'',  sfx:'%',   placeholder:'2.0',    tip:'Your current blended cost to accept consumer payments — card interchange, processor fees, and markup combined. Bundled processors (Stripe, Square): 2.6–2.9%. Mid-size merchants: 1.8–2.2%. Large merchants with negotiated rates: 1.2–1.8%.' },
+      { id:'con_ip_rate',   label:'Expected instant payment acceptance fee', pfx:'',  sfx:'%',   placeholder:'0.2',    tip:'Estimated merchant fee to accept instant payments via FedNow or RTP. This fee structure is still emerging — network costs are very low ($0.01–$0.08/txn) but payment processors will add a service markup. Current estimates range from 0.1–0.5% or a flat per-transaction fee. Enter 0 to model a no-cost scenario.' },
+      { id:'con_conv',      label:'Expected instant payment adoption rate',  pfx:'',  sfx:'%',   placeholder:'15',     tip:'Estimated % of your total consumer payment volume where customers choose instant payment when offered as an option. Industry forecasts suggest 10–25% of consumers within 2–3 years, alongside continued use of cards and other methods.' }
+    ],
+    defaults: {
+      sm:  { con_vol:80000,     con_txns:1500,    con_card_rate:2.5, con_ip_rate:0.2, con_conv:12 },
+      md:  { con_vol:500000,    con_txns:8000,    con_card_rate:2.0, con_ip_rate:0.2, con_conv:15 },
+      lg:  { con_vol:4000000,   con_txns:60000,   con_card_rate:1.7, con_ip_rate:0.2, con_conv:18 },
+      xl:  { con_vol:30000000,  con_txns:400000,  con_card_rate:1.4, con_ip_rate:0.2, con_conv:20 },
+      xxl: { con_vol:300000000, con_txns:4000000, con_card_rate:1.2, con_ip_rate:0.2, con_conv:22 }
+    },
+    calc(v) {
+      const vol      = +v.con_vol||0;
+      const conv     = (+v.con_conv||0)/100;
+      const txns     = +v.con_txns||0;
+      const cardRate = (+v.con_card_rate||2.0)/100;
+      const ipRate   = (+v.con_ip_rate||0)/100;
+      const instantVol  = vol * conv;
+      const instantTxns = txns * conv;
+      const netRate            = Math.max(cardRate - ipRate, 0);
+      const processCostSavings = instantVol * netRate * 12;
+      const finalityValue      = instantTxns * 0.003 * 45 * 12;
+      const crLabel = (cardRate*100).toFixed(1) + '% current − ' + (ipRate*100).toFixed(1) + '% instant fees';
+      const hoursDisp = instantTxns * 0.003 * (20/60) * 12;
+      return { total: processCostSavings+finalityValue, comps:[
+        { label:'Net processing cost savings (' + crLabel + ')', v: processCostSavings },
+        { label:'Reversal risk reduction (instant payments are final)', v: finalityValue }
+      ], hours: hoursDisp >= 1 ? { total: Math.round(hoursDisp), comps:[
+        { label:'Chargeback & reversal dispute handling eliminated (20 min/incident)', hours: Math.round(hoursDisp) }
+      ]} : null };
+    },
+    action: 'Add instant payment as an additional checkout option via your payment processor or bank gateway. Consumers who prefer to pay directly from their bank account gain a new convenient option alongside cards. <strong>Note: merchant acceptance fees for instant payments are still emerging — confirm current pricing with your processor before finalizing estimates.</strong>'
+  },
+  {
+    id: 'consumer_bill',
+    name: 'Consumer Bill/Subscription Payments, supported by Request for Payment',
+    dir: 'receive',
+    tagline: 'Send digital payment requests to consumers for faster, frictionless bill settlement — no portal login required.',
+    desc: 'Request for Payment (RFP) lets you send a structured payment request directly to your customer\'s bank app. They review and pay with a single tap — no need to visit a separate payment portal or enter card numbers. For organizations that send recurring bills to individuals, RFP reduces check volume, improves on-time payment rates, and lowers the cost of collections. Particularly effective for utility bills, monthly rent, HOA dues, insurance premiums, healthcare patient billing, subscription services, and government fees.',
+    drivers: ['Higher on-time payment rates','Check & portal payment displacement','Collections cost reduction','Faster cash conversion'],
+    industryFit: { retail:3, manufacturing:2, healthcare:10, gig_staffing:3, real_estate:7, insurance:9, government:10, professional:6, utilities:10, transport:2 },
+    painFit: { high_costs:2, missed_discounts:0, worker_pay:0, slow_refunds:0, slow_ar:4, manual_recon:3, cash_flow:3, liquidity:2 },
+    methodFit: ['check','ach_deb'],
+    inputs: [
+      { id:'cbill_count', label:'Bills or statements sent / month',    pfx:'',  sfx:'bills', placeholder:'500',  tip:'Number of consumer bills, statements, or invoices sent to individual customers each month.' },
+      { id:'cbill_avg',   label:'Average bill amount',                 pfx:'$', sfx:'',      placeholder:'180',  tip:'Average dollar value per consumer bill or statement.' },
+      { id:'cbill_chk',   label:'% currently paid by check or mail',  pfx:'',  sfx:'%',     placeholder:'30',   tip:'Share of consumer bill payments currently received as paper checks or money orders.' },
+      { id:'cbill_past',  label:'% past due at 30 days',              pfx:'',  sfx:'%',     placeholder:'18',   tip:'Share of bills not paid by the due date today. Industry benchmarks: healthcare ~25%, rent/property ~8–15%, utilities ~12%, insurance ~8%, subscriptions ~5%.' },
+      { id:'cbill_staff', label:'Collections staff hours / month',    pfx:'',  sfx:'hrs',   placeholder:'15',   tip:'Hours spent per month on collections calls, reminder notices, and follow-up for overdue consumer bills.' }
+    ],
+    defaults: {
+      sm:  { cbill_count:100,   cbill_avg:150, cbill_chk:35, cbill_past:18, cbill_staff:10 },
+      md:  { cbill_count:800,   cbill_avg:180, cbill_chk:30, cbill_past:16, cbill_staff:40 },
+      lg:  { cbill_count:5000,  cbill_avg:200, cbill_chk:22, cbill_past:14, cbill_staff:150 },
+      xl:  { cbill_count:40000, cbill_avg:220, cbill_chk:15, cbill_past:12, cbill_staff:600 },
+      xxl: { cbill_count:400000,cbill_avg:250, cbill_chk:10, cbill_past:10, cbill_staff:5000 }
+    },
+    calc(v) {
+      const cnt   = +v.cbill_count||0, avg  = +v.cbill_avg||0;
+      const chk   = (+v.cbill_chk||0)/100,  past = (+v.cbill_past||0)/100;
+      const staff = +v.cbill_staff||0;
+      const annCnt = cnt * 12, annVol = cnt * avg * 12;
+      const chkDisplace    = annCnt * chk * 4.50;
+      const dsoSavings     = annVol / 365 * 4 * 0.055;
+      const staffSavings   = staff * 0.30 * 30 * 12;
+      const pastDueSavings = annCnt * past * 0.20 * avg * 0.005;
+      const hoursStaff = staff * 0.30 * 12;
+      return { total: chkDisplace+dsoSavings+staffSavings+pastDueSavings, comps:[
+        { label:'Check & mail payment displacement savings', v: chkDisplace },
+        { label:'Working capital freed (4-day payment acceleration)', v: dsoSavings },
+        { label:'Collections staff time savings (30% reduction)', v: staffSavings },
+        { label:'Reduced bad debt (20% past-due improvement)', v: pastDueSavings }
+      ], hours: hoursStaff >= 1 ? { total: Math.round(hoursStaff), comps:[
+        { label:'Collections staff time freed (30% reduction × 12 months)', hours: Math.round(hoursStaff) }
+      ]} : null };
+    },
+    action: 'Work with your bank or billing platform to enable RFP messaging for outbound bills. Embed a "Pay now" prompt in your statement emails that triggers a payment request to the customer\'s bank app. <strong>Start with recurring-bill customers who have opted into digital communications — they have the highest likelihood of adoption.</strong>'
+  },
+  {
+    id: 'b2b_invoice',
+    name: 'B2B Invoice Payments, supported by Request for Payment',
+    dir: 'receive',
+    tagline: 'Send digital payment requests to business customers to close invoices faster and reduce your cash conversion cycle.',
+    desc: 'Request for Payment streamlines B2B invoice collections by sending a structured payment request directly to your customer\'s bank account. The payer can review and approve payment within their banking platform — no portal login, no re-keying of invoice details. This shortens your cash conversion cycle, reduces late payments, and cuts the manual effort your AR team spends on follow-up.',
+    drivers: ['Shorter cash conversion cycle','AR collections cost reduction','Check & ACH batch displacement','Reduced late payment exposure'],
+    industryFit: { retail:4, manufacturing:10, healthcare:7, gig_staffing:6, real_estate:7, insurance:5, government:7, professional:10, utilities:5, transport:9 },
+    painFit: { high_costs:2, missed_discounts:0, worker_pay:0, slow_refunds:0, slow_ar:4, manual_recon:4, cash_flow:4, liquidity:3 },
+    methodFit: ['check','ach_deb','ach'],
+    inputs: [
+      { id:'b2bi_count', label:'Invoices sent to business customers / month', pfx:'',  sfx:'invs', placeholder:'100',  tip:'Number of invoices or payment requests sent to other businesses each month.' },
+      { id:'b2bi_avg',   label:'Average invoice value',                       pfx:'$', sfx:'',     placeholder:'2500', tip:'Average dollar value per B2B invoice.' },
+      { id:'b2bi_dso',   label:'Current average days to payment (DSO)',       pfx:'',  sfx:'days', placeholder:'38',   tip:'Your current Days Sales Outstanding — how many days on average from invoice date to receipt of payment.' },
+      { id:'b2bi_chk',   label:'% of customers currently paying by check',   pfx:'',  sfx:'%',    placeholder:'35',   tip:'Share of your B2B customers who currently pay by paper check.' },
+      { id:'b2bi_staff', label:'AR staff hours / month on invoice follow-up', pfx:'',  sfx:'hrs',  placeholder:'20',   tip:'Hours your AR team spends per month chasing invoice payment — calls, emails, dispute resolution.' }
+    ],
+    defaults: {
+      sm:  { b2bi_count:30,    b2bi_avg:1500,  b2bi_dso:40, b2bi_chk:40, b2bi_staff:8   },
+      md:  { b2bi_count:150,   b2bi_avg:3000,  b2bi_dso:38, b2bi_chk:35, b2bi_staff:30  },
+      lg:  { b2bi_count:800,   b2bi_avg:12000, b2bi_dso:35, b2bi_chk:25, b2bi_staff:100 },
+      xl:  { b2bi_count:4000,  b2bi_avg:40000, b2bi_dso:32, b2bi_chk:18, b2bi_staff:400 },
+      xxl: { b2bi_count:30000, b2bi_avg:80000, b2bi_dso:30, b2bi_chk:12, b2bi_staff:3000}
+    },
+    calc(v) {
+      const cnt   = +v.b2bi_count||0, avg  = +v.b2bi_avg||0;
+      const chk   = (+v.b2bi_chk||0)/100, staff = +v.b2bi_staff||0;
+      const annCnt = cnt * 12, annVol = cnt * avg * 12;
+      const dsoReduction   = 5;
+      const floatSavings   = annVol / 365 * dsoReduction * 0.055;
+      const staffSavings   = staff * 0.35 * 35 * 12;
+      const chkDisplace    = annCnt * chk * 1.50;
+      const hoursAR = staff * 0.35 * 12;
+      return { total: floatSavings+staffSavings+chkDisplace, comps:[
+        { label:'Working capital freed (' + dsoReduction + '-day DSO reduction × 5.5% CoF)', v: floatSavings },
+        { label:'AR collections staff time savings (35% reduction)', v: staffSavings },
+        { label:'Check deposit processing savings', v: chkDisplace }
+      ], hours: hoursAR >= 1 ? { total: Math.round(hoursAR), comps:[
+        { label:'AR follow-up staff time freed (35% reduction × 12 months)', hours: Math.round(hoursAR) }
+      ]} : null };
+    },
+    action: 'Integrate RFP with your accounting or ERP system to auto-generate payment requests when invoices are issued. Your bank or a fintech middleware provider can handle the RFP message routing. <strong>Prioritize your highest-DSO customer segment first — that\'s where the working capital impact is largest.</strong>'
+  },
+  {
+    id: 'treasury',
+    name: 'Treasury & Liquidity Management',
+    dir: 'both',
+    tagline: 'Use 24/7 instant payments to fund accounts just-in-time and eliminate pre-funding buffers.',
+    desc: 'With batch ACH, treasury teams must pre-fund accounts 1–2 days ahead of need, leaving idle cash sitting in low-yield accounts. Instant payments enable just-in-time account funding, intercompany sweeps at any hour, and more precise cash positioning — releasing working capital.',
+    drivers: ['Pre-funding buffer reduction','Idle cash opportunity cost','Overnight overdraft avoidance','Intercompany sweep efficiency'],
+    industryFit: { retail:7, manufacturing:8, healthcare:7, gig_staffing:5, real_estate:6, insurance:8, government:8, professional:6, utilities:7, transport:7 },
+    painFit: { high_costs:2, missed_discounts:0, worker_pay:0, slow_refunds:0, slow_ar:1, manual_recon:2, cash_flow:4, liquidity:4 },
+    methodFit: ['wire','ach'],
+    inputs: [
+      { id:'tr_buffer',  label:'Average daily pre-funding buffer',        pfx:'$', sfx:'',    placeholder:'500000', tip:'Average cash balance held in advance of settlement needs (excess liquidity buffer).' },
+      { id:'tr_accounts', label:'Number of bank accounts to optimize',    pfx:'', sfx:'accts', placeholder:'5', tip:'Number of accounts across entities or geographies that could benefit from just-in-time sweeping.' },
+      { id:'tr_od',       label:'Monthly overdraft / daylight OD charges', pfx:'$', sfx:'',   placeholder:'2000', tip:'Average monthly overdraft or daylight overdraft fees charged by your bank.' }
+    ],
+    defaults: { sm:{tr_buffer:50000,tr_accounts:2,tr_od:200}, md:{tr_buffer:300000,tr_accounts:5,tr_od:1500}, lg:{tr_buffer:2000000,tr_accounts:12,tr_od:8000}, xl:{tr_buffer:20000000,tr_accounts:40,tr_od:50000}, xxl:{tr_buffer:200000000,tr_accounts:200,tr_od:400000} },
+    calc(v) {
+      const buf = +v.tr_buffer||0, od = +v.tr_od||0;
+      const bufferRelease = buf * 0.40 * 0.055;
+      const odSavings     = od * 12 * 0.50;
+      return { total: bufferRelease+odSavings, comps:[
+        { label:'Idle buffer opportunity cost (40% reduction × 5.5%)', v: bufferRelease },
+        { label:'Overdraft charge reduction (50% improvement)', v: odSavings }
+      ]};
+    },
+    action: 'Work with your treasury bank to enable real-time account-to-account transfers via FedNow or RTP. Define JIT funding rules for payroll, vendor, and disbursement accounts. Value scales with the size of your daily float and the number of accounts actively managed.'
+  }
+];
+
+// ─────────────────────────────────────────────────────────
+// FPC RESOURCES — work groups and publications per use case
+// Keys match USE_CASES ids. painResources surfaced when the
+// user has selected that pain point in Step 2.
+// ─────────────────────────────────────────────────────────
+const _R = {  // shorthand resource builder
+  b10m:   { title:'B2B Instant Payments: The $10 Million Moment — Unlocking the Next Frontier', url:'https://fasterpaymentscouncil.org/blog/16676/B2B-Instant-Payments-The-10-Million-Moment-Unlocking-the-Next-Frontier-Blog' },
+  einv:   { title:'B2B Instant Payments + E-Invoicing: A Perfect Marriage', url:'https://fasterpaymentscouncil.org/blog/16177/B2B-Instant-Payments-E-Invoicing-A-Perfect-Marriage-Blog' },
+  nirp:   { title:'Navigating Instant Recurring Payments: Consumer, Business, and Financial Institution Perspectives', url:'https://fasterpaymentscouncil.org/blog/13330/Navigating-Instant-Recurring-Payments-Consumer-Business-and-Financial-Institution-Perspectives-Report' },
+  irpv:   { title:'Instant Recurring Payments: Unlocking Opportunities in High-Growth Vertical Markets', url:'https://fasterpaymentscouncil.org/blog/16821/Instant-Recurring-Payments-Unlocking-Opportunities-in-High-Growth-Vertical-Markets-Paper' },
+  sop25:  { title:'2025 State of Play in U.S. Faster Payments Report', url:'https://fasterpaymentscouncil.org/blog/15813/2025-State-of-Play-in-U-S-Faster-Payments-Report' },
+  quant:  { title:'2025 U.S. Instant Payments Adoption Quantitative Study', url:'https://fasterpaymentscouncil.org/blog/15747/2025-U-S-Instant-Payments-Adoption-Quantitative-Study' },
+  qr1:    { title:'Instant Payment QR Code Impediments to Adoption: Usability Report', url:'https://fasterpaymentscouncil.org/blog/14765/Instant-Payment-QR-Code-Impediments-to-Adoption-Usability-Report' },
+  qr2:    { title:"How QR Codes Address ‘the Last Mile’ Adoption of Faster Payments at the Point-of-Sale", url:'https://fasterpaymentscouncil.org/blog/13278/How-QR-Codes-Address-the-Last-Mile-Adoption-of-Faster-Payments-at-the-Point-of-Sale-Report' },
+  fraud:  { title:'Instant Payment Fraud Dispute Resolution: Guiding Principles for the U.S. Report', url:'https://fasterpaymentscouncil.org/blog/17138/Instant-Payments-Fraud-Dispute-Resolution-Guiding-Principles-for-the-U-S-Report' },
+  dso:    { title:'Getting Paid Faster in B2B: How Instant Payments Help Reduce DSO and Improve Access to Capital', url:'https://fasterpaymentscouncil.org/blog/15839/Getting-Paid-Faster-in-B2B-How-Instant-Payments-Help-Reduce-DSO-and-Improve-Access-to-Capital-Blog' },
+  relief: { title:'U.S. Disaster Relief Payments: Dangerously in Need of Innovation, and Fast', url:'https://fasterpaymentscouncil.org/blog/15473/U-S-Disaster-Relief-Payments-Dangerously-in-Need-of-Innovation-and-Fast-Blog' },
+  dir:    { title:'How a Directory Service Accelerates Instant Payments: Consumer Bill Pay Example Report', url:'https://fasterpaymentscouncil.org/blog/15034/How-a-Directory-Service-Accelerates-Instant-Payments-Consumer-Bill-Pay-Example-Report' }
+};
+const _WG_UX   = { name:'Faster Payments User Experience Work Group',      url:'https://fasterpaymentscouncil.org/work-group-signup' };
+const _WG_DATA = { name:'Instant Payments Data Optimization Work Group',   url:'https://fasterpaymentscouncil.org/work-group-signup' };
+
+const FPC_RESOURCES = {
+  ar:           { wg:_WG_UX,   def:[_R.b10m],          pain:{ missed_discounts:[_R.b10m], slow_ar:[_R.dso], cash_flow:[_R.b10m] } },
+  b2b_invoice:  { wg:_WG_DATA, def:[_R.einv],           pain:{ manual_recon:[_R.einv], slow_ar:[_R.einv] } },
+  consumer_bill:{ wg:_WG_UX,   def:[_R.nirp],           pain:{ high_costs:[_R.nirp,_R.irpv], manual_recon:[_R.nirp,_R.irpv], slow_refunds:[_R.nirp,_R.irpv], cash_flow:[_R.nirp,_R.irpv] } },
+  treasury:     { wg:_WG_DATA, def:[_R.b10m],           pain:{} },
+  contractor:   { wg:_WG_UX,   def:[_R.sop25,_R.quant], pain:{} },
+  supplier:     { wg:_WG_DATA, def:[_R.einv],           pain:{} },
+  consumer_pay: { wg:_WG_UX,   def:[_R.qr1,_R.qr2],    pain:{ high_costs:[_R.qr1,_R.qr2], manual_recon:[_R.fraud], slow_refunds:[_R.fraud], cash_flow:[_R.fraud] } },
+  refunds:      { wg:_WG_UX,   def:[_R.sop25,_R.quant], pain:{ slow_refunds:[_R.relief] } },
+  payroll_ewa:  { wg:_WG_UX,   def:[_R.sop25,_R.quant], pain:{} },
+  claims:       { wg:_WG_UX,   def:[_R.sop25,_R.quant], pain:{ slow_refunds:[_R.dir] } },
+  real_estate:  { wg:_WG_UX,   def:[_R.sop25],          pain:{} }
+};
+
+// ─────────────────────────────────────────────────────────
+// EMERGING USE CASES — real potential but not yet live
+// ─────────────────────────────────────────────────────────
+const EMERGING_UC_IDS = new Set(['consumer_pay', 'consumer_bill', 'b2b_invoice']);
+function isEmerging(ucId) { return EMERGING_UC_IDS.has(ucId); }
+
+const EMERGING_CONTEXT = {
+  consumer_pay:   'consumer-facing instant payment acceptance',
+  consumer_bill:  'Request for Payment (RFP) messaging',
+  b2b_invoice:    'Request for Payment (RFP) messaging'
+};
+
+function renderEmergingNotice(ucId) {
+  if (!isEmerging(ucId)) return '';
+  const ctx = EMERGING_CONTEXT[ucId] || 'emerging payment infrastructure';
+  const wg  = (FPC_RESOURCES[ucId] || {}).wg;
+  const wgLink = wg
+    ? ` <a href="${wg.url}" target="_blank" rel="noopener">Join the FPC &rarr;</a> to help expand these capabilities.`
+    : ' The FPC is actively working to expand the ecosystem.';
+  return `<div class="emerging-notice">
+    <svg viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="#856404" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex-shrink:0;margin-top:1px"><circle cx="8" cy="8" r="6.25"/><line x1="8" y1="5" x2="8" y2="9"/><circle cx="8" cy="11.25" r=".6" fill="#856404" stroke="none"/></svg>
+    <div><strong>Not yet in live production.</strong> This use case could unlock significant value, but it depends on broader deployment of <strong>${ctx}</strong> that is not yet widely available.${wgLink}</div>
+  </div>`;
+}
+
+// Returns { workGroup, resources[] } deduplicated and pain-boosted for current state.pains
+function getRelevantResources(ucId) {
+  const entry = FPC_RESOURCES[ucId];
+  if (!entry) return { workGroup:null, resources:[] };
+  const seen = new Set();
+  const out  = [];
+  const add  = r => { if (!seen.has(r.url)) { seen.add(r.url); out.push(r); } };
+  (entry.def || []).forEach(add);
+  state.pains.forEach(pid => { (entry.pain[pid] || []).forEach(add); });
+  return { workGroup: entry.wg || null, resources: out };
+}
+
+function renderFPCResources(ucId) {
+  const { workGroup, resources } = getRelevantResources(ucId);
+  if (!workGroup && !resources.length) return '';
+  const docIcon = `<svg viewBox="0 0 13 13" width="11" height="11" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex-shrink:0;margin-top:1px"><path d="M2 1h7l2 2v9H2z"/><path d="M7 1v2.5H9"/><line x1="4" y1="6" x2="9" y2="6"/><line x1="4" y1="8.5" x2="9" y2="8.5"/></svg>`;
+  let html = '';
+  if (resources.length) {
+    html += `<div class="fpc-res-box">
+      <div class="fpc-res-hdr">${docIcon} FPC Resources</div>
+      <div class="fpc-res-list">${resources.map(r =>
+        `<a class="fpc-res-link" href="${r.url}" target="_blank" rel="noopener">
+          <span class="fpc-res-arrow">&#8599;</span>${r.title}
+        </a>`).join('')}
+      </div>
+    </div>`;
+  }
+  if (workGroup) {
+    html += `<div class="fpc-wg-box">
+      <div class="fpc-wg-text"><strong>Join the conversation:</strong> The <strong>${workGroup.name}</strong> focuses on topics like this one.</div>
+      <a class="fpc-wg-btn" href="${workGroup.url}" target="_blank" rel="noopener">Join Work Group &rarr;</a>
+    </div>`;
+  }
+  return html;
+}
+
+// ─────────────────────────────────────────────────────────
+// STATE
+// ─────────────────────────────────────────────────────────
+function emptyFlows() {
+  return {
+    out_biz: { check:{vol:'',txns:''}, ach:{vol:'',txns:''}, wire:{vol:'',txns:''}, card:{vol:'',txns:''} },
+    out_ind: { check:{vol:'',txns:''}, ach:{vol:'',txns:''}, card:{vol:'',txns:''} },
+    in_biz:  { check:{vol:'',txns:''}, ach:{vol:'',txns:''}, wire:{vol:'',txns:''}, card:{vol:'',txns:''} },
+    in_con:  { check:{vol:'',txns:''}, ach:{vol:'',txns:''}, card:{vol:'',txns:''} }
+  };
+}
+
+let state = {
+  step: 1,
+  industry: null,
+  revenue: null,   // annual revenue in millions USD
+  flows: emptyFlows(),
+  pains: new Set(),
+  selectedUCs: new Set(),
+  ucInputs: {},
+  results: [],
+  tuningUC: null,  // which UC's fine-tune panel is open in Step 3
+  estimatedFlowKeys: new Set(),  // tracks cells filled by the "fill with defaults" button
+  resultSort: 'value'  // 'value' | 'fit'
+};
+
+// Convenience getter — derived from revenue, not stored separately
+function stateSize() { return getSizeTier(state.revenue); }
+
+// ─────────────────────────────────────────────────────────
+// FLOW HELPERS
+// ─────────────────────────────────────────────────────────
+const FLOW_DEFS = [
+  { id:'out_biz', dir:'out', label:'Outbound &mdash; to businesses',
+    sub:'Supplier & vendor payments, B2B transfers',
+    methods:[{id:'check',label:'Check'},{id:'ach',label:'ACH / EFT'},{id:'wire',label:'Wire'},{id:'card',label:'Corporate card'}] },
+  { id:'in_biz',  dir:'in',  label:'Inbound &mdash; from businesses',
+    sub:'B2B customer payments, receivables',
+    methods:[{id:'check',label:'Check'},{id:'ach',label:'ACH / EFT'},{id:'wire',label:'Wire'},{id:'card',label:'Corporate card'}] },
+  { id:'out_ind', dir:'out', label:'Outbound &mdash; to individuals',
+    sub:'Employee pay, contractor/gig payments, refunds & payouts',
+    methods:[{id:'check',label:'Check'},{id:'ach',label:'ACH credit'},{id:'card',label:'Card / prepaid payout'}] },
+  { id:'in_con',  dir:'in',  label:'Inbound &mdash; from consumers',
+    sub:'Consumer payments, bill pay, card & bank pay',
+    methods:[{id:'check',label:'Check'},{id:'ach',label:'ACH debit / bank pay'},{id:'card',label:'Card (credit / debit)'}] }
+];
+
+// ─────────────────────────────────────────────────────────
+// FLOW FILL DEFAULTS
+// Monthly volume per $1M annual revenue + avg transaction size
+// Source: Fed Reserve 2022 Payments Study; AFP 2022 Electronic Payments Survey
+// ─────────────────────────────────────────────────────────
+const FLOW_FILL_DEFAULTS = {
+  out_biz: { // outbound to businesses — supplier & vendor payments
+    check: { volPerM:11500, avgTxn:3200 },
+    ach:   { volPerM:16000, avgTxn:5800 },
+    wire:  { volPerM: 3200, avgTxn:38000 },
+    card:  { volPerM: 1800, avgTxn:2400 }
+  },
+  in_biz: { // inbound from businesses — B2B receivables
+    check: { volPerM:13500, avgTxn:2600 },
+    ach:   { volPerM:21000, avgTxn:7000 },
+    wire:  { volPerM: 7500, avgTxn:42000 },
+    card:  { volPerM: 2200, avgTxn:1900 }
+  },
+  out_ind: { // outbound to individuals — payroll, contractors, refunds
+    check: { volPerM: 1200, avgTxn:1400 },
+    ach:   { volPerM: 8000, avgTxn:2400 },
+    card:  { volPerM:  800, avgTxn:580 }
+  },
+  in_con: { // inbound from consumers — bill pay, card & bank payments
+    check: { volPerM:  800, avgTxn:170 },
+    ach:   { volPerM: 5000, avgTxn:210 },
+    card:  { volPerM:14200, avgTxn:85 }
+  }
+};
+
+function applyFlowEstimates() {
+  const revM = state.revenue;
+  if (!revM || revM <= 0) { alert('Please enter your annual revenue in Step 1 before filling with industry defaults.'); return; }
+  let filled = 0;
+  FLOW_DEFS.forEach(quad => {
+    quad.methods.forEach(m => {
+      const defs = (FLOW_FILL_DEFAULTS[quad.id]||{})[m.id];
+      if (!defs) return;
+      if (!state.flows[quad.id]) state.flows[quad.id] = {};
+      if (!state.flows[quad.id][m.id]) state.flows[quad.id][m.id] = {vol:'',txns:''};
+      const e = state.flows[quad.id][m.id];
+      const hasVol  = e.vol  !== '' && +e.vol  > 0;
+      const hasTxns = e.txns !== '' && +e.txns > 0;
+      const estVol  = Math.round(defs.volPerM * revM / 1000) * 1000;
+      const estTxns = Math.max(1, Math.round(estVol / defs.avgTxn));
+      const vKey = `${quad.id}.${m.id}.vol`, tKey = `${quad.id}.${m.id}.txns`;
+      if (!hasVol  && !state.estimatedFlowKeys.has(vKey))  { e.vol  = String(estVol);  state.estimatedFlowKeys.add(vKey);  filled++; }
+      if (!hasTxns && !state.estimatedFlowKeys.has(tKey))  { e.txns = String(estTxns); state.estimatedFlowKeys.add(tKey);  filled++; }
+    });
+  });
+  renderStep2();
+}
+
+function clearFlowEstimates() {
+  state.estimatedFlowKeys.forEach(key => {
+    const [quad, meth, field] = key.split('.');
+    if (state.flows[quad]?.[meth]) state.flows[quad][meth][field] = '';
+  });
+  state.estimatedFlowKeys.clear();
+  renderStep2();
+}
+
+// Derive which legacy method IDs are active based on entered flow volumes
+function getActiveMethods() {
+  const active = new Set();
+  const f = state.flows;
+  const fv = (q,m) => parseFloat(((f[q]||{})[m]||{}).vol||0)||0;
+  if (fv('out_biz','check')||fv('out_ind','check')||fv('in_biz','check')||fv('in_con','check')) active.add('check');
+  if (fv('out_biz','ach')  ||fv('out_ind','ach')  ||fv('in_biz','ach'))                         active.add('ach');
+  if (fv('in_con','ach'))                                                                         active.add('ach_deb');
+  if (fv('out_biz','wire') ||fv('in_biz','wire'))                                                active.add('wire');
+  if (fv('out_biz','card')||fv('out_ind','card')||fv('in_biz','card')||fv('in_con','card'))       active.add('card');
+  return active;
+}
+
+// Map flow volume data to use-case input pre-fills
+// Returns a partial defaults object, or null if no relevant flow data exists
+function flowDefaults(uc) {
+  const f = state.flows;
+  const fv = (q,m,field) => parseFloat(((f[q]||{})[m]||{})[field]||0)||0;
+
+  const obkChkV=fv('out_biz','check','vol'), obkAchV=fv('out_biz','ach','vol'), obkWireV=fv('out_biz','wire','vol'), obkCardV=fv('out_biz','card','vol');
+  const obkChkT=fv('out_biz','check','txns'),obkAchT=fv('out_biz','ach','txns'),obkWireT=fv('out_biz','wire','txns'),obkCardT=fv('out_biz','card','txns');
+  const obkTotV=obkChkV+obkAchV+obkWireV+obkCardV, obkTotT=obkChkT+obkAchT+obkWireT+obkCardT;
+
+  const oindChkV=fv('out_ind','check','vol'), oindAchV=fv('out_ind','ach','vol'), oindCardV=fv('out_ind','card','vol');
+  const oindChkT=fv('out_ind','check','txns'),oindAchT=fv('out_ind','ach','txns'),oindCardT=fv('out_ind','card','txns');
+  const oindTotV=oindChkV+oindAchV+oindCardV, oindTotT=oindChkT+oindAchT+oindCardT;
+
+  const ibkChkV=fv('in_biz','check','vol'), ibkAchV=fv('in_biz','ach','vol'), ibkWireV=fv('in_biz','wire','vol'), ibkCardV=fv('in_biz','card','vol');
+  const ibkChkT=fv('in_biz','check','txns'),ibkAchT=fv('in_biz','ach','txns'),ibkWireT=fv('in_biz','wire','txns'),ibkCardT=fv('in_biz','card','txns');
+  const ibkTotV=ibkChkV+ibkAchV+ibkWireV+ibkCardV, ibkTotT=ibkChkT+ibkAchT+ibkWireT+ibkCardT;
+
+  const iconChkV=fv('in_con','check','vol'), iconAchV=fv('in_con','ach','vol'), iconCardV=fv('in_con','card','vol');
+  const iconChkT=fv('in_con','check','txns'),iconAchT=fv('in_con','ach','txns'),iconCardT=fv('in_con','card','txns');
+  const iconTotV=iconChkV+iconAchV+iconCardV, iconTotT=iconChkT+iconAchT+iconCardT;
+
+  const rnd = (n,snap) => snap ? Math.round(n/snap)*snap : Math.round(n);
+
+  switch(uc.id) {
+    case 'supplier': {
+      if (!obkTotT && !obkTotV) return null;
+      const d = {};
+      if (obkTotT>0) d.supp_count = rnd(obkTotT,1);
+      if (obkTotT>0&&obkTotV>0) d.supp_avg = rnd(obkTotV/obkTotT,100);
+      if (obkTotV>0) d.supp_chk = rnd(obkChkV/obkTotV*100);
+      return d;
+    }
+    case 'payroll_ewa': {
+      if (!oindAchT) return null;
+      return { ewa_emp: Math.max(1, rnd(oindAchT/2.2)) };
+    }
+    case 'contractor': {
+      if (!oindTotT) return null;
+      const d = { gig_count: rnd(oindTotT) };
+      if (oindTotV>0&&oindTotT>0) d.gig_avg = rnd(oindTotV/oindTotT,10);
+      if (oindTotT>0) {
+        d.gig_card = rnd(oindCardT/oindTotT*100);
+        d.gig_chk  = rnd(oindChkT/oindTotT*100);
+        d.gig_ach  = rnd(oindAchT/oindTotT*100);
+      }
+      return d;
+    }
+    case 'refunds': {
+      if (!oindTotT) return null;
+      const d = { ref_count: rnd(oindTotT) };
+      if (oindTotV>0&&oindTotT>0) d.ref_avg = rnd(oindTotV/oindTotT,10);
+      if (oindTotT>0) d.ref_chk = rnd(oindChkT/oindTotT*100);
+      return d;
+    }
+    case 'claims': {
+      if (!oindTotT) return null;
+      const d = { clm_count: rnd(oindTotT) };
+      if (oindTotV>0&&oindTotT>0) d.clm_avg = rnd(oindTotV/oindTotT,100);
+      if (oindTotT>0) d.clm_chk = rnd(oindChkT/oindTotT*100);
+      return d;
+    }
+    case 'real_estate': {
+      const reTxns = obkWireT+ibkWireT;
+      if (!reTxns) return null;
+      return { re_count: rnd(reTxns) };
+    }
+    case 'ar': {
+      if (!ibkTotT) return null;
+      const d = { ar_count: rnd(ibkTotT) };
+      if (ibkTotT>0&&ibkTotV>0) d.ar_avg = rnd(ibkTotV/ibkTotT,100);
+      if (ibkTotV>0) d.ar_chk = rnd(ibkChkV/ibkTotV*100);
+      return d;
+    }
+    case 'consumer_pay': {
+      if (!iconCardV&&!iconCardT) return null;
+      const d = {};
+      if (iconCardV>0) d.con_vol  = rnd(iconCardV,100);
+      if (iconCardT>0) d.con_txns = rnd(iconCardT);
+      return d;
+    }
+    case 'consumer_bill': {
+      const cbTxns=iconChkT+iconAchT, cbVol=iconChkV+iconAchV;
+      if (!cbTxns) return null;
+      const d = { cbill_count: rnd(cbTxns) };
+      if (cbTxns>0&&cbVol>0) d.cbill_avg = rnd(cbVol/cbTxns,10);
+      if (cbVol>0) d.cbill_chk = rnd(iconChkV/cbVol*100);
+      return d;
+    }
+    case 'b2b_invoice': {
+      if (!ibkTotT) return null;
+      const d = { b2bi_count: rnd(ibkTotT) };
+      if (ibkTotT>0&&ibkTotV>0) d.b2bi_avg = rnd(ibkTotV/ibkTotT,100);
+      if (ibkTotV>0) d.b2bi_chk = rnd(ibkChkV/ibkTotV*100);
+      return d;
+    }
+    default: return null;
+  }
+}
+
+// ─────────────────────────────────────────────────────────
+// SCORING
+// ─────────────────────────────────────────────────────────
+
+// 0–50 pt boost based on how much relevant payment volume was entered for this use case.
+// Uses a rational curve: fast rise at low ratios, asymptote near 50.
+//   ratio 0.01 (1% of monthly rev)  → ~5 pts   → minor nudge
+//   ratio 0.10 (10%)                → ~33 pts   → Good Fit territory
+//   ratio 0.60 (60%)                → ~43 pts   → Strong Fit territory (combined with industry)
+//   ratio 1.00+                     → ~47+ pts  → Strong Fit on its own
+function calcFlowBoost(uc) {
+  if (!state.revenue) return 0;
+  const monthlyRev = (state.revenue * 1e6) / 12;
+  const f = state.flows;
+  const fv = (q,m) => parseFloat(((f[q]||{})[m]||{}).vol||0)||0;
+
+  let vol = 0;
+  switch(uc.id) {
+    case 'consumer_pay':
+      vol = fv('in_con','card'); break;
+    case 'consumer_bill':
+      vol = fv('in_con','check') + fv('in_con','ach'); break;
+    case 'b2b_invoice':
+    case 'ar':
+      vol = fv('in_biz','check') + fv('in_biz','ach') + fv('in_biz','wire') + fv('in_biz','card'); break;
+    case 'supplier':
+      vol = fv('out_biz','check') + fv('out_biz','ach') + fv('out_biz','wire') + fv('out_biz','card'); break;
+    case 'payroll_ewa':
+      vol = fv('out_ind','ach'); break;
+    case 'contractor':
+    case 'refunds':
+    case 'claims':
+      vol = fv('out_ind','check') + fv('out_ind','ach') + fv('out_ind','card'); break;
+    case 'real_estate':
+      vol = fv('out_biz','wire') + fv('in_biz','wire'); break;
+    default: return 0;
+  }
+
+  if (!vol || !monthlyRev) return 0;
+  const ratio = vol / monthlyRev;
+  return Math.min(50, Math.round(50 * ratio / (ratio + 0.1)));
+}
+
+function scoreUC(uc) {
+  if (!state.industry || !state.revenue) return 0;
+  const indScore  = (uc.industryFit[state.industry] || 0) * 4;   // 0–40
+  let painScore   = 0;
+  state.pains.forEach(p => { painScore += (uc.painFit[p] || 0) * 2.5; }); // 0–40
+  let methodScore = 0;
+  const activeMethods = getActiveMethods();
+  uc.methodFit.forEach(m => { if (activeMethods.has(m)) methodScore += 7; });
+  methodScore = Math.min(methodScore, 20);
+  const flowBoost = calcFlowBoost(uc);                            // 0–50
+  return Math.min(100, Math.round(indScore + painScore + methodScore + flowBoost));
+}
+
+function fitLabel(score) {
+  if (score >= 68) return { label:'Strong Fit', cls:'fit-strong', cardCls:'strong' };
+  if (score >= 42) return { label:'Good Fit',   cls:'fit-good',   cardCls:'good' };
+  return              { label:'Potential Fit',   cls:'fit-potential', cardCls:'potential' };
+}
+
+// ─────────────────────────────────────────────────────────
+// STEP RENDERING
+// ─────────────────────────────────────────────────────────
+const STEPS = [
+  { num:1, label:'Organization Profile' },
+  { num:2, label:'Current Payments' },
+  { num:3, label:'Use Case Analysis' },
+  { num:4, label:'Results' }
+];
+
+const STEP_TITLES = [null,
+  'Organization Profile',
+  'Current Payment Landscape',
+  'Use Case Fit Analysis',
+  'Your Faster Payments Opportunity'
+];
+const STEP_SUBS = [null,
+  'Tell us about your organization so we can surface the fastest-payments use cases most relevant to you.',
+  'Tell us about your current payment volumes and any challenges your team faces. Both sections are optional &mdash; more detail yields more accurate estimates.',
+  'Use cases that best match your profile are active below. Click a use case to fine-tune its inputs &mdash; estimates update instantly. Add other use cases or remove any that don\'t apply.',
+  'Here is your personalized faster payments use case assessment — prioritized by fit and estimated annual value.'
+];
+
+function renderProgress() {
+  const pg = document.getElementById('pg');
+  let html = '';
+  STEPS.forEach((s,i) => {
+    if (i > 0) html += '<div class="pbln"></div>';
+    const cls = s.num < state.step ? 'd' : s.num === state.step ? 'a' : '';
+    const lblCls = cls;
+    html += `<div class="pbn"><div class="pbc ${cls}">${s.num < state.step ? '&#10003;' : s.num}</div><span class="pbl ${lblCls}">${s.label}</span></div>`;
+  });
+  pg.innerHTML = html;
+  document.getElementById('stt').textContent = STEP_TITLES[state.step];
+  document.getElementById('sts').textContent = STEP_SUBS[state.step];
+}
+
+function renderNav() {
+  const btnB  = document.getElementById('btnB');
+  const btnN  = document.getElementById('btnN');
+  const btnSO = document.getElementById('btnSO');
+  const btnPDF = document.getElementById('btnPDF');
+  btnB.style.display  = state.step > 1 ? '' : 'none';
+  btnN.style.display  = state.step < 4 ? '' : 'none';
+  btnSO.style.display = state.step > 1 ? '' : 'none';
+  btnPDF.style.display = state.step === 4 ? '' : 'none';
+  btnN.textContent = state.step === 3 ? 'See Results →' : 'Next →';
+}
+
+function showStep(n) {
+  document.querySelectorAll('.step').forEach(el => el.classList.remove('on'));
+  document.getElementById('step'+n).classList.add('on');
+}
+
+// ─────────────────────────────────────────────────────────
+// STEP 1 – render industry & size grids
+// ─────────────────────────────────────────────────────────
+function renderStep1() {
+  const ig = document.getElementById('industryGrid');
+  ig.innerHTML = INDUSTRIES.map(ind => `
+    <div class="oc">
+      <input type="radio" name="industry" id="ind_${ind.id}" value="${ind.id}" ${state.industry===ind.id?'checked':''}>
+      <label for="ind_${ind.id}"><span class="onn">${ind.name}</span><span class="ons">${ind.sub}</span></label>
+    </div>`).join('');
+  ig.querySelectorAll('input').forEach(inp => inp.addEventListener('change', () => { state.industry = inp.value; }));
+
+  const rr = document.getElementById('revenueInputRow');
+  const tierLabel = state.revenue ? (TIER_LABELS[getSizeTier(state.revenue)] || '') : '';
+  rr.innerHTML = `
+    <div class="ai-row">
+      <label for="revInput">Annual revenue:</label>
+      <input type="number" id="revInput" class="ai-inp" min="0" step="1"
+             placeholder="e.g. 50" value="${state.revenue !== null ? state.revenue : ''}">
+      <span style="font-size:14px;color:#666">million USD</span>
+      <span class="rev-tier" id="revTierBadge" style="${tierLabel?'':'display:none'}">${tierLabel}</span>
+    </div>`;
+  document.getElementById('revInput').addEventListener('input', e => {
+    const val = parseFloat(e.target.value);
+    state.revenue = (!isNaN(val) && val > 0) ? val : null;
+    const badge = document.getElementById('revTierBadge');
+    const tier  = getSizeTier(state.revenue);
+    if (tier) { badge.textContent = TIER_LABELS[tier]; badge.style.display = ''; }
+    else       { badge.textContent = ''; badge.style.display = 'none'; }
+  });
+}
+
+// ─────────────────────────────────────────────────────────
+// STEP 2 – render methods & pains (FREE TIER: flows locked to defaults)
+// ─────────────────────────────────────────────────────────
+function renderStep2() {
+  // FREE TIER: always populate all flow fields with industry defaults
+  if (FREE_TIER && state.revenue) {
+    FLOW_DEFS.forEach(quad => {
+      quad.methods.forEach(m => {
+        const defs = (FLOW_FILL_DEFAULTS[quad.id]||{})[m.id];
+        if (!defs) return;
+        if (!state.flows[quad.id]) state.flows[quad.id] = {};
+        if (!state.flows[quad.id][m.id]) state.flows[quad.id][m.id] = {vol:'',txns:''};
+        const estVol  = Math.round(defs.volPerM * state.revenue / 1000) * 1000;
+        const estTxns = Math.max(1, Math.round(estVol / defs.avgTxn));
+        state.flows[quad.id][m.id].vol  = String(estVol);
+        state.flows[quad.id][m.id].txns = String(estTxns);
+      });
+    });
+  }
+
+  const ml = document.getElementById('methodList');
+
+  // FREE TIER: show lock notice above the grid
+  const lockNotice = FREE_TIER ? `<div class="free-lock-note">
+    &#128274; <strong>Payment flow volumes are set to industry benchmarks</strong> for your sector and revenue tier. FPC members enter their actual volumes, which tightens the estimate range and improves projection accuracy.
+    <a href="${MEMBER_URL}" target="_blank" rel="noopener" style="color:#856404;font-weight:700;margin-left:4px">Learn about FPC Membership &rarr;</a>
+  </div>` : '';
+
+  ml.innerHTML = lockNotice + `<div class="flow-grid">${FLOW_DEFS.map(quad => {
+    const arrow = quad.dir==='out' ? '&#9650;' : '&#9660;';
+    return `<div class="flow-quad">
+      <p class="flow-quad-hdr">${arrow} ${quad.label}</p>
+      <p class="flow-quad-sub">${quad.sub}</p>
+      <div class="flow-hdr-row">
+        <span></span>
+        <span class="flow-col-hdr">Monthly volume ($)</span>
+        <span class="flow-col-hdr">Transactions / mo</span>
+      </div>
+      ${quad.methods.map(m => {
+        const entry = (state.flows[quad.id]||{})[m.id]||{};
+        if (FREE_TIER) {
+          return `<div class="flow-row">
+            <span class="flow-lbl">${m.label}</span>
+            <input type="number" class="flow-inp is-locked" min="0" step="any" placeholder="—"
+                   value="${entry.vol||''}" disabled>
+            <input type="number" class="flow-inp is-locked" min="0" step="1" placeholder="—"
+                   value="${entry.txns||''}" disabled>
+          </div>`;
+        }
+        const hasVal = (+entry.vol||0) > 0 || (+entry.txns||0) > 0;
+        const vEst = state.estimatedFlowKeys.has(`${quad.id}.${m.id}.vol`);
+        const tEst = state.estimatedFlowKeys.has(`${quad.id}.${m.id}.txns`);
+        return `<div class="flow-row">
+          <span class="flow-lbl">${m.label}</span>
+          <input type="number" class="flow-inp${hasVal?' has-val':''}${vEst?' is-estimated':''}" min="0" step="any" placeholder="—"
+                 data-quad="${quad.id}" data-meth="${m.id}" data-field="vol"
+                 value="${entry.vol||''}">
+          <input type="number" class="flow-inp${hasVal?' has-val':''}${tEst?' is-estimated':''}" min="0" step="1" placeholder="—"
+                 data-quad="${quad.id}" data-meth="${m.id}" data-field="txns"
+                 value="${entry.txns||''}">
+        </div>`;
+      }).join('')}
+    </div>`;
+  }).join('')}</div>`;
+
+  if (!FREE_TIER) {
+    ml.querySelectorAll('.flow-inp').forEach(inp => {
+      inp.addEventListener('input', () => {
+        const {quad, meth, field} = inp.dataset;
+        if (!state.flows[quad]) state.flows[quad] = {};
+        if (!state.flows[quad][meth]) state.flows[quad][meth] = {vol:'',txns:''};
+        state.flows[quad][meth][field] = inp.value;
+        const key = `${quad}.${meth}.${field}`;
+        if (state.estimatedFlowKeys.has(key)) { state.estimatedFlowKeys.delete(key); inp.classList.remove('is-estimated'); }
+        const row = inp.closest('.flow-row');
+        const sibling = row.querySelectorAll('.flow-inp');
+        const active = [...sibling].some(el => (+el.value||0) > 0);
+        sibling.forEach(el => { active ? el.classList.add('has-val') : el.classList.remove('has-val'); });
+      });
+    });
+
+    // Fill-with-defaults button (member version only)
+    document.getElementById('fillDefaultsBar')?.remove();
+    const hasEstimates = state.estimatedFlowKeys.size > 0;
+    const fillBtnHtml = `<div id="fillDefaultsBar" style="margin:12px 0 24px;display:flex;align-items:center;gap:10px;flex-wrap:wrap">
+      <button type="button" id="btnFillDefaults" style="display:inline-flex;align-items:center;gap:6px;padding:7px 14px;border:1.5px solid #00529B;border-radius:6px;background:#FFFFFF;color:#00529B;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><rect x="1" y="1" width="5" height="5" rx="1" fill="#00529B"/><rect x="8" y="1" width="5" height="5" rx="1" fill="#00529B" opacity=".4"/><rect x="1" y="8" width="5" height="5" rx="1" fill="#00529B" opacity=".4"/><rect x="8" y="8" width="5" height="5" rx="1" fill="#00529B" opacity=".4"/></svg>
+        Fill empty fields with industry defaults
+      </button>
+      ${hasEstimates ? `<button type="button" id="btnClearDefaults" style="font-size:12px;color:#999;background:none;border:none;cursor:pointer;font-family:inherit;text-decoration:underline">Clear estimates</button>` : ''}
+      ${hasEstimates ? `<span style="font-size:12px;color:#888;font-style:italic">&#9632; Shaded fields are industry estimates — edit any that don't reflect your organization.</span>` : ''}
+    </div>`;
+    ml.insertAdjacentHTML('afterend', fillBtnHtml);
+    document.getElementById('btnFillDefaults')?.addEventListener('click', applyFlowEstimates);
+    document.getElementById('btnClearDefaults')?.addEventListener('click', clearFlowEstimates);
+  }
+
+  const painById = Object.fromEntries(PAINS.map(p => [p.id, p]));
+  const pl = document.getElementById('painList');
+  pl.innerHTML = `<div class="pain-grid">${PAIN_GROUPS.map(grp => `
+    <div class="pain-group">
+      <div class="pain-grp-hdr">${PAIN_SVG[grp.icon]}${grp.label}</div>
+      ${grp.ids.map(pid => {
+        const p = painById[pid];
+        return `<div class="rc">
+          <input type="checkbox" id="p_${p.id}" ${state.pains.has(p.id)?'checked':''}>
+          <label for="p_${p.id}"><div><span class="rc-nm">${p.name}</span><span class="rc-ds">${p.ds}</span></div></label>
+        </div>`;
+      }).join('')}
+    </div>`).join('')}</div>`;
+  pl.querySelectorAll('input').forEach(inp => {
+    inp.addEventListener('change', () => {
+      const id = inp.id.replace('p_','');
+      inp.checked ? state.pains.add(id) : state.pains.delete(id);
+    });
+  });
+}
+
+// ─────────────────────────────────────────────────────────
+// STEP 3 – interactive analysis
+// ─────────────────────────────────────────────────────────
+let s3ChartInst = null;
+
+function renderStep3() {
+  const scored = USE_CASES.map(uc => ({ uc, score: scoreUC(uc) }))
+    .sort((a,b) => b.score - a.score);
+
+  // Auto-select strong fits on first entry (when nothing is selected yet)
+  if (state.selectedUCs.size === 0) {
+    const strong = scored.filter(x => x.score >= 68);
+    const toSel  = strong.length > 0 ? strong : scored.slice(0, Math.min(2, scored.length));
+    toSel.forEach(({uc}) => {
+      state.selectedUCs.add(uc.id);
+      if (!state.ucInputs[uc.id] || Object.keys(state.ucInputs[uc.id]).length === 0) {
+        const revD  = state.revenue ? getScaledDefaults(uc, state.revenue) : {};
+        const flowD = flowDefaults(uc) || {};
+        state.ucInputs[uc.id] = Object.assign({}, revD, flowD);
+      }
+    });
+  }
+
+  renderS3ActiveBar(scored);
+  renderS3TunePanel();
+  renderS3Chart();
+  renderS3Additional(scored);
+}
+
+// ── Value helper ──────────────────────────────────────────
+function getUCValue(ucId) {
+  const uc = USE_CASES.find(u => u.id === ucId);
+  if (!uc) return 0;
+  const inputs   = state.ucInputs[ucId] || {};
+  const hasInput = uc.inputs.some(inp => inputs[inp.id] !== undefined && inputs[inp.id] !== '');
+  const calcWith = hasInput ? inputs : (() => {
+    const merged = Object.assign({}, state.revenue ? getScaledDefaults(uc, state.revenue) : {}, flowDefaults(uc) || {});
+    return Object.keys(merged).length ? merged : null;
+  })();
+  if (!calcWith) return 0;
+  try { return uc.calc(calcWith).total || 0; } catch(e) { return 0; }
+}
+
+// ── Active bar (pills) ────────────────────────────────────
+function renderS3ActiveBar(scored) {
+  const bar = document.getElementById('s3ActiveBar');
+  if (!bar) return;
+  const active = (scored || USE_CASES.map(uc => ({ uc, score: scoreUC(uc) }))).filter(x => state.selectedUCs.has(x.uc.id));
+
+  if (active.length === 0) {
+    bar.innerHTML = '<span class="s3-empty-bar">No use cases active &mdash; add one from the sections below.</span>';
+    return;
+  }
+
+  const pillHtml = ({uc}) => {
+    const isTuning = state.tuningUC === uc.id;
+    const emerging = isEmerging(uc.id);
+    const val      = getUCValue(uc.id);
+    const valStr   = val > 0 ? `<span class="s3-pill-val">&middot; ${fmt(val)}/yr</span>` : '';
+    return `<button class="s3-pill active${emerging?' emerging':''}${isTuning?' tuning':''}" onclick="s3ToggleTune('${uc.id}')">
+      ${uc.name} ${valStr}
+      <span class="s3-pill-x" onclick="s3DeactivateUC(event,'${uc.id}')" title="Remove">&times;</span>
+    </button>`;
+  };
+
+  const todayGroup    = active.filter(x => !isEmerging(x.uc.id));
+  const emergingGroup = active.filter(x =>  isEmerging(x.uc.id));
+  const showLabels    = todayGroup.length > 0 && emergingGroup.length > 0;
+
+  const groupLbl = (text, color) => showLabels
+    ? `<span style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:${color};white-space:nowrap;align-self:center">${text}</span>`
+    : '';
+
+  let html = '';
+  if (todayGroup.length > 0) {
+    html += `<div class="s3-pill-group">
+      ${groupLbl('Available Today', '#00529B')}
+      <div class="s3-pill-group-pills">${todayGroup.map(pillHtml).join('')}</div>
+    </div>`;
+  }
+  if (emergingGroup.length > 0) {
+    html += `<div class="s3-pill-group">
+      ${groupLbl('Future Opportunities', '#856404')}
+      <div class="s3-pill-group-pills">${emergingGroup.map(pillHtml).join('')}</div>
+    </div>`;
+  }
+  bar.innerHTML = html;
+}
+
+// ── Fine-tune panel ───────────────────────────────────────
+function renderS3TunePanel() {
+  const panel = document.getElementById('s3TunePanel');
+  if (!panel) return;
+  if (!state.tuningUC) { panel.classList.remove('open'); panel.innerHTML = ''; return; }
+
+  const uc = USE_CASES.find(u => u.id === state.tuningUC);
+  if (!uc || !state.selectedUCs.has(uc.id)) { state.tuningUC = null; panel.classList.remove('open'); panel.innerHTML = ''; return; }
+
+  const score   = scoreUC(uc);
+  const fit     = fitLabel(score);
+  const dirLabel = uc.dir==='send' ? 'SEND' : uc.dir==='receive' ? 'RECEIVE' : 'SEND + RECEIVE';
+  const dirCls   = uc.dir==='send' ? 'dir-send' : uc.dir==='receive' ? 'dir-recv' : 'dir-both';
+
+  panel.classList.add('open');
+
+  // FREE TIER: show lock message instead of editable inputs
+  if (FREE_TIER) {
+    const val = getUCValue(uc.id);
+    const lo = val > 0 ? fmt(val * 0.90) : null;
+    const hi = val > 0 ? fmt(val * 1.10) : null;
+    panel.innerHTML = `
+      <div class="s3-tune-hdr">
+        <span class="uc-dir ${dirCls}" style="font-size:10px">${dirLabel}</span>
+        <span class="s3-tune-title">${uc.name}</span>
+        <span class="fit-badge ${fit.cls}">${fit.label} &middot; ${score}/100</span>
+        <button class="btnb" style="padding:5px 10px;font-size:12px;flex-shrink:0" onclick="s3ToggleTune('${uc.id}')">&#x25B4; Close</button>
+      </div>
+      <div class="s3-tune-body">
+        ${renderEmergingNotice(uc.id)}
+        <p class="s3-tune-tagline">${uc.tagline}</p>
+        ${lo ? `<div class="s3-tune-est" style="display:block;margin-bottom:12px"><strong>${lo} &ndash; ${hi}</strong> estimated annual value <span style="font-size:11px;font-style:italic;color:#3a5c1a">(±10% range — based on industry benchmarks)</span></div>` : ''}
+        <div class="free-tune-lock">
+          <svg viewBox="0 0 20 20" width="22" height="22" fill="none" stroke="#856404" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="margin-bottom:8px;display:block;margin-left:auto;margin-right:auto"><rect x="4" y="9" width="12" height="9" rx="2"/><path d="M7 9V6a3 3 0 0 1 6 0v3"/></svg>
+          <strong>Fine-tuning inputs are available to FPC members</strong><br>
+          FPC members enter their actual figures here to sharpen the estimate and narrow the uncertainty range to as low as ±5%.
+          <div style="margin-top:12px"><a href="${MEMBER_URL}" target="_blank" rel="noopener" class="free-notice-btn">Learn about FPC Membership &rarr;</a></div>
+        </div>
+        ${renderFPCResources(uc.id)}
+      </div>`;
+    return;
+  }
+
+  const inputs  = state.ucInputs[uc.id] || {};
+  panel.innerHTML = `
+    <div class="s3-tune-hdr">
+      <span class="uc-dir ${dirCls}" style="font-size:10px">${dirLabel}</span>
+      <span class="s3-tune-title">${uc.name}</span>
+      <span class="fit-badge ${fit.cls}">${fit.label} &middot; ${score}/100</span>
+      <button class="uc-defaults-btn" onclick="s3FillDefaults('${uc.id}')">&#x2B0E; Auto-fill</button>
+      <button class="btnb" style="padding:5px 10px;font-size:12px;flex-shrink:0" onclick="s3ToggleTune('${uc.id}')">&#x25B4; Close</button>
+    </div>
+    <div class="s3-tune-body">
+      ${renderEmergingNotice(uc.id)}
+      <p class="s3-tune-tagline">${uc.tagline}</p>
+      <div class="uc-inputs">
+        ${uc.inputs.map(inp => {
+          const val = inputs[inp.id] !== undefined ? inputs[inp.id] : '';
+          return `<div class="uc-field">
+            <label class="uc-lbl" for="s3t_${uc.id}_${inp.id}">${inp.label}${inp.tip ? ` <span class="tip" data-tip="${inp.tip}">?</span>` : ''}</label>
+            <div class="uc-iw">
+              ${inp.pfx ? `<span class="uc-pfx">${inp.pfx}</span>` : ''}
+              <input class="uc-inp${inp.pfx?' has-pfx':''}${inp.sfx?' has-sfx':''}" type="number"
+                id="s3t_${uc.id}_${inp.id}" min="0" step="any"
+                placeholder="${inp.placeholder}" value="${val}"
+                oninput="handleUCInput('${uc.id}','${inp.id}',this.value)">
+              ${inp.sfx ? `<span class="uc-sfx">${inp.sfx}</span>` : ''}
+            </div>
+          </div>`;
+        }).join('')}
+      </div>
+      <div class="s3-tune-est" id="s3t_est_${uc.id}" style="display:none"></div>
+      ${renderFPCResources(uc.id)}
+    </div>`;
+
+  s3UpdatePreview(uc.id);
+}
+
+// ── Chart ─────────────────────────────────────────────────
+function renderS3Chart() {
+  const section = document.getElementById('s3ChartSection');
+  const wrap    = document.getElementById('s3ChartWrap');
+  const canvas  = document.getElementById('s3Chart');
+  if (!section || !canvas) return;
+
+  const chartData = USE_CASES
+    .filter(uc => state.selectedUCs.has(uc.id))
+    .map(uc => ({ name: uc.name, value: getUCValue(uc.id), emerging: isEmerging(uc.id) }))
+    .filter(d => d.value > 0)
+    .sort((a,b) => { if (a.emerging !== b.emerging) return a.emerging ? 1 : -1; return b.value - a.value; });
+
+  if (chartData.length === 0) {
+    section.style.display = 'none';
+    if (s3ChartInst) { s3ChartInst.destroy(); s3ChartInst = null; }
+    const leg = document.getElementById('s3ChartLegend'); if (leg) leg.innerHTML = '';
+    return;
+  }
+
+  section.style.display = '';
+  if (wrap) wrap.style.height = Math.max(120, chartData.length * 42 + 44) + 'px';
+
+  const bgLo = chartData.map(d => d.emerging ? 'rgba(180,120,0,0.35)' : 'rgba(0,82,155,0.35)');
+  const bgHi = chartData.map(d => d.emerging ? 'rgba(180,120,0,0.65)' : 'rgba(0,82,155,0.65)');
+
+  if (s3ChartInst) { s3ChartInst.destroy(); s3ChartInst = null; }
+  s3ChartInst = new Chart(canvas.getContext('2d'), {
+    type: 'bar',
+    data: {
+      labels: chartData.map(d => d.name),
+      datasets: [
+        { label:'Low estimate',      data: chartData.map(d => d.value * 0.80), backgroundColor: bgLo, stack:'s' },
+        { label:'Additional upside', data: chartData.map(d => d.value * 0.40), backgroundColor: bgHi, stack:'s' }
+      ]
+    },
+    options: {
+      indexAxis:'y', responsive:true, maintainAspectRatio:false,
+      plugins:{ legend:{ display:false }, tooltip:{ callbacks:{ label: ctx => ' '+fmt(ctx.raw) }}},
+      scales:{
+        x:{ stacked:true, ticks:{ callback: v => fmt(v) }, grid:{ color:'rgba(0,0,0,0.06)' }},
+        y:{ stacked:true, ticks:{ font:{ size:11 }}}
+      }
+    }
+  });
+
+  // Legend — only show if there's a mix of today and emerging
+  const leg = document.getElementById('s3ChartLegend');
+  if (leg) {
+    const hasToday = chartData.some(d => !d.emerging);
+    const hasEmerg = chartData.some(d => d.emerging);
+    leg.innerHTML = (hasToday && hasEmerg) ? `
+      <div class="chart-legend-item"><div class="chart-legend-swatch" style="background:rgba(0,82,155,0.65)"></div>Available today</div>
+      <div class="chart-legend-item"><div class="chart-legend-swatch" style="background:rgba(180,120,0,0.65)"></div>Future opportunity (emerging use case)</div>` : '';
+  }
+}
+
+// ── Additional use cases ──────────────────────────────────
+function renderS3Additional(scored) {
+  const container = document.getElementById('s3Additional');
+  if (!container) return;
+  const inactiveScored = (scored || USE_CASES.map(uc => ({ uc, score: scoreUC(uc) }))).filter(x => !state.selectedUCs.has(x.uc.id));
+  const goodFits = inactiveScored.filter(x => x.score >= 42);
+  const potFits  = inactiveScored.filter(x => x.score <  42);
+  if (inactiveScored.length === 0) { container.innerHTML = ''; return; }
+
+  const renderGroup = (title, fitCls, items, defaultOpen) => {
+    if (!items.length) return '';
+    const gid = 's3g_' + fitCls;
+    return `<div class="s3-section">
+      <div class="s3-section-hdr" onclick="s3ToggleSection('${gid}')">
+        <span>
+          <span class="s3-section-title">${title}</span>
+          <span class="s3-section-count">(${items.length})</span>
+        </span>
+        <span class="s3-section-tog" id="${gid}_tog">${defaultOpen ? '&#9650;' : '&#9660;'}</span>
+      </div>
+      <div class="s3-section-body${defaultOpen ? ' open' : ''}" id="${gid}">
+        ${items.map(({uc, score}) => renderS3AddCard(uc, score, fitCls)).join('')}
+      </div>
+    </div>`;
+  };
+
+  container.innerHTML =
+    renderGroup('Good Fits', 'good', goodFits, true) +
+    renderGroup('Potential Fits', 'potential', potFits, false);
+}
+
+function renderS3AddCard(uc, score, fitCls) {
+  const fit      = fitLabel(score);
+  const dirLabel = uc.dir==='send' ? 'SEND' : uc.dir==='receive' ? 'RECEIVE' : 'SEND + RECEIVE';
+  const dirCls   = uc.dir==='send' ? 'dir-send' : uc.dir==='receive' ? 'dir-recv' : 'dir-both';
+  const isActive = state.selectedUCs.has(uc.id);
+  const inputs   = state.ucInputs[uc.id] || {};
+  const bid      = 's3ab_' + uc.id;
+
+  return `<div class="s3-add-card ${fitCls}-fit" id="s3card_${uc.id}">
+    <div class="s3-add-top">
+      <span class="uc-dir ${dirCls}" style="font-size:10px;flex-shrink:0;margin-top:2px">${dirLabel}</span>
+      <div class="s3-add-info">
+        <div class="s3-add-name">${uc.name}</div>
+        <div class="s3-add-tagline">${uc.tagline}</div>
+      </div>
+      <div class="s3-add-actions">
+        <span class="fit-badge ${fit.cls}">${fit.label}</span>
+        ${isEmerging(uc.id) ? '<span class="emerging-badge">&#9888; Emerging</span>' : ''}
+        <button class="s3-add-btn${isActive?' added':''}" onclick="s3ActivateUC(event,'${uc.id}')">
+          ${isActive ? '&#10003; Added' : '+ Add to analysis'}
+        </button>
+        <button class="s3-expand-btn" onclick="s3ToggleAddBody('${uc.id}')">&#128274; View details &#9660;</button>
+      </div>
+    </div>
+    <div class="s3-add-body" id="${bid}">
+      ${renderEmergingNotice(uc.id)}
+      <p class="s3-tune-tagline" style="margin-bottom:12px">${uc.desc}</p>
+      ${FREE_TIER ? `
+        <div class="free-tune-lock" style="text-align:left;padding:12px 14px">
+          &#128274; <strong>Fine-tune inputs are available to FPC members.</strong>
+          Estimates use industry benchmarks for your sector and revenue tier. FPC members enter their actual figures to sharpen projections.
+          <a href="${MEMBER_URL}" target="_blank" rel="noopener" style="color:#856404;font-weight:700;margin-left:4px;white-space:nowrap">Learn more &rarr;</a>
+        </div>` : `
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
+          <span style="font-size:11px;font-weight:700;color:#444;text-transform:uppercase;letter-spacing:.05em">Estimate inputs</span>
+          <button class="uc-defaults-btn" onclick="s3FillDefaults('${uc.id}')">&#x2B0E; Auto-fill</button>
+        </div>
+        <div class="uc-inputs">
+          ${uc.inputs.map(inp => {
+            const val = inputs[inp.id] !== undefined ? inputs[inp.id] : '';
+            return `<div class="uc-field">
+              <label class="uc-lbl" for="s3a_${uc.id}_${inp.id}">${inp.label}${inp.tip ? ` <span class="tip" data-tip="${inp.tip}">?</span>` : ''}</label>
+              <div class="uc-iw">
+                ${inp.pfx ? `<span class="uc-pfx">${inp.pfx}</span>` : ''}
+                <input class="uc-inp${inp.pfx?' has-pfx':''}${inp.sfx?' has-sfx':''}" type="number"
+                  id="s3a_${uc.id}_${inp.id}" min="0" step="any"
+                  placeholder="${inp.placeholder}" value="${val}"
+                  oninput="handleUCInput('${uc.id}','${inp.id}',this.value)">
+                ${inp.sfx ? `<span class="uc-sfx">${inp.sfx}</span>` : ''}
+              </div>
+            </div>`;
+          }).join('')}
+        </div>
+        <div class="s3-tune-est" id="s3a_est_${uc.id}" style="display:none"></div>`}
+      ${renderFPCResources(uc.id)}
+    </div>
+  </div>`;
+}
+
+// ── Preview helper (updates all visible preview divs for a UC) ─
+function s3UpdatePreview(ucId) {
+  const uc = USE_CASES.find(u => u.id === ucId);
+  if (!uc) return;
+  const inputs   = state.ucInputs[ucId] || {};
+  const hasInput = uc.inputs.some(inp => inputs[inp.id] !== undefined && inputs[inp.id] !== '');
+  const calcWith = hasInput ? inputs : (() => {
+    const m = Object.assign({}, state.revenue ? getScaledDefaults(uc, state.revenue) : {}, flowDefaults(uc) || {});
+    return Object.keys(m).length ? m : null;
+  })();
+
+  let html = '';
+  if (calcWith) {
+    try {
+      const res = uc.calc(calcWith);
+      if (res && res.total > 0) {
+        const lo = res.total * 0.80, hi = res.total * 1.20;
+        const hoursHtml = (res.hours && res.hours.total >= 1)
+          ? `<div class="hours-row"><svg viewBox="0 0 14 14" width="12" height="12" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><circle cx="7" cy="7" r="5.5"/><polyline points="7,3.5 7,7 9.5,8.5"/></svg> Est. <strong>${fmtHrs(res.hours.total)}</strong> staff time saved annually</div>`
+          : '';
+        html = `<strong>${fmt(lo)} &ndash; ${fmt(hi)}</strong> estimated annual value
+          <div class="est-comps">${res.comps.map(c=>`<div class="est-comp"><span>${c.label}</span><span>${fmt(c.v)}</span></div>`).join('')}</div>
+          ${hoursHtml}`;
+      }
+    } catch(e) {}
+  }
+
+  ['s3t_est_', 's3a_est_'].forEach(prefix => {
+    const el = document.getElementById(prefix + ucId);
+    if (!el) return;
+    if (html) { el.style.display = 'block'; el.innerHTML = html; }
+    else       { el.style.display = 'none'; }
+  });
+}
+
+// ── Event handlers ────────────────────────────────────────
+function s3ToggleTune(ucId) {
+  state.tuningUC = (state.tuningUC === ucId) ? null : ucId;
+  const scored = USE_CASES.map(uc => ({ uc, score: scoreUC(uc) })).sort((a,b) => b.score - a.score);
+  renderS3ActiveBar(scored);
+  renderS3TunePanel();
+}
+
+function s3DeactivateUC(evt, ucId) {
+  evt.stopPropagation();
+  state.selectedUCs.delete(ucId);
+  if (state.tuningUC === ucId) state.tuningUC = null;
+  const scored = USE_CASES.map(uc => ({ uc, score: scoreUC(uc) })).sort((a,b) => b.score - a.score);
+  renderS3ActiveBar(scored);
+  renderS3TunePanel();
+  renderS3Chart();
+  renderS3Additional(scored);
+}
+
+function s3ActivateUC(evt, ucId) {
+  evt.stopPropagation();
+  state.selectedUCs.add(ucId);
+  // Auto-fill inputs if empty
+  const uc = USE_CASES.find(u => u.id === ucId);
+  if (uc && (!state.ucInputs[ucId] || !Object.keys(state.ucInputs[ucId]).length)) {
+    const revD  = state.revenue ? getScaledDefaults(uc, state.revenue) : {};
+    const flowD = flowDefaults(uc) || {};
+    state.ucInputs[ucId] = Object.assign({}, revD, flowD);
+  }
+  const scored = USE_CASES.map(uc => ({ uc, score: scoreUC(uc) })).sort((a,b) => b.score - a.score);
+  renderS3ActiveBar(scored);
+  renderS3Chart();
+  renderS3Additional(scored);
+}
+
+function s3ToggleAddBody(ucId) {
+  const body = document.getElementById('s3ab_' + ucId);
+  if (!body) return;
+  body.classList.toggle('open');
+  // Populate inputs if opening for the first time
+  if (body.classList.contains('open')) {
+    const uc = USE_CASES.find(u => u.id === ucId);
+    if (uc && (!state.ucInputs[ucId] || !Object.keys(state.ucInputs[ucId]).length)) {
+      s3FillDefaults(ucId);
+    } else {
+      s3UpdatePreview(ucId);
+    }
+  }
+}
+
+function s3FillDefaults(ucId) {
+  const uc = USE_CASES.find(u => u.id === ucId);
+  if (!uc) return;
+  const defs = Object.assign({}, state.revenue ? getScaledDefaults(uc, state.revenue) : {}, flowDefaults(uc) || {});
+  if (!Object.keys(defs).length) return;
+  if (!state.ucInputs[ucId]) state.ucInputs[ucId] = {};
+  Object.assign(state.ucInputs[ucId], defs);
+  uc.inputs.forEach(inp => {
+    if (defs[inp.id] === undefined) return;
+    const el1 = document.getElementById('s3t_' + ucId + '_' + inp.id);
+    if (el1) el1.value = defs[inp.id];
+    const el2 = document.getElementById('s3a_' + ucId + '_' + inp.id);
+    if (el2) el2.value = defs[inp.id];
+  });
+  s3UpdatePreview(ucId);
+  renderS3Chart();
+  const scored = USE_CASES.map(uc => ({ uc, score: scoreUC(uc) })).sort((a,b) => b.score - a.score);
+  renderS3ActiveBar(scored);
+}
+
+function s3ToggleSection(gid) {
+  const body = document.getElementById(gid);
+  const tog  = document.getElementById(gid + '_tog');
+  if (!body) return;
+  body.classList.toggle('open');
+  if (tog) tog.innerHTML = body.classList.contains('open') ? '&#9650;' : '&#9660;';
+}
+
+function handleUCInput(ucId, inputId, value) {
+  if (!state.ucInputs[ucId]) state.ucInputs[ucId] = {};
+  state.ucInputs[ucId][inputId] = value;
+  if (state.step === 3) {
+    s3UpdatePreview(ucId);
+    renderS3Chart();
+    const scored = USE_CASES.map(uc => ({ uc, score: scoreUC(uc) })).sort((a,b) => b.score - a.score);
+    renderS3ActiveBar(scored);
+  }
+}
+
+// ─────────────────────────────────────────────────────────
+// STEP 4 – results
+// ─────────────────────────────────────────────────────────
+let chartInst = null;
+
+function setResultSort(mode) {
+  state.resultSort = mode;
+  renderStep4();
+}
+
+function renderStep4() {
+  const allScored = USE_CASES.map(uc => {
+    const score   = scoreUC(uc);
+    const inputs  = state.ucInputs[uc.id] || {};
+    let calcResult = null;
+    const hasInput = uc.inputs.some(inp => inputs[inp.id] !== undefined && inputs[inp.id] !== '');
+    if (hasInput) {
+      try { calcResult = uc.calc(inputs); } catch(e) {}
+    }
+    if (!calcResult) {
+      // Use revenue-scaled + flow-derived defaults for unquantified selected UCs
+      if (state.selectedUCs.has(uc.id)) {
+        const revD = state.revenue ? getScaledDefaults(uc, state.revenue) : {};
+        const merged = Object.assign({}, revD, flowDefaults(uc) || {});
+        if (Object.keys(merged).length > 0) { try { calcResult = uc.calc(merged); } catch(e) {} }
+      }
+    }
+    const total = calcResult ? calcResult.total : 0;
+    return { uc, score, calcResult, total, estimated: !hasInput };
+  }).filter(r => state.selectedUCs.has(r.uc.id) || r.score >= 68)
+    .sort((a,b) => {
+      const aSelPri = state.selectedUCs.has(a.uc.id) ? 1 : 0;
+      const bSelPri = state.selectedUCs.has(b.uc.id) ? 1 : 0;
+      if (aSelPri !== bSelPri) return bSelPri - aSelPri;
+      return (b.total * b.score) - (a.total * a.score);
+    });
+
+  state.results = allScored;
+
+  // Show only selected or top-fit
+  const displayed = allScored.filter(r => state.selectedUCs.has(r.uc.id) || r.score >= 68).slice(0, 8);
+
+  if (displayed.length === 0) {
+    document.getElementById('summaryMetrics').innerHTML = '';
+    document.getElementById('resultCards').innerHTML = '<div class="no-uc-msg">No use cases selected. Go back to Step 3 to select use cases to analyze.</div>';
+    document.getElementById('recommendations').innerHTML = '';
+    return;
+  }
+
+  const selectedResults = displayed.filter(r => state.selectedUCs.has(r.uc.id));
+  const todayResults    = selectedResults.filter(r => !isEmerging(r.uc.id));
+  const emergingResults = selectedResults.filter(r =>  isEmerging(r.uc.id));
+  const todayVal    = todayResults.reduce((s,r) => s+r.total, 0);
+  const emergingVal = emergingResults.reduce((s,r) => s+r.total, 0);
+  const topUC    = [...selectedResults].sort((a,b)=>b.total-a.total)[0];
+  const topFitUC = [...todayResults].sort((a,b)=>b.score-a.score)[0];
+  const sameUC   = topUC && topFitUC && topUC.uc.id === topFitUC.uc.id;
+  const totalHours = selectedResults.reduce((s,r) => s + ((r.calcResult && r.calcResult.hours) ? (r.calcResult.hours.total||0) : 0), 0);
+
+  // Summary metrics — free tier shows ranges (±10%), member shows point estimates
+  const fmtRange = (v) => v > 0 ? `${fmt(v*0.90)}&nbsp;&ndash;&nbsp;${fmt(v*1.10)}` : '—';
+  document.getElementById('summaryMetrics').innerHTML = `
+    <div class="met"><div class="ml">Available Today</div><div class="mv" style="font-size:13px">${FREE_TIER ? fmtRange(todayVal) : (todayVal > 0 ? fmt(todayVal) : '—')}</div><div class="ms">${todayResults.length} live use case${todayResults.length!==1?'s':''}</div></div>
+    <div class="met"><div class="ml">Annual Hours Saved</div><div class="mv" style="font-size:15px">${totalHours >= 1 ? fmtHrs(totalHours) : '—'}</div><div class="ms">Est. staff time freed annually</div></div>
+    ${emergingVal > 0 ? `<div class="met emerging-met"><div class="ml">Future Opportunity</div><div class="mv" style="font-size:13px">${FREE_TIER ? fmtRange(emergingVal) : fmt(emergingVal)}</div><div class="ms">${emergingResults.length} emerging use case${emergingResults.length!==1?'s':''}</div></div>` : ''}
+    <div class="met"><div class="ml">Highest Value</div><div class="mv" style="font-size:13px;line-height:1.4">${topUC ? topUC.uc.name : '—'}</div><div class="ms">${topUC && topUC.total > 0 ? (FREE_TIER ? fmtRange(topUC.total) : fmt(topUC.total))+'/yr est.' : '—'}</div></div>
+    <div class="met"><div class="ml">Best Fit</div><div class="mv" style="font-size:13px;line-height:1.4">${topFitUC ? topFitUC.uc.name : '—'}</div><div class="ms">${topFitUC ? topFitUC.score+'/100 fit score'+(sameUC?' &middot; same as highest value':'') : '—'}</div></div>`;
+
+  // Uncertainty note — free tier always at ±10% (defaults), explains how members narrow it
+  const uncNote = document.getElementById('uncertaintyNote');
+  if (uncNote) {
+    const indNameForNote = INDUSTRIES.find(i=>i.id===state.industry)?.name || 'your sector';
+    uncNote.innerHTML = FREE_TIER
+      ? `<div class="free-uncertainty-note">These estimates were built based on industry benchmarking data for <strong>${indNameForNote}</strong> organizations of your size. FPC members can enter their actual payment data to receive more customized results and narrower uncertainty ranges.</div>`
+      : '';
+  }
+
+  // Chart — today use cases first, then emerging; per-bar colors
+  const chartDisplayed = displayed
+    .filter(r => state.selectedUCs.has(r.uc.id) && r.total > 0)
+    .sort((a,b) => { if (isEmerging(a.uc.id) !== isEmerging(b.uc.id)) return isEmerging(a.uc.id) ? 1 : -1; return b.total - a.total; });
+  const s4leg = document.getElementById('s4ChartLegend');
+  if (chartInst) { chartInst.destroy(); chartInst = null; }
+  if (chartDisplayed.length > 0) {
+    const s4bgLo = chartDisplayed.map(r => isEmerging(r.uc.id) ? 'rgba(180,120,0,0.35)' : 'rgba(0,82,155,0.35)');
+    const s4bgHi = chartDisplayed.map(r => isEmerging(r.uc.id) ? 'rgba(180,120,0,0.65)' : 'rgba(0,82,155,0.65)');
+    const ctx4 = document.getElementById('resultsChart').getContext('2d');
+    chartInst = new Chart(ctx4, {
+      type:'bar',
+      data:{
+        labels: chartDisplayed.map(r => r.uc.name),
+        datasets:[
+          { label:'Low estimate',      data: chartDisplayed.map(r=>r.total*0.80), backgroundColor: s4bgLo, stack:'s' },
+          { label:'Additional upside', data: chartDisplayed.map(r=>r.total*0.40), backgroundColor: s4bgHi, stack:'s' }
+        ]
+      },
+      options:{
+        indexAxis:'y', responsive:true, maintainAspectRatio:false,
+        plugins:{ legend:{ display:false }, tooltip:{ callbacks:{ label: ctx => ' '+fmt(ctx.raw) }}},
+        scales:{
+          x:{ stacked:true, ticks:{ callback: v=>fmt(v) }, grid:{ color:'rgba(0,0,0,0.06)' }},
+          y:{ stacked:true, ticks:{ font:{ size:11 }}}
+        }
+      }
+    });
+    if (s4leg) {
+      const hasT = chartDisplayed.some(r => !isEmerging(r.uc.id));
+      const hasE = chartDisplayed.some(r =>  isEmerging(r.uc.id));
+      s4leg.innerHTML = (hasT && hasE) ? `
+        <div class="chart-legend-item"><div class="chart-legend-swatch" style="background:rgba(0,82,155,0.65)"></div>Available today</div>
+        <div class="chart-legend-item"><div class="chart-legend-swatch" style="background:rgba(180,120,0,0.65)"></div>Future opportunity (emerging use case)</div>` : '';
+    }
+  } else {
+    document.getElementById('resultsChart').style.display='none';
+    document.getElementById('s4ChartWrap').style.display='none';
+    document.querySelector('#step4 .cnote').style.display='none';
+    if (s4leg) s4leg.innerHTML = '';
+  }
+
+  // Sort bar
+  const sortBar = document.getElementById('s4SortBar');
+  if (sortBar) {
+    sortBar.style.display = displayed.length > 1 ? 'flex' : 'none';
+    sortBar.querySelector('#sortByValue').className = 'sort-btn' + (state.resultSort==='value' ? ' sort-active' : '');
+    sortBar.querySelector('#sortByFit').className   = 'sort-btn' + (state.resultSort==='fit'   ? ' sort-active' : '');
+  }
+
+  // Apply sort — selected before unselected, today before emerging, then by chosen metric
+  const sortFn = (a,b) => {
+    const as=state.selectedUCs.has(a.uc.id)?1:0, bs=state.selectedUCs.has(b.uc.id)?1:0;
+    if (as !== bs) return bs - as;
+    const ae=isEmerging(a.uc.id)?1:0, be=isEmerging(b.uc.id)?1:0;
+    if (ae !== be) return ae - be;
+    return state.resultSort === 'fit' ? b.score - a.score : b.total - a.total;
+  };
+  const sortedDisplayed = [...displayed].sort(sortFn);
+
+  // Result cards
+  const maxVal = Math.max(...sortedDisplayed.map(r=>r.total), 1);
+  const cards = document.getElementById('resultCards');
+  cards.innerHTML = sortedDisplayed.map((r,i) => {
+    const fit = fitLabel(r.score);
+    const rankCls = i === 0 ? 'top' : '';
+    const dirLabel = r.uc.dir==='send' ? 'SEND' : r.uc.dir==='receive' ? 'RECEIVE' : 'SEND + RECEIVE';
+    const dirCls   = r.uc.dir==='send' ? 'dir-send' : r.uc.dir==='receive' ? 'dir-recv' : 'dir-both';
+    const hasVal   = r.total > 0;
+    const lo = r.total * 0.80, hi = r.total * 1.20;
+
+    const emerging4 = isEmerging(r.uc.id);
+    return `<div class="res-card">
+      <div class="res-hdr">
+        <div class="res-rank ${rankCls}">${i+1}</div>
+        <span class="uc-dir ${dirCls}" style="font-size:10px;font-weight:700;letter-spacing:.06em;padding:3px 7px;border-radius:3px;flex-shrink:0">${dirLabel}</span>
+        <span class="res-title">${r.uc.name}</span>
+        <span class="fit-badge ${fit.cls}">${fit.label}</span>
+        ${emerging4 ? '<span class="emerging-badge">&#9888; Emerging</span>' : ''}
+        ${hasVal ? `<span class="res-value${emerging4?' emerging-val':''}">${fmt(lo)} &ndash; ${fmt(hi)}</span>` : `<span class="res-value zero">Fit-based</span>`}
+      </div>
+      <div class="res-body">
+        ${renderEmergingNotice(r.uc.id)}
+        <div class="fit-score-row">
+          <span class="fit-score-label">Fit score:</span>
+          <div class="fit-score-bar-wrap"><div class="fit-score-bar" style="width:${r.score}%;background:${r.score>=68?'#046a38':r.score>=42?'#00529B':'#AAAAAA'}"></div></div>
+          <span class="fit-score-val" style="color:${r.score>=68?'#046a38':r.score>=42?'#00529B':'#AAAAAA'}">${r.score}/100</span>
+        </div>
+        <div class="res-benefits">
+          <div class="res-benefits-ttl"><svg viewBox="0 0 13 13" width="11" height="11" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="1,10 4.5,5.5 7,8 10,4 12,4"/><polyline points="10,4 12,4 12,6"/></svg> Estimated Annual Benefits</div>
+          ${r.calcResult ? `<div class="res-comps">
+            ${FREE_TIER
+              ? r.calcResult.comps.map(c => `<div class="free-comp-lock">
+                  <span class="free-comp-lock-lbl">${c.label}</span>
+                  <span class="free-comp-lock-badge">&#128274; Members</span>
+                </div>`).join('') + `<p style="font-size:11px;color:#856404;margin-top:8px;font-style:italic">FPC members see the dollar breakdown for each value driver.</p>`
+              : r.calcResult.comps.map(c => `<div class="res-comp">
+                  <span class="res-comp-lbl">${c.label}</span>
+                  <div class="res-comp-bar-wrap"><div class="res-comp-bar" style="width:${Math.round(c.v/Math.max(...r.calcResult.comps.map(x=>x.v),1)*100)}%"></div></div>
+                  <span class="res-comp-val">${fmt(c.v)}</span>
+                </div>`).join('')}
+          </div>` : `<p style="font-size:12px;color:#999999;margin-bottom:4px">Add volumes in Step 3 to see a dollar estimate for this use case.</p>`}
+          ${!FREE_TIER && r.estimated && hasVal ? '<p style="font-size:11px;color:#999999;margin-bottom:0;margin-top:4px;font-style:italic">&#9432; Estimate based on size-tier defaults — enter your actual volumes in Step 3 for a refined figure.</p>' : ''}
+          ${r.calcResult && r.calcResult.hours && r.calcResult.hours.total >= 1 ? `<div class="res-hours">
+            <div class="res-hours-hdr"><svg viewBox="0 0 14 14" width="12" height="12" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true" style="flex-shrink:0"><circle cx="7" cy="7" r="5.5"/><polyline points="7,3.5 7,7 9.5,8.5"/></svg> Est. ${fmtHrs(r.calcResult.hours.total)} staff time saved annually${FREE_TIER ? ` <span style="font-size:10px;font-weight:700;color:#856404;background:#FFF3CD;border:1px solid #F0C040;border-radius:3px;padding:1px 6px;margin-left:4px">&#128274; Breakdown — Members</span>` : ''}</div>
+            ${FREE_TIER ? '' : r.calcResult.hours.comps.map(c=>`<div class="res-hours-comp"><span>${c.label}</span><span>${fmtHrs(c.hours)}</span></div>`).join('')}
+          </div>` : ''}
+        </div>
+        <div class="res-action"><div class="res-action-lbl"><svg viewBox="0 0 13 13" width="10" height="10" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="6.5" cy="5" r="3.5"/><line x1="6.5" y1="9" x2="6.5" y2="11.5"/><line x1="5" y1="11.5" x2="8" y2="11.5"/></svg> Recommended next step</div>${r.uc.action}</div>
+        ${renderFPCResources(r.uc.id)}
+      </div>
+    </div>`;
+  }).join('');
+
+  // Recommendations
+  const industryName = INDUSTRIES.find(i=>i.id===state.industry)?.name || 'your industry';
+  const recs = [];
+  const top3 = displayed.slice(0,3);
+  if (top3[0]) recs.push(`Start with <strong>${top3[0].uc.name}</strong> — it scores highest for your profile and${top3[0].total>0?' offers estimated value in the range shown above.':' is the strongest strategic fit for '+industryName+'.'}`);
+  if (top3[1]) recs.push(`Consider <strong>${top3[1].uc.name}</strong> as a parallel workstream — the implementation overlap with your top use case can reduce total effort.`);
+  if (state.pains.has('slow_ar') || state.pains.has('cash_flow')) recs.push('Connect with your banking partner about Request for Payment (RFP) capabilities — this directly addresses your cash flow and collections challenges with minimal internal IT effort.');
+  recs.push('Confirm your bank\'s FedNow and RTP participation as a first step — network availability varies by institution.');
+
+  document.getElementById('recommendations').innerHTML = recs.map((r,i) => `<div class="rec-item"><span class="rec-num">${i+1}</span><span>${r}</span></div>`).join('');
+
+  // Member CTA — free tier only
+  const ctaEl = document.getElementById('memberCTA');
+  if (ctaEl) {
+    if (FREE_TIER) {
+      ctaEl.innerHTML = `<div class="free-member-cta">
+        <div class="free-member-cta-title">Get the full picture with FPC membership</div>
+        <p class="free-member-cta-sub">Your results above use industry benchmarks for <strong>${industryName}</strong> organizations. FPC members unlock:</p>
+        <ul class="free-member-cta-list">
+          <li><span class="free-member-cta-check">&#10003;</span>Enter actual payment volumes for sharper, more precise estimates</li>
+          <li><span class="free-member-cta-check">&#10003;</span>See point estimates instead of ranges — and narrow uncertainty to ±5%</li>
+          <li><span class="free-member-cta-check">&#10003;</span>See the full dollar breakdown for each value driver</li>
+          <li><span class="free-member-cta-check">&#10003;</span>Fine-tune inputs for each use case individually</li>
+          <li><span class="free-member-cta-check">&#10003;</span>Export a branded PDF for board or leadership presentations</li>
+          <li><span class="free-member-cta-check">&#10003;</span>Access FPC working groups aligned to your priority use cases</li>
+        </ul>
+        <a href="${MEMBER_URL}" target="_blank" rel="noopener" class="free-member-cta-btn">Learn about FPC Membership &rarr;</a>
+        <p class="free-member-cta-contact">Questions? Contact us at <a href="mailto:info@fasterpaymentscouncil.org">info@fasterpaymentscouncil.org</a></p>
+      </div>`;
+    } else {
+      ctaEl.innerHTML = '';
+    }
+  }
+}
+
+// ─────────────────────────────────────────────────────────
+// UTILITIES
+// ─────────────────────────────────────────────────────────
+function fmt(n) {
+  if (!n || isNaN(n)) return '$0';
+  if (n >= 1000000) return '$' + (n/1000000).toFixed(1).replace(/\.0$/,'') + 'M';
+  if (n >= 1000)    return '$' + Math.round(n/1000) + 'K';
+  return '$' + Math.round(n).toLocaleString();
+}
+
+function fmtHrs(n) {
+  if (!n || isNaN(n) || n < 1) return '0 hrs';
+  if (n >= 1000) return (n/1000).toFixed(1).replace(/\.0$/,'') + 'K hrs';
+  return Math.round(n).toLocaleString() + ' hrs';
+}
+
+function validate() {
+  const vm = document.getElementById('vm');
+  if (state.step === 1) {
+    if (!state.industry) { vm.textContent='Please select your industry.'; vm.style.display=''; return false; }
+    if (!state.revenue)  { vm.textContent='Please enter your annual revenue.'; vm.style.display=''; return false; }
+  }
+  // Step 2 (payment volumes + pains) is optional — no blocking validation
+  vm.style.display='none';
+  return true;
+}
+
+function resetTool() {
+  state = { step:1, industry:null, revenue:null, flows:emptyFlows(), pains:new Set(), selectedUCs:new Set(), ucInputs:{}, results:[], tuningUC:null, estimatedFlowKeys:new Set(), resultSort:'value' };
+  if (chartInst)   { chartInst.destroy();   chartInst   = null; }
+  if (s3ChartInst) { s3ChartInst.destroy(); s3ChartInst = null; }
+  document.getElementById('resultsChart').style.display='';
+  const cw = document.getElementById('s4ChartWrap'); if(cw) cw.style.display='';
+  const cn = document.querySelector('#step4 .cnote'); if(cn) cn.style.display='';
+  navigate(1);
+}
+
+function navigate(n) {
+  state.step = n;
+  showStep(n);
+  renderProgress();
+  renderNav();
+  if (n===1) renderStep1();
+  if (n===2) renderStep2();
+  if (n===3) renderStep3();
+  if (n===4) renderStep4();
+  window.scrollTo(0,0);
+}
+
+// ─────────────────────────────────────────────────────────
+// PDF EXPORT
+// ─────────────────────────────────────────────────────────
+function buildPDFHtml() {
+  const ind      = INDUSTRIES.find(i => i.id === state.industry);
+  const indName  = ind ? ind.name : '—';
+  const tierLbl  = state.revenue ? (TIER_LABELS[getSizeTier(state.revenue)] || '') : '';
+  const revStr   = state.revenue ? '$' + (state.revenue >= 1000 ? (state.revenue/1000).toFixed(1).replace(/\.0$/,'')+'B' : state.revenue+'M') : '—';
+  const dateStr  = new Date().toLocaleDateString('en-US', {year:'numeric',month:'long',day:'numeric'});
+  const logoSrc  = document.getElementById('hdrLogo')?.src || '';
+
+  // Chart image
+  let chartImg = '';
+  try { const cv = document.getElementById('resultsChart'); if (cv) chartImg = cv.toDataURL('image/png'); } catch(e) {}
+
+  // Selected results sorted same as on screen
+  const sel = state.results.filter(r => state.selectedUCs.has(r.uc.id));
+  const sorted = [...sel].sort((a,b) => {
+    const ae=isEmerging(a.uc.id)?1:0, be=isEmerging(b.uc.id)?1:0;
+    if (ae !== be) return ae - be;
+    return state.resultSort === 'fit' ? b.score - a.score : b.total - a.total;
+  });
+
+  // Summary numbers
+  const todayRes    = sorted.filter(r => !isEmerging(r.uc.id));
+  const emergingRes = sorted.filter(r =>  isEmerging(r.uc.id));
+  const todayVal    = todayRes.reduce((s,r) => s+r.total, 0);
+  const emergingVal = emergingRes.reduce((s,r) => s+r.total, 0);
+  const totalHours  = sorted.reduce((s,r) => s + ((r.calcResult?.hours?.total)||0), 0);
+  const topValUC    = [...sorted].sort((a,b)=>b.total-a.total)[0];
+  const topFitUC2   = [...todayRes].sort((a,b)=>b.score-a.score)[0];
+
+  const BLU='#00529B', GRN='#046a38', AMB='#856404';
+  const sect = (t) => `<div style="font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.09em;color:${BLU};padding-left:8px;border-left:3px solid ${BLU};margin:18px 0 10px">${t}</div>`;
+
+  // Metric tiles
+  const tile = (lbl, val, sub, color) => `
+    <div style="flex:1;min-width:110px;padding:10px 12px;border:1px solid #E5E5E5;border-radius:6px;border-top:3px solid ${color}">
+      <div style="font-size:8.5px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:#666;margin-bottom:4px">${lbl}</div>
+      <div style="font-size:14px;font-weight:700;color:#222;margin-bottom:2px;line-height:1.2">${val}</div>
+      <div style="font-size:8px;color:#888">${sub}</div>
+    </div>`;
+
+  const metricsHtml = `<div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px">
+    ${tile('Available Today', todayVal>0?fmt(todayVal):'—', todayRes.length+' live use case'+(todayRes.length!==1?'s':''), BLU)}
+    ${tile('Annual Hours Saved', totalHours>=1?fmtHrs(totalHours):'—', 'Est. staff time freed', GRN)}
+    ${emergingVal>0?tile('Future Opportunity', fmt(emergingVal), emergingRes.length+' emerging use case'+(emergingRes.length!==1?'s':''), AMB):''}
+    ${topValUC?tile('Highest Value', topValUC.uc.name, topValUC.total>0?fmt(topValUC.total)+'/yr est.':'—', BLU):''}
+    ${topFitUC2?tile('Best Fit', topFitUC2.uc.name, topFitUC2.score+'/100 fit score', GRN):''}
+  </div>`;
+
+  // Result cards
+  const fitColors = { 'Strong Fit':GRN, 'Good Fit':BLU, 'Potential Fit':'#888' };
+  const cardsHtml = sorted.map(r => {
+    const fit      = fitLabel(r.score);
+    const lo = r.total*0.80, hi = r.total*1.20;
+    const emerging = isEmerging(r.uc.id);
+    const dirLabel = r.uc.dir==='send'?'SEND':r.uc.dir==='receive'?'RECEIVE':'SEND + RECEIVE';
+    const hasVal   = r.total > 0;
+
+    const compsHtml = r.calcResult ? r.calcResult.comps.map(c =>
+      `<div style="display:flex;justify-content:space-between;font-size:8.5px;padding:3px 0;border-bottom:1px solid #F0F0F0;color:#444">
+        <span>${c.label}</span><span style="font-weight:600;white-space:nowrap;padding-left:8px">${fmt(c.v)}</span>
+      </div>`).join('') : '';
+
+    const hoursHtml = r.calcResult?.hours?.total >= 1 ? `
+      <div style="margin-top:7px;padding-top:7px;border-top:1px solid #D5DFE8">
+        <div style="font-size:8.5px;font-weight:700;color:${GRN};margin-bottom:4px">
+          Est. ${fmtHrs(r.calcResult.hours.total)} staff time saved annually
+        </div>
+        ${r.calcResult.hours.comps.map(c=>`<div style="display:flex;justify-content:space-between;font-size:8px;color:#555;padding:2px 0">
+          <span>${c.label}</span><span style="font-weight:600">${fmtHrs(c.hours)}</span>
+        </div>`).join('')}
+      </div>` : '';
+
+    return `<div style="border:1.5px solid ${emerging?'#E6C94A':'#DDE5EE'};border-radius:8px;padding:12px 14px;margin-bottom:10px;page-break-inside:avoid">
+      <div style="display:flex;align-items:flex-start;gap:8px;margin-bottom:8px">
+        <span style="font-size:8px;font-weight:700;background:${emerging?AMB:BLU};color:#fff;padding:2px 7px;border-radius:3px;flex-shrink:0;margin-top:1px">${dirLabel}</span>
+        <span style="font-size:13px;font-weight:700;color:#222;flex:1;line-height:1.3">${r.uc.name}</span>
+        <span style="font-size:8.5px;font-weight:700;color:${fitColors[fit.label]||'#888'};white-space:nowrap">${fit.label} &middot; ${r.score}/100</span>
+        ${emerging?`<span style="font-size:8px;font-weight:700;background:#FFF3CD;color:${AMB};padding:2px 7px;border-radius:3px;flex-shrink:0">Future Opportunity</span>`:''}
+      </div>
+      <div style="background:#F5F7FA;border:1px solid #DDE5EE;border-radius:6px;padding:9px 12px;margin-bottom:8px">
+        <div style="font-size:8.5px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:${BLU};margin-bottom:6px">Estimated Annual Benefits</div>
+        ${hasVal ? `<div style="font-size:12px;font-weight:700;color:#222;margin-bottom:6px">${fmt(lo)} – ${fmt(hi)}</div>` : `<div style="font-size:10px;color:#888;font-style:italic">Add volumes in Step 3 to generate an estimate.</div>`}
+        ${compsHtml}
+        ${hoursHtml}
+      </div>
+      ${r.uc.action ? `<div style="background:#F0F7EE;border:1px solid #C8E0C0;border-radius:6px;padding:8px 11px">
+        <div style="font-size:8px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:${GRN};margin-bottom:4px">Recommended next step</div>
+        <div style="font-size:9px;color:#333;line-height:1.6">${r.uc.action}</div>
+      </div>` : ''}
+    </div>`;
+  }).join('');
+
+  return `<div style="max-width:760px;margin:0 auto;font-family:Arial,Helvetica,sans-serif;color:#3d3d3d;padding:0 8px">
+    <div style="display:flex;align-items:center;justify-content:space-between;padding-bottom:12px;margin-bottom:20px;border-bottom:3px solid ${BLU}">
+      <div style="display:flex;align-items:center;gap:12px">
+        ${logoSrc?`<img src="${logoSrc}" style="height:40px;width:auto;object-fit:contain">`:'' }
+        <div>
+          <div style="font-size:13px;font-weight:700;color:${BLU}">U.S. Faster Payments Council</div>
+          <div style="font-size:10px;color:#666">Faster Payments Use Case Evaluator — Business Edition</div>
+        </div>
+      </div>
+      <div style="text-align:right;font-size:9px;color:#888">${dateStr}</div>
+    </div>
+    ${sect('Organization Profile')}
+    <div style="display:flex;gap:24px;font-size:10px;color:#444;margin-bottom:4px">
+      <span><strong>Industry:</strong> ${indName}</span>
+      <span><strong>Annual Revenue:</strong> ${revStr}</span>
+      <span><strong>Size Tier:</strong> ${tierLbl}</span>
+    </div>
+    ${sect('Summary')}
+    ${metricsHtml}
+    ${chartImg?`${sect('Estimated Annual Value by Use Case')}<img src="${chartImg}" style="width:100%;max-height:240px;object-fit:contain;margin-bottom:4px">`:'' }
+    ${sect('Use Case Analysis')}
+    ${cardsHtml}
+    <div style="font-size:7.5px;color:#999;line-height:1.6;padding:10px 12px;border:1px solid #E5E5E5;border-radius:4px;margin-top:12px">
+      Projections are estimates derived from industry benchmarks and the inputs provided. Actual results will vary based on implementation approach, adoption rates, and market conditions. Float and working capital figures assume a 5.5% cost of funds. This tool is for strategic planning purposes only and does not constitute financial or investment advice. Provided by the U.S. Faster Payments Council — fasterpaymentscouncil.org.
+    </div>
+    <div style="background:${BLU};padding:10px 24px;display:flex;justify-content:space-between;align-items:center;margin-top:16px;border-radius:4px">
+      <div style="font-size:8px;color:rgba(255,255,255,.8)">U.S. Faster Payments Council &nbsp;&middot;&nbsp; fasterpaymentscouncil.org</div>
+      <div style="font-size:7.5px;color:rgba(255,255,255,.55)">Faster Payments Use Case Evaluator — Business Edition</div>
+    </div>
+  </div>`;
+}
+
+function exportPDF() {
+  const win = window.open('', '_blank', 'width=900,height=760,scrollbars=yes');
+  if (!win) { alert('Pop-ups are blocked. Please allow pop-ups for this site, then try again.'); return; }
+  const doc = '<!DOCTYPE html><html><head><meta charset="UTF-8">'
+    + '<title>FPC Use Case Evaluator — ' + new Date().toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'}) + '</title>'
+    + '<style>'
+    + '*{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important;box-sizing:border-box;margin:0;padding:0}'
+    + '@page{size:letter;margin:14mm 12mm}'
+    + 'html,body{background:#FFFFFF;font-family:Arial,Helvetica,sans-serif}'
+    + '.pdf-tip{position:fixed;bottom:0;left:0;right:0;background:#1a1a2e;color:#fff;padding:12px 24px;text-align:center;font-family:Arial,sans-serif;font-size:12px;z-index:99999;line-height:1.6}'
+    + '@media print{.pdf-tip{display:none!important}}'
+    + '</style></head><body>'
+    + buildPDFHtml()
+    + '<div class="pdf-tip">To save as PDF: press <strong>Ctrl+P</strong> (Windows) or <strong>Cmd+P</strong> (Mac) &mdash; then select <strong>"Save as PDF"</strong> as the destination.</div>'
+    + '</body></html>';
+  win.document.open(); win.document.write(doc); win.document.close();
+  win.focus();
+  setTimeout(() => { try { win.print(); } catch(e) {} }, 700);
+}
+
+// ─────────────────────────────────────────────────────────
+// PDF EMAIL MODAL (free tier)
+// ─────────────────────────────────────────────────────────
+function showPDFEmailModal() {
+  // Populate hidden fields with context
+  const indField = document.getElementById('pdfIndustryField');
+  const revField = document.getElementById('pdfRevTierField');
+  if (indField) indField.value = INDUSTRIES.find(i=>i.id===state.industry)?.name || '';
+  if (revField) revField.value = state.revenue ? (TIER_LABELS[getSizeTier(state.revenue)] || '') : '';
+  // Clear previous email input
+  const emailInput = document.getElementById('pdfEmailInput');
+  if (emailInput) emailInput.value = '';
+  document.getElementById('pdfEmailModal').style.display = 'flex';
+}
+
+function closePDFModal() {
+  document.getElementById('pdfEmailModal').style.display = 'none';
+}
+
+function handlePDFEmailSubmit(event) {
+  event.preventDefault();
+  const emailInput = document.getElementById('pdfEmailInput');
+  if (!emailInput || !emailInput.value) return;
+
+  // Submit to Netlify Forms via fetch (non-blocking)
+  const formData = new FormData(event.target);
+  fetch('/', { method: 'POST', headers: {'Accept': 'application/x-www-form-urlencoded'}, body: new URLSearchParams(formData).toString() })
+    .catch(() => {}); // silent fail — PDF still generates
+
+  // Close modal and generate PDF
+  closePDFModal();
+  setTimeout(() => exportPDF(), 150);
+}
+
+// ─────────────────────────────────────────────────────────
+// INIT
+// ─────────────────────────────────────────────────────────
+document.getElementById('btnN').addEventListener('click', () => {
+  if (!validate()) return;
+  navigate(state.step + 1);
+});
+document.getElementById('btnB').addEventListener('click', () => navigate(state.step - 1));
+document.getElementById('btnSO').addEventListener('click', resetTool);
+document.getElementById('btnRs').addEventListener('click', resetTool);
+
+// Logo
+(function(){
+  const img = document.getElementById('hdrLogo');
+  const logo = new Image();
+  logo.onload = function(){ img.src = '../fpc-logo.png'; img.style.display=''; };
+  logo.onerror = function(){};
+  logo.src = '../fpc-logo.png';
+})();
+
+navigate(1);
+</script>
+</body>
+</html>

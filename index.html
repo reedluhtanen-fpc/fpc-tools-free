@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Faster Payments Tools &mdash; U.S. Faster Payments Council</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Montserrat:wght@700;800&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Lato',-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;background:#FFFFFF;color:#3d3d3d;-webkit-font-smoothing:antialiased}
+.page{max-width:920px;margin:0 auto;padding:28px 24px 80px}
+.fpc-hdr{display:flex;align-items:flex-start;padding-bottom:20px;margin-bottom:44px;border-bottom:5px solid #00529B}
+.hdr-left{display:flex;align-items:center;gap:12px}
+.hdr-title{font-size:15px;font-weight:700;color:#00529B;letter-spacing:.01em;font-family:'Montserrat',-apple-system,BlinkMacSystemFont,sans-serif}
+.hdr-sub{font-size:12px;color:#666666;margin-top:2px}
+.hdr-badge{font-size:11px;color:#FFFFFF;background:#046a38;padding:5px 12px;border-radius:4px;font-weight:600;letter-spacing:.02em}
+
+.hub-hero{text-align:center;margin-bottom:48px}
+.hub-title{font-family:'Montserrat',-apple-system,BlinkMacSystemFont,sans-serif;font-size:30px;font-weight:800;color:#00529B;margin-bottom:10px}
+.hub-desc{font-size:15px;color:#555555;line-height:1.75;max-width:620px;margin:0 auto}
+
+.aud-section{margin-bottom:44px}
+.aud-lbl{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;padding-left:10px;border-left:3px solid;margin-bottom:18px}
+.aud-lbl.fi{color:#00529B;border-color:#00529B}
+.aud-lbl.biz{color:#046a38;border-color:#046a38}
+
+.fi-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+
+/* Tool cards */
+.tool-card{display:flex;flex-direction:column;padding:28px;border-radius:12px;text-decoration:none;transition:transform .15s,box-shadow .15s;border:none}
+.tool-card:hover{transform:translateY(-3px)}
+.tool-card.fi-card{background:#00529B}
+.tool-card.fi-card:hover{box-shadow:0 8px 28px rgba(0,82,155,.3)}
+.tool-card.biz-card{background:#046a38;flex-direction:row;align-items:flex-start;gap:24px}
+.tool-card.biz-card:hover{box-shadow:0 8px 28px rgba(4,106,56,.3)}
+
+.tc-icon{flex-shrink:0;margin-bottom:18px}
+.biz-card .tc-icon{margin-bottom:0}
+
+.tc-badge{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.09em;color:rgba(255,255,255,.6);margin-bottom:8px}
+.tc-name{font-family:'Montserrat',-apple-system,BlinkMacSystemFont,sans-serif;font-size:20px;font-weight:800;color:#FFFFFF;line-height:1.2;margin-bottom:10px}
+.tc-desc{font-size:13px;color:rgba(255,255,255,.82);line-height:1.7;flex:1}
+.tc-cta{margin-top:20px;font-size:13px;font-weight:700;color:#FFFFFF;display:flex;align-items:center;gap:6px}
+.tc-cta-arrow{display:inline-flex;transition:transform .15s}
+.tool-card:hover .tc-cta-arrow{transform:translateX(4px)}
+
+.biz-body{flex:1}
+
+/* Free-tier notice bar */
+.free-notice-bar{background:#FFF8E7;border:1px solid #F0C040;border-radius:6px;padding:10px 16px;margin-bottom:28px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.free-notice-text{font-size:13px;color:#5a3e00;flex:1;min-width:180px;line-height:1.5}
+.free-notice-btn{font-size:12px;font-weight:700;padding:7px 16px;border-radius:6px;border:1.5px solid #856404;color:#856404;background:#FFFFFF;text-decoration:none;white-space:nowrap;flex-shrink:0;transition:background .15s}
+.free-notice-btn:hover{background:#FFF3CD}
+
+/* Free tag on tool cards */
+.tc-free-tag{font-size:11px;color:rgba(255,255,255,.65);background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.25);border-radius:4px;padding:3px 9px;display:inline-block;margin-top:12px;margin-bottom:4px;letter-spacing:.02em}
+
+/* Hub member CTA */
+.hub-member-cta{background:#00529B;border-radius:10px;padding:28px 32px;margin-top:8px}
+.hub-member-cta-title{font-family:'Montserrat',-apple-system,BlinkMacSystemFont,sans-serif;font-size:18px;font-weight:700;color:#FFFFFF;margin-bottom:8px}
+.hub-member-cta-sub{font-size:13px;color:rgba(255,255,255,.85);line-height:1.7;margin-bottom:18px;max-width:640px}
+.hub-member-cta-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px 24px;margin-bottom:22px}
+.hub-member-cta-item{font-size:13px;color:rgba(255,255,255,.9);display:flex;align-items:flex-start;gap:8px;line-height:1.5}
+.hub-member-cta-check{color:#7BC8A4;font-weight:700;flex-shrink:0}
+.hub-member-cta-btn{display:inline-block;padding:11px 28px;border-radius:8px;background:#FFFFFF;color:#00529B;font-size:14px;font-weight:700;text-decoration:none;font-family:'Montserrat',-apple-system,BlinkMacSystemFont,sans-serif;transition:background .15s}
+.hub-member-cta-btn:hover{background:#E8F1F8}
+.hub-member-cta-contact{font-size:12px;color:rgba(255,255,255,.6);margin-top:12px}
+.hub-member-cta-contact a{color:rgba(255,255,255,.8);text-decoration:underline}
+
+/* Responsive */
+@media(max-width:600px){
+  .fi-grid{grid-template-columns:1fr}
+  .tool-card.biz-card{flex-direction:column}
+  .biz-card .tc-icon{margin-bottom:14px}
+  .hub-title{font-size:24px}
+}
+</style>
+</head>
+<body>
+<div class="page">
+
+<!-- Header -->
+<div class="fpc-hdr">
+  <div style="display:flex;flex-direction:column;align-items:center;gap:12px;flex-shrink:0">
+    <img id="hdrLogo" style="height:216px;width:auto;max-width:360px;object-fit:contain;display:none" alt="FPC Logo">
+    <div class="hdr-badge">BETA &mdash; For Reviewer Feedback</div>
+  </div>
+  <div style="flex:1;padding:58px 0 0 24px;text-align:left">
+    <p class="hub-title" style="margin-bottom:10px;text-align:left;white-space:nowrap">Faster Payments Planning Tools</p>
+    <p class="hub-desc" style="margin:0;max-width:none;text-align:left">Evidence-based tools from the U.S. Faster Payments Council to help financial institutions and businesses evaluate, prioritize, and build the case for faster payments.</p>
+  </div>
+</div>
+
+<!-- Free tier notice bar -->
+<div class="free-notice-bar">
+  <span class="free-notice-text">You're using the <strong>free version</strong> of the FPC Faster Payments Planning Tools, which uses industry benchmark data. The members-only version allows users to input actual data and to receive more customized results.</span>
+  <a href="https://fasterpaymentscouncil.org/members" target="_blank" rel="noopener" class="free-notice-btn">FPC Member? Log In &rarr;</a>
+</div>
+
+<!-- Financial Institutions -->
+<div class="aud-section">
+  <p class="aud-lbl fi">For Financial Institutions</p>
+  <div class="fi-grid">
+
+    <a href="roi-calculator/index.html?mode=estimator" class="tool-card fi-card">
+      <div class="tc-icon">
+        <svg width="56" height="44" viewBox="0 0 56 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <line x1="8" y1="4" x2="8" y2="40" stroke="rgba(255,255,255,.4)" stroke-width="1.5" stroke-linecap="round"/>
+          <line x1="8" y1="40" x2="52" y2="40" stroke="rgba(255,255,255,.4)" stroke-width="1.5" stroke-linecap="round"/>
+          <line x1="8" y1="30" x2="52" y2="30" stroke="rgba(255,255,255,.1)" stroke-width="1"/>
+          <line x1="8" y1="20" x2="52" y2="20" stroke="rgba(255,255,255,.1)" stroke-width="1"/>
+          <line x1="8" y1="10" x2="52" y2="10" stroke="rgba(255,255,255,.1)" stroke-width="1"/>
+          <path d="M12,36 L22,28 L32,22 L42,13 L51,5 L51,40 L12,40 Z" fill="rgba(255,255,255,.1)"/>
+          <polyline points="12,36 22,28 32,22 42,13 51,5" stroke="white" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+          <circle cx="12" cy="36" r="3" fill="white"/>
+          <circle cx="22" cy="28" r="3" fill="white"/>
+          <circle cx="32" cy="22" r="3" fill="white"/>
+          <circle cx="42" cy="13" r="3" fill="white"/>
+          <circle cx="51" cy="5" r="3" fill="white"/>
+        </svg>
+      </div>
+      <div class="tc-badge">Financial Institutions</div>
+      <div class="tc-name">ROI Estimator</div>
+      <div class="tc-desc">Not yet live on instant payments? Model your 3-year return across fee revenue, check displacement savings, deposit retention, and fraud cost reduction.</div>
+      <div class="tc-free-tag">Free version &mdash; uses industry benchmarks</div>
+      <div class="tc-cta">Launch the ROI Estimator <span class="tc-cta-arrow"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M8 3l4 4-4 4" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span></div>
+    </a>
+
+    <a href="roi-calculator/index.html?mode=assessment" class="tool-card fi-card">
+      <div class="tc-icon">
+        <svg width="56" height="44" viewBox="0 0 56 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <line x1="4" y1="40" x2="52" y2="40" stroke="rgba(255,255,255,.4)" stroke-width="1.5" stroke-linecap="round"/>
+          <rect x="6" y="28" width="11" height="12" rx="2" fill="rgba(255,255,255,.35)"/>
+          <rect x="22" y="19" width="11" height="21" rx="2" fill="rgba(255,255,255,.6)"/>
+          <rect x="38" y="8" width="11" height="32" rx="2" fill="rgba(255,255,255,.85)"/>
+          <line x1="43" y1="20" x2="43" y2="5" stroke="white" stroke-width="2" stroke-linecap="round"/>
+          <polyline points="40,8 43,5 46,8" stroke="white" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <div class="tc-badge">Financial Institutions</div>
+      <div class="tc-name">Implementation Assessment</div>
+      <div class="tc-desc">Already live on FedNow or RTP? Benchmark your current capabilities, identify incremental opportunities, and project the value of expanding your program.</div>
+      <div class="tc-free-tag">Free version &mdash; uses industry benchmarks</div>
+      <div class="tc-cta">Launch the Assessment Tool <span class="tc-cta-arrow"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M8 3l4 4-4 4" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span></div>
+    </a>
+
+  </div>
+</div>
+
+<!-- Businesses -->
+<div class="aud-section">
+  <p class="aud-lbl biz">For Businesses &amp; Corporates</p>
+  <a href="use-case-evaluator/index.html" class="tool-card biz-card">
+    <div class="tc-icon">
+      <svg width="56" height="56" viewBox="0 0 56 56" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="6" y="20" width="44" height="30" rx="4" fill="rgba(255,255,255,.15)" stroke="rgba(255,255,255,.5)" stroke-width="1.8"/>
+        <path d="M20 20V15a5 5 0 0 1 5-5h6a5 5 0 0 1 5 5v5" stroke="rgba(255,255,255,.6)" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+        <line x1="6" y1="31" x2="50" y2="31" stroke="rgba(255,255,255,.3)" stroke-width="1.5"/>
+        <!-- left col: stack of lines representing use cases -->
+        <rect x="13" y="37" width="12" height="2.5" rx="1.2" fill="rgba(255,255,255,.5)"/>
+        <rect x="13" y="42" width="9" height="2.5" rx="1.2" fill="rgba(255,255,255,.3)"/>
+        <!-- right: checkmark circle -->
+        <circle cx="37" cy="40" r="8" fill="rgba(255,255,255,.2)"/>
+        <polyline points="33,40 36,43 41,36.5" stroke="white" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </div>
+    <div class="biz-body">
+      <div class="tc-badge">Businesses &amp; Corporates</div>
+      <div class="tc-name">Use Case Evaluator</div>
+      <div class="tc-desc">Identify which faster payments use cases fit your business, estimate the annual dollar value and staff time saved, and get recommended next steps for each opportunity.</div>
+      <div class="tc-free-tag">Free version &mdash; uses industry benchmarks</div>
+      <div class="tc-cta">Launch the Use Case Evaluator <span class="tc-cta-arrow"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M8 3l4 4-4 4" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span></div>
+    </div>
+  </a>
+</div>
+
+<!-- Member CTA -->
+<div class="hub-member-cta">
+  <div class="hub-member-cta-title">Unlock the full suite with FPC membership</div>
+  <p class="hub-member-cta-sub">The free versions of these tools use industry benchmark data to generate estimates. FPC members can enter their own actual data for sharper, more customized results across all three tools.</p>
+  <div class="hub-member-cta-grid">
+    <div class="hub-member-cta-item"><span class="hub-member-cta-check">✓</span> Enter actual payment volumes and financials</div>
+    <div class="hub-member-cta-item"><span class="hub-member-cta-check">✓</span> Point estimates instead of benchmark ranges</div>
+    <div class="hub-member-cta-item"><span class="hub-member-cta-check">✓</span> Fine-tune inputs for each use case</div>
+    <div class="hub-member-cta-item"><span class="hub-member-cta-check">✓</span> Full dollar breakdown for every value driver</div>
+    <div class="hub-member-cta-item"><span class="hub-member-cta-check">✓</span> Export branded PDFs for board presentations</div>
+    <div class="hub-member-cta-item"><span class="hub-member-cta-check">✓</span> Access FPC working groups and resources</div>
+  </div>
+  <a href="https://fasterpaymentscouncil.org/members" target="_blank" rel="noopener" class="hub-member-cta-btn">Learn about FPC Membership &rarr;</a>
+  <p class="hub-member-cta-contact">Questions? <a href="mailto:info@fasterpaymentscouncil.org">info@fasterpaymentscouncil.org</a></p>
+</div>
+
+</div>
+
+<script>
+(function(){
+  var img = document.getElementById('hdrLogo');
+  var logo = new Image();
+  logo.onload = function(){ img.src = 'fpc-logo.png'; img.style.display = ''; };
+  logo.onerror = function(){};
+  logo.src = 'fpc-logo.png';
+})();
+</script>
+</body>
+</html>
