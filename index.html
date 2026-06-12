@@ -10,7 +10,9 @@
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 body{font-family:'Lato',-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;background:#FFFFFF;color:#3d3d3d;-webkit-font-smoothing:antialiased}
 .page{max-width:920px;margin:0 auto;padding:28px 24px 80px}
-.fpc-hdr{display:flex;align-items:flex-start;padding-bottom:20px;margin-bottom:44px;border-bottom:5px solid #00529B}
+.fpc-hdr{display:flex;flex-direction:column;align-items:center;padding-bottom:20px;margin-bottom:44px;border-bottom:5px solid #00529B}
+.fpc-hdr-top{text-align:center;margin-bottom:20px}
+.fpc-hdr-row{display:flex;align-items:flex-start;width:100%}
 .hdr-left{display:flex;align-items:center;gap:12px}
 .hdr-title{font-size:15px;font-weight:700;color:#00529B;letter-spacing:.01em;font-family:'Montserrat',-apple-system,BlinkMacSystemFont,sans-serif}
 .hdr-sub{font-size:12px;color:#666666;margin-top:2px}
@@ -22,18 +24,18 @@ body{font-family:'Lato',-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Ar
 
 .aud-section{margin-bottom:44px}
 .aud-lbl{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;padding-left:10px;border-left:3px solid;margin-bottom:18px}
-.aud-lbl.fi{color:#00529B;border-color:#00529B}
-.aud-lbl.biz{color:#046a38;border-color:#046a38}
+.aud-lbl.fi{color:#046a38;border-color:#046a38}
+.aud-lbl.biz{color:#00529B;border-color:#00529B}
 
 .fi-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
 
 /* Tool cards */
 .tool-card{display:flex;flex-direction:column;padding:28px;border-radius:12px;text-decoration:none;transition:transform .15s,box-shadow .15s;border:none}
 .tool-card:hover{transform:translateY(-3px)}
-.tool-card.fi-card{background:#00529B}
-.tool-card.fi-card:hover{box-shadow:0 8px 28px rgba(0,82,155,.3)}
-.tool-card.biz-card{background:#046a38;flex-direction:row;align-items:flex-start;gap:24px}
-.tool-card.biz-card:hover{box-shadow:0 8px 28px rgba(4,106,56,.3)}
+.tool-card.fi-card{background:#046a38}
+.tool-card.fi-card:hover{box-shadow:0 8px 28px rgba(4,106,56,.3)}
+.tool-card.biz-card{background:#00529B;flex-direction:row;align-items:flex-start;gap:24px}
+.tool-card.biz-card:hover{box-shadow:0 8px 28px rgba(0,82,155,.3)}
 
 .tc-icon{flex-shrink:0;margin-bottom:18px}
 .biz-card .tc-icon{margin-bottom:0}
@@ -57,7 +59,7 @@ body{font-family:'Lato',-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Ar
 .tc-free-tag{font-size:11px;color:rgba(255,255,255,.65);background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.25);border-radius:4px;padding:3px 9px;display:inline-block;margin-top:12px;margin-bottom:4px;letter-spacing:.02em}
 
 /* Hub member CTA */
-.hub-member-cta{background:#00529B;border-radius:10px;padding:28px 32px;margin-top:8px}
+.hub-member-cta{background:#00529B;border-radius:10px;padding:28px 32px;margin-top:8px;margin-bottom:44px}
 .hub-member-cta-title{font-family:'Montserrat',-apple-system,BlinkMacSystemFont,sans-serif;font-size:18px;font-weight:700;color:#FFFFFF;margin-bottom:8px}
 .hub-member-cta-sub{font-size:13px;color:rgba(255,255,255,.85);line-height:1.7;margin-bottom:18px;max-width:640px}
 .hub-member-cta-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px 24px;margin-bottom:22px}
@@ -65,8 +67,10 @@ body{font-family:'Lato',-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Ar
 .hub-member-cta-check{color:#7BC8A4;font-weight:700;flex-shrink:0}
 .hub-member-cta-btn{display:inline-block;padding:11px 28px;border-radius:8px;background:#FFFFFF;color:#00529B;font-size:14px;font-weight:700;text-decoration:none;font-family:'Montserrat',-apple-system,BlinkMacSystemFont,sans-serif;transition:background .15s}
 .hub-member-cta-btn:hover{background:#E8F1F8}
-.hub-member-cta-contact{font-size:12px;color:rgba(255,255,255,.6);margin-top:12px}
-.hub-member-cta-contact a{color:rgba(255,255,255,.8);text-decoration:underline}
+.hub-member-cta-actions{display:flex;align-items:center;gap:12px;max-width:680px;margin:0 auto}
+.hub-member-cta-actions>*{flex:1;text-align:center}
+.hub-member-cta-btn-ghost{display:inline-block;padding:11px 28px;border-radius:8px;border:2px solid rgba(255,255,255,.5);color:#FFFFFF;font-size:14px;font-weight:700;text-decoration:none;font-family:'Montserrat',-apple-system,BlinkMacSystemFont,sans-serif;transition:border-color .15s,background .15s}
+.hub-member-cta-btn-ghost:hover{border-color:#FFFFFF;background:rgba(255,255,255,.1)}
 
 /* Responsive */
 @media(max-width:600px){
@@ -82,20 +86,43 @@ body{font-family:'Lato',-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Ar
 
 <!-- Header -->
 <div class="fpc-hdr">
-  <div style="display:flex;flex-direction:column;align-items:center;gap:12px;flex-shrink:0">
-    <img id="hdrLogo" style="height:216px;width:auto;max-width:360px;object-fit:contain;display:none" alt="FPC Logo">
-    <div class="hdr-badge">BETA &mdash; For Reviewer Feedback</div>
+  <div class="fpc-hdr-top">
+    <div style="display:flex;align-items:center;justify-content:center;gap:48px">
+      <img id="hdrLogo" style="height:180px;width:auto;max-width:320px;object-fit:contain;display:none" alt="FPC Logo">
+      <div style="display:flex;flex-direction:column;align-items:center;gap:6px">
+        <div style="font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:#999999">Sponsored by</div>
+        <img src="ACI%20Vertical.png" alt="ACI Worldwide" style="height:100px;width:auto;display:block;">
+      </div>
+    </div>
   </div>
-  <div style="flex:1;padding:58px 0 0 24px;text-align:left">
-    <p class="hub-title" style="margin-bottom:10px;text-align:left;white-space:nowrap">Faster Payments Planning Tools</p>
-    <p class="hub-desc" style="margin:0;max-width:none;text-align:left">Evidence-based tools from the U.S. Faster Payments Council to help financial institutions and businesses evaluate, prioritize, and build the case for faster payments.</p>
+  <div style="width:100%;text-align:center;padding-top:16px">
+    <p class="hub-title" style="margin-bottom:10px">Faster Payments Value Engine</p>
+    <p class="hub-desc" style="margin:0;max-width:none">Evidence-based tools from the U.S. Faster Payments Council to help financial institutions and businesses evaluate, prioritize, and build the case for faster payments.</p>
   </div>
 </div>
 
 <!-- Free tier notice bar -->
 <div class="free-notice-bar">
-  <span class="free-notice-text">You're using the <strong>free version</strong> of the FPC Faster Payments Planning Tools, which uses industry benchmark data. The members-only version allows users to input actual data and to receive more customized results.</span>
+  <span class="free-notice-text">You're using the <strong>free version</strong> of the FPC Faster Payments Value Engine, which uses industry benchmark data. The members-only version allows users to input actual data and to receive more customized results.</span>
   <a href="https://fasterpaymentscouncil.org/members" target="_blank" rel="noopener" class="free-notice-btn">FPC Member? Log In &rarr;</a>
+</div>
+
+<!-- Member CTA -->
+<div class="hub-member-cta">
+  <div class="hub-member-cta-title">Unlock the full suite with FPC membership</div>
+  <p class="hub-member-cta-sub">The free versions of these tools use industry benchmark data to generate estimates. FPC members can enter their own actual data for sharper, more customized results across all three tools.</p>
+  <div class="hub-member-cta-grid">
+    <div class="hub-member-cta-item"><span class="hub-member-cta-check">✓</span> Enter actual payment volumes and financials</div>
+    <div class="hub-member-cta-item"><span class="hub-member-cta-check">✓</span> Point estimates instead of benchmark ranges</div>
+    <div class="hub-member-cta-item"><span class="hub-member-cta-check">✓</span> Fine-tune inputs for each use case</div>
+    <div class="hub-member-cta-item"><span class="hub-member-cta-check">✓</span> Full dollar breakdown for every value driver</div>
+    <div class="hub-member-cta-item"><span class="hub-member-cta-check">✓</span> Export branded PDFs for board presentations</div>
+    <div class="hub-member-cta-item"><span class="hub-member-cta-check">✓</span> Access FPC working groups and resources</div>
+  </div>
+  <div class="hub-member-cta-actions">
+    <a href="https://fasterpaymentscouncil.org/members" target="_blank" rel="noopener" class="hub-member-cta-btn">Learn about FPC Membership &rarr;</a>
+    <a href="mailto:info@fasterpaymentscouncil.org" class="hub-member-cta-btn-ghost">Questions? Contact us &rarr;</a>
+  </div>
 </div>
 
 <!-- Financial Institutions -->
@@ -175,21 +202,6 @@ body{font-family:'Lato',-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Ar
   </a>
 </div>
 
-<!-- Member CTA -->
-<div class="hub-member-cta">
-  <div class="hub-member-cta-title">Unlock the full suite with FPC membership</div>
-  <p class="hub-member-cta-sub">The free versions of these tools use industry benchmark data to generate estimates. FPC members can enter their own actual data for sharper, more customized results across all three tools.</p>
-  <div class="hub-member-cta-grid">
-    <div class="hub-member-cta-item"><span class="hub-member-cta-check">✓</span> Enter actual payment volumes and financials</div>
-    <div class="hub-member-cta-item"><span class="hub-member-cta-check">✓</span> Point estimates instead of benchmark ranges</div>
-    <div class="hub-member-cta-item"><span class="hub-member-cta-check">✓</span> Fine-tune inputs for each use case</div>
-    <div class="hub-member-cta-item"><span class="hub-member-cta-check">✓</span> Full dollar breakdown for every value driver</div>
-    <div class="hub-member-cta-item"><span class="hub-member-cta-check">✓</span> Export branded PDFs for board presentations</div>
-    <div class="hub-member-cta-item"><span class="hub-member-cta-check">✓</span> Access FPC working groups and resources</div>
-  </div>
-  <a href="https://fasterpaymentscouncil.org/members" target="_blank" rel="noopener" class="hub-member-cta-btn">Learn about FPC Membership &rarr;</a>
-  <p class="hub-member-cta-contact">Questions? <a href="mailto:info@fasterpaymentscouncil.org">info@fasterpaymentscouncil.org</a></p>
-</div>
 
 </div>
 

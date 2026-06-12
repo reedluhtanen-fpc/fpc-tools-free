@@ -13,12 +13,14 @@ html.has-mode #step0{display:none!important}
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 body{font-family:'Lato',-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;background:#FFFFFF;color:#3d3d3d;-webkit-font-smoothing:antialiased}
 .page{max-width:880px;margin:0 auto;padding:28px 24px 60px}
-.fpc-hdr{display:flex;align-items:center;justify-content:space-between;padding-bottom:16px;margin-bottom:24px;border-bottom:3px solid #00529B}
-.hdr-left{display:flex;align-items:center;gap:12px}
+.fpc-hdr{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;padding-bottom:16px;margin-bottom:24px;border-bottom:3px solid #00529B}
+.hdr-right{display:flex;flex-direction:column;align-items:flex-end;gap:8px}
+.hdr-sponsor{height:70px;width:180px;border:2px dashed #CCCCCC;border-radius:6px;display:flex;align-items:center;justify-content:center;color:#BBBBBB;font-size:12px;font-family:inherit}
 .btnpdf{padding:9px 22px;border-radius:6px;border:none;background:#046a38;color:#FFFFFF;font-size:14px;font-weight:600;cursor:pointer;font-family:inherit}
 .btnpdf:hover:not(:disabled){background:#035430}
 .btnpdf:disabled{opacity:.6;cursor:not-allowed}
 .hdr-title{font-size:15px;font-weight:700;color:#00529B;letter-spacing:.01em;font-family:'Montserrat',-apple-system,BlinkMacSystemFont,sans-serif}
+.hdr-subtitle{font-size:13px;font-weight:600;color:#555555;margin-top:2px;font-family:'Montserrat',-apple-system,BlinkMacSystemFont,sans-serif}
 .hdr-sub{font-size:12px;color:#666666;margin-top:2px}
 .hdr-badge{font-size:11px;color:#FFFFFF;background:#046a38;padding:5px 12px;border-radius:4px;font-weight:600;letter-spacing:.02em}
 .mt{display:flex;border:1px solid #CCCCCC;border-radius:6px;margin-bottom:1.5rem;overflow:hidden}
@@ -253,11 +255,16 @@ p.ss{margin:6px 0 1.75rem;font-size:15px;color:#3d3d3d;line-height:1.65}
 .free-member-cta-contact{font-size:12px;color:rgba(255,255,255,.6);margin-top:12px}
 .free-member-cta-contact a{color:rgba(255,255,255,.8);text-decoration:underline}
 .pdf-modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.55);display:flex;align-items:center;justify-content:center;z-index:9999;padding:16px}
-.pdf-modal{background:#FFFFFF;border-radius:12px;padding:28px 28px 22px;max-width:420px;width:100%;box-shadow:0 8px 40px rgba(0,0,0,.25)}
+.pdf-modal{background:#FFFFFF;border-radius:12px;padding:28px 28px 22px;max-width:420px;width:100%;box-shadow:0 8px 40px rgba(0,0,0,.25);max-height:92vh;overflow-y:auto}
 .pdf-modal-title{font-family:'Montserrat',-apple-system,BlinkMacSystemFont,sans-serif;font-size:18px;font-weight:700;color:#00529B;margin-bottom:6px}
 .pdf-modal-sub{font-size:13px;color:#555555;line-height:1.6;margin-bottom:18px}
+.pdf-modal-label{display:block;font-size:11px;font-weight:700;color:#444444;text-transform:uppercase;letter-spacing:.04em;margin-bottom:5px;margin-top:12px}
+.pdf-logo-locked-btn{display:inline-flex;align-items:center;gap:6px;padding:8px 14px;background:#FFF8E7;border:1.5px solid #E8A215;border-radius:6px;color:#8B5E00;font-size:13px;font-weight:600;cursor:not-allowed;opacity:0.85}
 .pdf-modal-input{width:100%;padding:10px 12px;border:1.5px solid #CCCCCC;border-radius:6px;font-size:14px;font-family:inherit;margin-bottom:10px;outline:none}
 .pdf-modal-input:focus{border-color:#00529B}
+.pdf-modal-consent{display:flex;align-items:flex-start;gap:8px;margin-bottom:12px}
+.pdf-modal-consent input[type=checkbox]{width:15px;height:15px;flex-shrink:0;margin-top:2px;cursor:pointer;accent-color:#00529B}
+.pdf-modal-consent label{font-size:12px;color:#444444;line-height:1.5;cursor:pointer}
 .pdf-modal-privacy{font-size:11px;color:#999999;line-height:1.5;margin-bottom:16px}
 .pdf-modal-privacy a{color:#00529B}
 .pdf-modal-actions{display:flex;gap:10px}
@@ -368,24 +375,60 @@ p.ss{margin:6px 0 1.75rem;font-size:15px;color:#3d3d3d;line-height:1.65}
   /* Footer */
   .ftr{flex-direction:column;gap:8px;align-items:flex-start}
 }
+.hub-member-cta{background:#00529B;border-radius:10px;padding:28px 32px;margin-top:8px;margin-bottom:24px}
+.hub-member-cta-title{font-family:'Montserrat',-apple-system,BlinkMacSystemFont,sans-serif;font-size:18px;font-weight:700;color:#FFFFFF;margin-bottom:8px}
+.hub-member-cta-sub{font-size:13px;color:rgba(255,255,255,.85);line-height:1.7;margin-bottom:18px;max-width:640px}
+.hub-member-cta-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px 24px;margin-bottom:22px}
+.hub-member-cta-item{font-size:13px;color:rgba(255,255,255,.9);display:flex;align-items:flex-start;gap:8px;line-height:1.5}
+.hub-member-cta-check{color:#7BC8A4;font-weight:700;flex-shrink:0}
+.hub-member-cta-btn{display:inline-block;padding:11px 28px;border-radius:8px;background:#FFFFFF;color:#00529B;font-size:14px;font-weight:700;text-decoration:none;font-family:'Montserrat',-apple-system,BlinkMacSystemFont,sans-serif;transition:background .15s}
+.hub-member-cta-btn:hover{background:#E8F1F8}
+.hub-member-cta-actions{display:flex;align-items:center;gap:12px;max-width:680px;margin:0 auto}
+.hub-member-cta-actions>*{flex:1;text-align:center}
+.hub-member-cta-btn-ghost{display:inline-block;padding:11px 28px;border-radius:8px;border:2px solid rgba(255,255,255,.5);color:#FFFFFF;font-size:14px;font-weight:700;text-decoration:none;font-family:'Montserrat',-apple-system,BlinkMacSystemFont,sans-serif;transition:border-color .15s,background .15s}
+.hub-member-cta-btn-ghost:hover{border-color:#FFFFFF;background:rgba(255,255,255,.1)}
+.assump-box-locked{background:#FFFCF0;border-color:#F0C040}
+.assump-box-locked .assump-box-lbl{color:#856404}
+.assump-locked-badge{font-size:11px;color:#856404;margin-top:7px;display:flex;align-items:center;gap:4px}
+.assump-locked-badge a{color:#856404;font-weight:700}
 </style>
 </head>
 <body>
 <div class="page">
 <a href="../index.html" style="display:inline-flex;align-items:center;gap:4px;font-size:12px;color:#999999;text-decoration:none;margin-bottom:10px" onmouseover="this.style.color='#00529B'" onmouseout="this.style.color='#999999'"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M9 6H3M5 3L2 6l3 3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg> All Tools</a>
 <div class="fpc-hdr">
-  <div class="hdr-left">
-    <img id="hdrLogo" style="height:144px;width:auto;max-width:240px;object-fit:contain;flex-shrink:0">
-    <div>
-      <div class="hdr-title" id="toolName">Faster Payments ROI Estimator</div>
+  <div><img id="hdrLogo" style="height:144px;width:auto;max-width:240px;object-fit:contain;flex-shrink:0"></div>
+  <div style="text-align:center">
+    <div class="hdr-title">Faster Payments Value Engine</div>
+    <div class="hdr-subtitle" id="toolName">ROI Estimator</div>
+  </div>
+  <div class="hdr-right">
+    <div style="display:flex;flex-direction:column;align-items:center;gap:2px">
+      <div style="font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:#999999">Sponsored by</div>
+      <img src="../ACI%20Vertical.png" alt="ACI Worldwide" style="height:80px;width:auto;display:block;">
     </div>
   </div>
-  <div class="hdr-badge">BETA &mdash; For Reviewer Feedback</div>
 </div>
 <!-- Free tier notice bar -->
 <div class="free-notice-bar">
   <span class="free-notice-text">You're using the <strong>free version</strong> of the FPC ROI Assessment Tool, which uses industry benchmark data. The members-only version allows users to input actual data and to receive more customized results.</span>
   <a href="https://fasterpaymentscouncil.org/members" target="_blank" rel="noopener" class="free-notice-btn">FPC Member? Log In &rarr;</a>
+</div>
+<div class="hub-member-cta">
+  <div class="hub-member-cta-title">Unlock the full suite with FPC membership</div>
+  <p class="hub-member-cta-sub">The free versions of these tools use industry benchmark data to generate estimates. FPC members can enter their own actual data for sharper, more customized results across all three tools.</p>
+  <div class="hub-member-cta-grid">
+    <div class="hub-member-cta-item"><span class="hub-member-cta-check">&#10003;</span> Enter actual payment volumes and financials</div>
+    <div class="hub-member-cta-item"><span class="hub-member-cta-check">&#10003;</span> Point estimates instead of benchmark ranges</div>
+    <div class="hub-member-cta-item"><span class="hub-member-cta-check">&#10003;</span> Fine-tune inputs for each use case</div>
+    <div class="hub-member-cta-item"><span class="hub-member-cta-check">&#10003;</span> Full dollar breakdown for every value driver</div>
+    <div class="hub-member-cta-item"><span class="hub-member-cta-check">&#10003;</span> Export branded PDFs for board presentations</div>
+    <div class="hub-member-cta-item"><span class="hub-member-cta-check">&#10003;</span> Access FPC working groups and resources</div>
+  </div>
+  <div class="hub-member-cta-actions">
+    <a href="https://fasterpaymentscouncil.org/members" target="_blank" rel="noopener" class="hub-member-cta-btn">Learn about FPC Membership &rarr;</a>
+    <a href="mailto:info@fasterpaymentscouncil.org" class="hub-member-cta-btn-ghost">Questions? Contact us &rarr;</a>
+  </div>
 </div>
 <div class="step on" id="step0">
   <p class="lnd-title">Select Your Experience</p>
@@ -528,7 +571,6 @@ p.ss{margin:6px 0 1.75rem;font-size:15px;color:#3d3d3d;line-height:1.65}
   <div id="alnPanel"></div>
   <div class="rp"><div class="rpt">&#128161; Recommendations for your institution</div><div id="recs"></div></div>
 <div id="fpcResourcesPanel"></div>
-<div id="roiMemberCTA"></div>
 <details class="mdet"><summary>&#8505;&nbsp; Methodology &amp; data sources</summary><div style="padding:0 16px 12px"><table id="mtbl" class="mtbl"></table></div></details>
   <div class="disc">Projections are estimates based on publicly available industry data and the inputs provided. Fee revenue figures represent gross customer-facing revenue and do not deduct network operator fees (industry average approximately $0.04&ndash;$0.50 per transaction). All projected figures represent a &plusmn;10% estimated range around the model midpoint. Where a receive-side fee is charged, the model assumes full market penetration regardless of fee level; actual adoption may vary. This tool is for strategic planning purposes only and does not constitute financial or investment advice. Provided by the U.S. Faster Payments Council.</div>
   <div class="ftr"><span class="ftrc">U.S. Faster Payments Council &middot; fasterpaymentscouncil.org</span><button type="button" id="btnRs" class="btnrs">&#8635; Start over</button></div>
@@ -545,7 +587,15 @@ p.ss{margin:6px 0 1.75rem;font-size:15px;color:#3d3d3d;line-height:1.65}
 <div id="pdfEmailModal" class="pdf-modal-overlay" style="display:none" onclick="if(event.target===this)closePDFModal()">
   <div class="pdf-modal">
     <div class="pdf-modal-title">Get your results as a PDF</div>
-    <p class="pdf-modal-sub">Enter your email and we'll generate your PDF summary &mdash; it opens in a new tab for easy saving or printing.</p>
+    <div style="font-size:11px;font-weight:700;color:#444444;margin-bottom:10px;margin-top:2px">Customize your report <span style="font-weight:400;color:#999999">(optional)</span></div>
+    <label class="pdf-modal-label" style="margin-top:0">Institution name</label>
+    <input type="text" id="pdfInstNameInput" class="pdf-modal-input" placeholder="e.g. First National Bank" maxlength="80">
+    <label class="pdf-modal-label">Logo</label>
+    <div style="margin-bottom:14px">
+      <div class="pdf-logo-locked-btn">&#128274; Upload logo&hellip;</div>
+      <div style="font-size:11px;color:#999999;margin-top:5px">Logo upload is available to FPC members &mdash; <a href="https://fasterpaymentscouncil.org/members" target="_blank" rel="noopener" style="color:#00529B">learn more &rarr;</a></div>
+    </div>
+    <hr style="border:none;border-top:1px solid #E5E5E5;margin:4px 0 16px">
     <form name="roi-pdf-email-capture" method="POST" data-netlify="true" netlify-honeypot="bot-field" onsubmit="handlePDFEmailSubmit(event)">
       <input type="hidden" name="form-name" value="roi-pdf-email-capture">
       <input type="hidden" name="tool" value="ROI Assessment Tool">
@@ -553,8 +603,23 @@ p.ss{margin:6px 0 1.75rem;font-size:15px;color:#3d3d3d;line-height:1.65}
       <input type="hidden" name="assets" id="pdfAssetsField" value="">
       <input type="hidden" name="mode" id="pdfModeField" value="">
       <p style="display:none"><input name="bot-field"></p>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+        <div>
+          <label class="pdf-modal-label" style="margin-top:0">First name</label>
+          <input type="text" name="first_name" id="pdfFirstNameInput" class="pdf-modal-input" placeholder="First" maxlength="60">
+        </div>
+        <div>
+          <label class="pdf-modal-label" style="margin-top:0">Last name</label>
+          <input type="text" name="last_name" id="pdfLastNameInput" class="pdf-modal-input" placeholder="Last" maxlength="60">
+        </div>
+      </div>
+      <label class="pdf-modal-label">Email address</label>
       <input type="email" name="email" id="pdfEmailInput" class="pdf-modal-input" placeholder="you@yourinstitution.com" required>
-      <p class="pdf-modal-privacy">Your email is used only to track interest in this tool. See the <a href="https://fasterpaymentscouncil.org/privacy-policy/" target="_blank" rel="noopener">FPC Privacy Policy</a>.</p>
+      <div class="pdf-modal-consent">
+        <input type="checkbox" name="sponsor_consent" id="pdfSponsorConsent" value="yes">
+        <label for="pdfSponsorConsent">I consent to my contact information being shared with ACI Worldwide, Inc., the presenting sponsor of these tools. (optional)</label>
+      </div>
+      <p class="pdf-modal-privacy">Your email address and contact information may be used for marketing communications purposes by the <a href="https://www.fasterpaymentscouncil.org" target="_blank" rel="noopener">U.S. Faster Payments Council</a> and <a href="https://www.aciworldwide.com" target="_blank" rel="noopener">ACI Worldwide, Inc.</a></p>
       <div class="pdf-modal-actions">
         <button type="submit" class="pdf-modal-submit">Generate PDF &rarr;</button>
         <button type="button" class="pdf-modal-cancel" onclick="closePDFModal()">Cancel</button>
@@ -617,7 +682,7 @@ var FPC_RESOURCES={
   solutionProviders:{t:'FPC Solution Provider Catalogue',u:'https://fasterpaymentscouncil.org/Solution-Providers-Catalogue'},
   serviceProviders:{t:'FPC Service Provider Catalogue',u:'https://fasterpaymentscouncil.org/Service-Providers-Catalogue'}
 };
-var mode='estimator',S={step:0,assets:'',cons:60,smb:30,corp:10,retLift:0.005,revPerCust:150,chkCost:null,ucPct:Object.assign({},UC_PCT_DEFAULTS)},railSel=new Set(),chartInst=null,sliderChartInst=null;
+var mode='estimator',S={step:0,instName:'',assets:'',cons:60,smb:30,corp:10,retLift:0.005,revPerCust:150,chkCost:null,fraudShift:0.10,fraudRate:0.0049,fraudTxVal:2000,ucPct:Object.assign({},UC_PCT_DEFAULTS)},railSel=new Set(),chartInst=null,sliderChartInst=null;
 var payMix={check:{ct:0,dol:0},achDebit:{ct:0,dol:0},achCredit:{ct:0,dol:0},wire:{ct:0,dol:0},sdAchDeb:{ct:0,dol:0},sdAchCr:{ct:0,dol:0},instant:{ct:0,dol:0},card:{ct:0,dol:0},other:{ct:0,dol:0}};
 var payMixEntered=false,selectedSliderStage=-1,sliderCapCard=false,sliderCapSend=false,sliderUcSel=null,sliderAddUCs=[];
 var UCS={};
@@ -656,7 +721,7 @@ function setInstType(t){
 function chooseMode(m){
   mode=m;
   var tn=document.getElementById('toolName');
-  if(tn)tn.textContent=m==='assessment'?'Faster Payments Implementation Assessment':'Faster Payments ROI Estimator';
+  if(tn)tn.textContent=m==='assessment'?'Implementation Assessment':'ROI Estimator';
   renderRailList();
   setInstType('bank');
   switchStep(1);
@@ -907,7 +972,7 @@ function calcROI(){
   }
   var cust=Math.min(Math.round(ab*70000),50000000);
   var retY=RAMP.map(function(r){return Math.round(cust*(r/.35)*effectiveRetLift()*S.revPerCust);});
-  var fraudY=txY.map(function(tx){return Math.round(tx*.10*.0049*2000);});
+  var fraudY=txY.map(function(tx){return Math.round(tx*S.fraudShift*S.fraudRate*S.fraudTxVal);});
   var totY=[0,1,2].map(function(i){return Math.round(feeY[i])+dispY[i]+retY[i]+fraudY[i];});
   return{feeY:feeY.map(Math.round),dispY:dispY.map(Math.round),retY:retY,fraudY:fraudY,totY:totY,t3:totY.reduce(function(a,b){return a+b;},0),cust:cust,ucFeeY3:ucFeeY3};
 }
@@ -960,7 +1025,7 @@ function repFee(ucId){
 }
 function calcIncrementalY3(ucId){
   var ab=parseFloat(S.assets)||0,mVol=ab*adjFactor(ucId),fee=repFee(ucId),ann=mVol*RAMP[2]*12;
-  return Math.round(ann*fee+ann*.10*(S.chkCost!==null?S.chkCost:checkCostPerItem())+ann*.10*.0049*2000);
+  return Math.round(ann*fee+ann*.10*(S.chkCost!==null?S.chkCost:checkCostPerItem())+ann*S.fraudShift*S.fraudRate*S.fraudTxVal);
 }
 function fpcLink(key){var r=FPC_RESOURCES[key];return r?'<a href="'+r.u+'" target="_blank" style="color:#00529B">'+r.t+'</a>':'';}
 function fpcLinksBlock(links){
@@ -1042,7 +1107,7 @@ function calcStageValue(rm,ucIds,fm,feeUcIds){
   });
   var cust=Math.min(Math.round(ab*70000),50000000);
   var retTotal=RAMP.map(function(r){return Math.round(cust*(r/.35)*retLiftForRm(rm)*S.revPerCust);}).reduce(function(a,b){return a+b;},0);
-  return Math.round(feeTotal)+Math.round(dispTotal)+retTotal+Math.round(txTotal*.10*.0049*2000);
+  return Math.round(feeTotal)+Math.round(dispTotal)+retTotal+Math.round(txTotal*S.fraudShift*S.fraudRate*S.fraudTxVal);
 }
 function calcSliderStages(){
   var hasSend=railSel.has('send'),hasCard=railSel.has('card'),hasRecv=railSel.has('receive');
@@ -1083,7 +1148,7 @@ function calcStageValueYears(rm,ucIds,fm,feeUcIds){
       feeY+=ann*bf;dispY+=ann*dispRateForRm(rm)*(S.chkCost!==null?S.chkCost:checkCostPerItem());txY+=ann;
     });
     var retY=Math.round(cust*(RAMP[yi]/.35)*retLiftForRm(rm)*S.revPerCust);
-    return Math.round(feeY)+Math.round(dispY)+retY+Math.round(txY*.10*.0049*2000);
+    return Math.round(feeY)+Math.round(dispY)+retY+Math.round(txY*S.fraudShift*S.fraudRate*S.fraudTxVal);
   });
 }
 function calcMaxScenarioYears(){
@@ -1100,7 +1165,7 @@ function calcMaxScenarioYears(){
     feeY[yi]=Math.round(feeSum);
     dispY[yi]=Math.round(dispSum);
     retY[yi]=Math.round(cust*(RAMP[yi]/.35)*retLiftForRm('both')*S.revPerCust);
-    fraudY[yi]=Math.round(txSum*.10*.0049*2000);
+    fraudY[yi]=Math.round(txSum*S.fraudShift*S.fraudRate*S.fraudTxVal);
   });
   return{feeY:feeY,dispY:dispY,retY:retY,fraudY:fraudY};
 }
@@ -1393,11 +1458,10 @@ function renderRetPanel(){
   el.innerHTML='<div class="assump-wrap">'
     +'<div class="assump-title">&#9881; Fine-Tune Key Assumptions</div>'
     +'<div class="assump-grid">'
-    +'<div class="assump-box">'
+    +'<div class="assump-box assump-box-locked">'
     +'<div class="assump-box-lbl">Deposit retention lift <span class="tip" data-tip="Annual retention lift applied to estimated customer base. Default is 0.50% for receive-only, 0.75% when send or card-based money movement is active, and 1.00% when both send and card are active — reflecting the stronger deposit-attraction pull FIs report as they expand payment origination capabilities. Based on Federal Reserve Financial Services research (2024) and BAI Banking Strategies churn data.">?</span></div>'
-    +'<div class="frow" style="margin:0 0 4px"><div class="fw"><span class="fp">%</span><input class="fi" type="number" id="retLiftInp" min="0" max="15" step="0.1" value="'+(effectiveRetLift()*100).toFixed(2)+'" style="padding-left:24px"></div></div>'
+    +'<div class="frow" style="margin:0 0 4px"><div class="fw"><span class="fp">%</span><input class="fi" type="number" disabled value="'+(effectiveRetLift()*100).toFixed(2)+'" style="padding-left:24px"></div></div>'
     +'<div class="assump-note">% annual retention lift &middot; 0%&ndash;15%</div>'
-    +'<div class="assump-note" style="color:#bbbbbb;font-style:italic;margin-top:3px">Fed. Reserve Financial Services 2024; BAI Banking Strategies; FPC model assumption</div>'
     +'</div>'
     +'<div class="assump-box">'
     +'<div class="assump-box-lbl">Annual customer value <span class="tip" data-tip="Average net annual revenue per customer, including net interest margin, fees, and service charges. Used to calculate deposit retention value. The $150 default reflects community and mid-size bank retail benchmarks. Typical range: $100–$500 depending on institution size, product mix, and net interest margin.">?</span></div>'
@@ -1405,29 +1469,61 @@ function renderRetPanel(){
     +'<div class="assump-note">$ per customer per year &middot; typical $100&ndash;$500</div>'
     +'<div class="assump-note" style="color:#bbbbbb;font-style:italic;margin-top:3px">BAI Banking Strategies; Tower Group; Fiserv; Forrester Research</div>'
     +'</div>'
-    +'<div class="assump-box">'
+    +'<div class="assump-box assump-box-locked">'
     +'<div class="assump-box-lbl">Cost per displaced check <span class="tip" data-tip="Per-item cost savings when a check is displaced by a faster payment. Default is $4.00 for institutions with $5B+ in assets and $10.00 for smaller institutions, reflecting higher per-unit costs at lower volume. Based on AFP 2024 Payments Survey and SouthState research showing direct costs of ~$3.68/check for large community banks, up to $10–$12 all-in for smaller institutions.">?</span></div>'
-    +'<div class="frow" style="margin:0 0 4px"><div class="fw"><span class="fp">$</span><input class="fi" type="number" id="chkCostInp" min="0" step="0.50" value="'+chkVal+'" style="padding-left:22px"></div></div>'
+    +'<div class="frow" style="margin:0 0 4px"><div class="fw"><span class="fp">$</span><input class="fi" type="number" disabled value="'+chkVal+'" style="padding-left:22px"></div></div>'
     +'<div class="assump-note">$ per displaced check item &middot; typical $4&ndash;$12</div>'
-    +'<div class="assump-note" style="color:#bbbbbb;font-style:italic;margin-top:3px">AFP 2024 Payments Fraud Survey; SouthState Correspondent Division</div>'
+    +'</div>'
+    +'<div class="assump-box assump-box-locked">'
+    +'<div class="assump-box-lbl">Fraud displacement shift <span class="tip" data-tip="Share of faster payment transactions that displace legacy payment items with higher fraud incidence (checks, ACH, wires). Default 10% reflects observed displacement rates in FedNow and RTP network data. Higher values apply if your institution has a fraud-heavy payment mix.">?</span></div>'
+    +'<div class="frow" style="margin:0 0 4px"><div class="fw"><span class="fp">%</span><input class="fi" type="number" disabled value="'+(S.fraudShift*100).toFixed(0)+'" style="padding-left:24px"></div></div>'
+    +'<div class="assump-note">% of faster payment txns displacing high-fraud items &middot; 0%&ndash;50%</div>'
+    +'</div>'
+    +'<div class="assump-box assump-box-locked">'
+    +'<div class="assump-box-lbl">Net fraud rate differential <span class="tip" data-tip="The net fraud rate difference between legacy payment methods and faster payments, expressed as a percentage of transaction value. Default 0.49% is drawn from AFP 2024 Payments Fraud Survey data comparing ACH/check fraud rates to real-time payment fraud rates.">?</span></div>'
+    +'<div class="frow" style="margin:0 0 4px"><div class="fw"><span class="fp">%</span><input class="fi" type="number" disabled value="'+(S.fraudRate*100).toFixed(2)+'" style="padding-left:24px"></div></div>'
+    +'<div class="assump-note">% net fraud rate differential &middot; typical 0.10%&ndash;1.50%</div>'
+    +'</div>'
+    +'<div class="assump-box assump-box-locked">'
+    +'<div class="assump-box-lbl">Avg. value of displaced items <span class="tip" data-tip="Average dollar value of the legacy payment items (checks, wires, ACH) being displaced by faster payments. Used to calculate the fraud savings per item. Default $2,000 reflects a blended average across check and ACH transactions. Adjust upward if your institution processes high-value commercial or wire transactions.">?</span></div>'
+    +'<div class="frow" style="margin:0 0 4px"><div class="fw"><span class="fp">$</span><input class="fi" type="number" disabled value="'+S.fraudTxVal+'" style="padding-left:22px"></div></div>'
+    +'<div class="assump-note">$ avg. transaction value on displaced items &middot; typical $500&ndash;$10,000</div>'
     +'</div>'
     +'</div>'
+    +'<div class="free-lock-note" style="margin-top:14px;margin-bottom:0">&#128274; All fine-tuning options are available to FPC members &mdash; <a href="'+MEMBER_URL+'" target="_blank" rel="noopener" style="color:#856404;font-weight:700">learn more &rarr;</a></div>'
     +'</div>';
-  document.getElementById('retLiftInp').addEventListener('input',function(){
-    var v=Math.max(0,Math.min(15,parseFloat(this.value)||0));
-    var railIncrement=(railSel.has('send')?0.0025:0)+(railSel.has('card')?0.0025:0);
-    S.retLift=Math.max(0,v/100-railIncrement);
-    applyRetentionChange();
-  });
   document.getElementById('revPerCustInp').addEventListener('input',function(){
     S.revPerCust=Math.max(0,parseFloat(this.value)||150);
-    applyRetentionChange();
+    freeApplyRetChange();
   });
-  document.getElementById('chkCostInp').addEventListener('input',function(){
-    var v=parseFloat(this.value);
-    S.chkCost=(!isNaN(v)&&v>=0)?v:null;
-    applyRetentionChange();
-  });
+}
+function freeApplyRetChange(){
+  var roi=calcROI();
+  var mat=calcMat();
+  var selCount=isRecvOnly()?UC_DATA.length:Object.values(UCS).filter(function(u){return u.sel;}).length;
+  var mg=document.getElementById('mGrid');
+  if(mg)mg.innerHTML='<div class="met"><div class="ml">3-year projected value</div><div class="mv">'+fmtRange(roi.t3)+'</div><div class="ms">all components</div></div><div class="met"><div class="ml">Year 1 annual value</div><div class="mv">'+fmtRange(roi.totY[0])+'</div><div class="ms">5% adoption ramp</div></div><div class="met"><div class="ml">Year 3 annual value</div><div class="mv">'+fmtRange(roi.totY[2])+'</div><div class="ms">35% adoption ramp</div></div><div class="met">'+buildUCMetric(selCount)+'</div>';
+  if(chartInst){
+    chartInst.data.datasets[0].data=roi.feeY;
+    chartInst.data.datasets[1].data=roi.dispY;
+    chartInst.data.datasets[2].data=roi.retY;
+    chartInst.data.datasets[3].data=roi.fraudY;
+    chartInst.update();
+  }
+  var rc=document.getElementById('recs');
+  if(rc)rc.innerHTML=getRecs(mat,roi).map(function(r,i){
+    var extra='';
+    if(r.type==='strat')extra='<div style="margin-top:6px;font-size:11px;color:#999999;font-style:italic">'+(mode==='assessment'?'Use the “Explore the value of going further” section above to model this scenario.':'Use the ← Back button to return to Step 2 and model a different capability path.')+'</div>';
+    var hasLinks=r.links&&r.links.length;
+    var rgtHtml='';
+    if(hasLinks){
+      var li=r.links.map(function(l){var key=typeof l==='string'?l:l.key;var ctx=typeof l==='object'&&l.ctx?l.ctx:null;var res=FPC_RESOURCES[key];if(!res)return'';var a='<a href="'+res.u+'" target="_blank" style="color:#00529B">'+res.t+'</a>';return'<div style="margin-bottom:6px">'+(ctx?ctx+a+'.':a)+'</div>';}).filter(Boolean);
+      if(li.length)rgtHtml='<div class="rec-rgt"><strong style="font-size:11.5px;color:#00529B;display:block;margin-bottom:8px">&#128279; FPC Resources</strong>'+li.join('')+'</div>';
+    }
+    var lftHtml='<div class="rec-lft">'+r.txt+extra+(rgtHtml?'<div class="rec-cta">&#8594; See the FPC resources to the right.</div>':'')+'</div>';
+    var prefix=r.type==='opp'?'Opportunity':'Recommendation';
+    return '<div class="rec-card"><div class="rec-hl '+r.type+'">'+prefix+' '+(i+1)+(r.title?': '+r.title:'')+'</div><div class="rec-body">'+lftHtml+rgtHtml+'</div></div>';
+  }).join('');
 }
 function applyRetentionChange(){
   var roi=calcROI();
@@ -1505,7 +1601,7 @@ var cust=roi.cust,mt=document.getElementById('mtbl');
     +'</tbody>';
 }
 function restart(){
-S={step:0,assets:'',cons:60,smb:30,corp:10,retLift:0.005,revPerCust:150,chkCost:null,ucPct:Object.assign({},UC_PCT_DEFAULTS)};
+S={step:0,instName:'',assets:'',cons:60,smb:30,corp:10,retLift:0.005,revPerCust:150,chkCost:null,fraudShift:0.10,fraudRate:0.0049,fraudTxVal:2000,ucPct:Object.assign({},UC_PCT_DEFAULTS)};
 railSel.clear();resetUCS();selectedSliderStage=-1;sliderCapCard=false;sliderCapSend=false;sliderUcSel=null;sliderAddUCs=[];
 var ucPctDets=document.getElementById('ucPctDetails');if(ucPctDets)ucPctDets.removeAttribute('open');
 renderUcPctGrid();ucPctChg();
@@ -1559,8 +1655,8 @@ function buildPDFHtml(){
   h+='<img src="'+FPC_LOGO_URI+'" style="height:52px;width:auto;max-width:80px;object-fit:contain;flex-shrink:0">';
   h+='<div>';
   h+='<div style="font-size:9px;text-transform:uppercase;letter-spacing:1.2px;color:rgba(255,255,255,.65);margin-bottom:3px">U.S. Faster Payments Council</div>';
-  h+='<div style="font-size:19px;font-weight:700;color:#FFFFFF;margin-bottom:3px">Faster Payments ROI Assessment</div>';
-  h+='<div style="font-size:9px;color:rgba(255,255,255,.65)">Generated '+dateStr+'</div>';
+  h+='<div style="font-size:19px;font-weight:700;color:#FFFFFF;margin-bottom:3px">Faster Payments Value Engine</div>';
+  h+='<div style="font-size:9px;color:rgba(255,255,255,.65)">Generated '+dateStr+(S.instName?' &nbsp;·&nbsp; Prepared for '+S.instName:'')+'</div>';
   h+='</div></div>';
   h+='<div style="background:#046a38;color:#FFFFFF;padding:9px 16px;border-radius:5px;font-size:10px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;white-space:nowrap">'+modeName+'</div>';
   h+='</div>';
@@ -1569,6 +1665,7 @@ function buildPDFHtml(){
   h+=sect+'Institution Profile</div>';
   h+='<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:16px">';
   var tile='<div style="background:#F5F7FA;border-radius:5px;padding:9px 12px"><div style="font-size:8px;color:#999999;text-transform:uppercase;letter-spacing:.05em;margin-bottom:3px">';
+  if(S.instName){h+=tile+'Institution</div><div style="font-size:11px;font-weight:600">'+S.instName+'</div></div>';}
   h+=tile+'Institution Type</div><div style="font-size:11px;font-weight:600">'+ftName+'</div></div>';
   h+=tile+'Total Assets</div><div style="font-size:11px;font-weight:600">$'+ab.toFixed(1)+' billion</div></div>';
   h+=tile+'Customer Mix</div><div style="font-size:11px;font-weight:600">'+S.cons+'% consumers / '+S.smb+'% SMB / '+S.corp+'% corporate</div></div>';
@@ -1765,22 +1862,6 @@ function freeLockResults(){
   // Hide methodology accordion
   var md=document.querySelector('#step4 .mdet');
   if(md)md.style.display='none';
-  // Member CTA panel
-  var ctaEl=document.getElementById('roiMemberCTA');
-  if(ctaEl)ctaEl.innerHTML='<div class="free-member-cta">'
-    +'<div class="free-member-cta-title">Get the full picture with FPC membership</div>'
-    +'<p class="free-member-cta-sub">Your results above use industry benchmarks for <strong>'+ftName+'</strong> institutions. FPC members unlock:</p>'
-    +'<ul class="free-member-cta-list">'
-    +'<li><span style="color:#7BC8A4;font-weight:700;flex-shrink:0">&#10003;</span> Enter actual customer mix, payment volumes, and fee schedules</li>'
-    +'<li><span style="color:#7BC8A4;font-weight:700;flex-shrink:0">&#10003;</span> Point estimates instead of benchmark ranges &mdash; narrow uncertainty to &#177;5%</li>'
-    +'<li><span style="color:#7BC8A4;font-weight:700;flex-shrink:0">&#10003;</span> Year-by-year breakdown for all four value components</li>'
-    +'<li><span style="color:#7BC8A4;font-weight:700;flex-shrink:0">&#10003;</span> Strategy scenario explorer: model a full multi-rail implementation</li>'
-    +'<li><span style="color:#7BC8A4;font-weight:700;flex-shrink:0">&#10003;</span> Export a branded PDF for board or leadership presentations</li>'
-    +'<li><span style="color:#7BC8A4;font-weight:700;flex-shrink:0">&#10003;</span> Access FPC working groups and implementation resources</li>'
-    +'</ul>'
-    +'<a href="'+MEMBER_URL+'" target="_blank" rel="noopener" class="free-member-cta-btn">Learn about FPC Membership →</a>'
-    +'<p class="free-member-cta-contact">Questions? <a href="mailto:info@fasterpaymentscouncil.org">info@fasterpaymentscouncil.org</a></p>'
-    +'</div>';
 }
 
 // ── Free-tier: PDF email capture modal ──
@@ -1791,14 +1872,20 @@ function showPDFEmailModal(){
   document.getElementById('pdfAssetsField').value=S.assets?'$'+parseFloat(S.assets).toFixed(1)+'B':'';
   document.getElementById('pdfModeField').value=mode==='estimator'?'ROI Estimator':'Implementation Assessment';
   document.getElementById('pdfEmailInput').value='';
+  document.getElementById('pdfInstNameInput').value=S.instName||'';
+  document.getElementById('pdfFirstNameInput').value=S.firstName||'';
+  document.getElementById('pdfLastNameInput').value=S.lastName||'';
   document.getElementById('pdfEmailModal').style.display='flex';
 }
 function closePDFModal(){document.getElementById('pdfEmailModal').style.display='none';}
 function handlePDFEmailSubmit(event){
   event.preventDefault();
-  var form=event.target,params={};
-  new FormData(form).forEach(function(v,k){params[k]=v;});
-  fetch('/',{method:'POST',headers:{'Accept':'application/x-www-form-urlencoded'},body:new URLSearchParams(params).toString()}).catch(function(){});
+  S.instName=document.getElementById('pdfInstNameInput').value.trim();
+  S.firstName=document.getElementById('pdfFirstNameInput').value.trim();
+  S.lastName=document.getElementById('pdfLastNameInput').value.trim();
+  var emailVal=document.getElementById('pdfEmailInput').value.trim();
+  var consent=document.getElementById('pdfSponsorConsent').checked?'Yes':'No';
+  fetch('https://api.web3forms.com/submit',{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},body:JSON.stringify({access_key:'8fa6073c-6e22-45e5-bd30-2d6928bf2d3a',subject:'FPC Lead | '+S.firstName+' | '+S.lastName+' | '+emailVal+' | '+(S.instName||'')+' | '+consent+' | ROI Calculator (Free)',from_name:'FPC Value Engine',first_name:S.firstName,last_name:S.lastName,email:emailVal,institution:S.instName||'',aci_consent:consent,tool:'ROI Calculator (Free)',submitted_at:new Date().toISOString()})}).catch(function(){});
   closePDFModal();
   setTimeout(function(){exportPDF();},150);
 }

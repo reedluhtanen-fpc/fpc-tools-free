@@ -11,9 +11,11 @@
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 body{font-family:'Lato',-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;background:#FFFFFF;color:#3d3d3d;-webkit-font-smoothing:antialiased}
 .page{max-width:880px;margin:0 auto;padding:28px 24px 60px}
-.fpc-hdr{display:flex;align-items:center;justify-content:space-between;padding-bottom:16px;margin-bottom:24px;border-bottom:3px solid #00529B}
-.hdr-left{display:flex;align-items:center;gap:12px}
+.fpc-hdr{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;padding-bottom:16px;margin-bottom:24px;border-bottom:3px solid #00529B}
+.hdr-right{display:flex;flex-direction:column;align-items:flex-end;gap:8px}
+.hdr-sponsor{height:70px;width:180px;border:2px dashed #CCCCCC;border-radius:6px;display:flex;align-items:center;justify-content:center;color:#BBBBBB;font-size:12px;font-family:inherit}
 .hdr-title{font-size:15px;font-weight:700;color:#00529B;letter-spacing:.01em;font-family:'Montserrat',-apple-system,BlinkMacSystemFont,sans-serif}
+.hdr-subtitle{font-size:13px;font-weight:600;color:#555555;margin-top:2px;font-family:'Montserrat',-apple-system,BlinkMacSystemFont,sans-serif}
 .hdr-sub{font-size:12px;color:#666666;margin-top:2px}
 .hdr-badge{font-size:11px;color:#FFFFFF;background:#046a38;padding:5px 12px;border-radius:4px;font-weight:600;letter-spacing:.02em}
 .btnpdf{padding:9px 22px;border-radius:6px;border:none;background:#046a38;color:#FFFFFF;font-size:14px;font-weight:600;cursor:pointer;font-family:inherit}
@@ -206,11 +208,16 @@ p.ss{margin:6px 0 1.75rem;font-size:15px;color:#3d3d3d;line-height:1.65}
 .free-member-cta-contact a{color:rgba(255,255,255,.8);text-decoration:underline}
 /* PDF email modal */
 .pdf-modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:9999;display:flex;align-items:center;justify-content:center;padding:16px}
-.pdf-modal{background:#FFFFFF;border-radius:12px;padding:28px 32px;width:100%;max-width:420px;box-shadow:0 8px 40px rgba(0,0,0,.3)}
+.pdf-modal{background:#FFFFFF;border-radius:12px;padding:28px 32px;width:100%;max-width:420px;box-shadow:0 8px 40px rgba(0,0,0,.3);max-height:92vh;overflow-y:auto}
 .pdf-modal-title{font-size:18px;font-weight:700;color:#00529B;margin-bottom:6px;font-family:'Montserrat',-apple-system,BlinkMacSystemFont,sans-serif}
 .pdf-modal-sub{font-size:13px;color:#555;margin-bottom:18px;line-height:1.6}
+.pdf-modal-label{display:block;font-size:11px;font-weight:700;color:#444444;text-transform:uppercase;letter-spacing:.04em;margin-bottom:5px;margin-top:12px}
+.pdf-logo-locked-btn{display:inline-flex;align-items:center;gap:6px;padding:8px 14px;background:#FFF8E7;border:1.5px solid #E8A215;border-radius:6px;color:#8B5E00;font-size:13px;font-weight:600;cursor:not-allowed;opacity:0.85}
 .pdf-modal-input{width:100%;padding:10px 14px;border:1.5px solid #CCCCCC;border-radius:6px;font-size:14px;font-family:inherit;margin-bottom:6px;box-sizing:border-box}
 .pdf-modal-input:focus{outline:none;border-color:#00529B}
+.pdf-modal-consent{display:flex;align-items:flex-start;gap:8px;margin-bottom:12px}
+.pdf-modal-consent input[type=checkbox]{width:15px;height:15px;flex-shrink:0;margin-top:2px;cursor:pointer;accent-color:#00529B}
+.pdf-modal-consent label{font-size:12px;color:#444444;line-height:1.5;cursor:pointer}
 .pdf-modal-privacy{font-size:11px;color:#999;margin-bottom:16px;line-height:1.5}
 .pdf-modal-privacy a{color:#00529B}
 .pdf-modal-actions{display:flex;gap:8px}
@@ -353,6 +360,18 @@ p.ss{margin:6px 0 1.75rem;font-size:15px;color:#3d3d3d;line-height:1.65}
 .res-hours-comp{display:flex;justify-content:space-between;font-size:11px;color:#666;padding:2px 0;border-top:1px solid #EEEEEE;margin-top:3px}
 .res-hours-comp:first-child{border-top:none;margin-top:0}
 .s3-tune-est .hours-row{margin-top:6px;padding-top:6px;border-top:1px solid #c5e0b4;font-size:12px;color:#3a5c1a;display:flex;align-items:center;gap:5px}
+.hub-member-cta{background:#00529B;border-radius:10px;padding:28px 32px;margin-top:8px;margin-bottom:24px}
+.hub-member-cta-title{font-family:'Montserrat',-apple-system,BlinkMacSystemFont,sans-serif;font-size:18px;font-weight:700;color:#FFFFFF;margin-bottom:8px}
+.hub-member-cta-sub{font-size:13px;color:rgba(255,255,255,.85);line-height:1.7;margin-bottom:18px;max-width:640px}
+.hub-member-cta-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px 24px;margin-bottom:22px}
+.hub-member-cta-item{font-size:13px;color:rgba(255,255,255,.9);display:flex;align-items:flex-start;gap:8px;line-height:1.5}
+.hub-member-cta-check{color:#7BC8A4;font-weight:700;flex-shrink:0}
+.hub-member-cta-btn{display:inline-block;padding:11px 28px;border-radius:8px;background:#FFFFFF;color:#00529B;font-size:14px;font-weight:700;text-decoration:none;font-family:'Montserrat',-apple-system,BlinkMacSystemFont,sans-serif;transition:background .15s}
+.hub-member-cta-btn:hover{background:#E8F1F8}
+.hub-member-cta-actions{display:flex;align-items:center;gap:12px;max-width:680px;margin:0 auto}
+.hub-member-cta-actions>*{flex:1;text-align:center}
+.hub-member-cta-btn-ghost{display:inline-block;padding:11px 28px;border-radius:8px;border:2px solid rgba(255,255,255,.5);color:#FFFFFF;font-size:14px;font-weight:700;text-decoration:none;font-family:'Montserrat',-apple-system,BlinkMacSystemFont,sans-serif;transition:border-color .15s,background .15s}
+.hub-member-cta-btn-ghost:hover{border-color:#FFFFFF;background:rgba(255,255,255,.1)}
 </style>
 </head>
 <body>
@@ -362,15 +381,17 @@ p.ss{margin:6px 0 1.75rem;font-size:15px;color:#3d3d3d;line-height:1.65}
 <a href="../index.html" style="display:inline-flex;align-items:center;gap:4px;font-size:12px;color:#999999;text-decoration:none;margin-bottom:10px" onmouseover="this.style.color='#00529B'" onmouseout="this.style.color='#999999'"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M9 6H3M5 3L2 6l3 3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg> All Tools</a>
 <!-- Header -->
 <div class="fpc-hdr">
-  <div class="hdr-left">
-    <img id="hdrLogo" style="height:144px;width:auto;max-width:240px;object-fit:contain;flex-shrink:0;display:none">
-    <div>
-      <div class="hdr-title">Faster Payments Use Case Evaluator</div>
-    </div>
+  <div><img id="hdrLogo" style="height:144px;width:auto;max-width:240px;object-fit:contain;flex-shrink:0;display:none"></div>
+  <div style="text-align:center">
+    <div class="hdr-title">Faster Payments Value Engine</div>
+    <div class="hdr-subtitle">Use Case Evaluator</div>
   </div>
-  <div style="display:flex;align-items:center;gap:10px">
+  <div class="hdr-right">
     <button type="button" class="btnpdf" id="btnPDF" style="display:none" onclick="showPDFEmailModal()">&#8595; Export PDF</button>
-    <div class="hdr-badge">BETA &mdash; For Reviewer Feedback</div>
+    <div style="display:flex;flex-direction:column;align-items:center;gap:2px">
+      <div style="font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:#999999">Sponsored by</div>
+      <img src="../ACI%20Vertical.png" alt="ACI Worldwide" style="height:80px;width:auto;display:block;">
+    </div>
   </div>
 </div>
 
@@ -378,6 +399,22 @@ p.ss{margin:6px 0 1.75rem;font-size:15px;color:#3d3d3d;line-height:1.65}
 <div class="free-notice-bar">
   <span class="free-notice-text">You're using the <strong>free version</strong> of the FPC Use Case Evaluator, which uses industry benchmark data. The members-only version allows users to input actual data and to receive more customized results.</span>
   <a href="https://fasterpaymentscouncil.org/members" target="_blank" rel="noopener" class="free-notice-btn">FPC Member? Log In &rarr;</a>
+</div>
+<div class="hub-member-cta">
+  <div class="hub-member-cta-title">Unlock the full suite with FPC membership</div>
+  <p class="hub-member-cta-sub">The free versions of these tools use industry benchmark data to generate estimates. FPC members can enter their own actual data for sharper, more customized results across all three tools.</p>
+  <div class="hub-member-cta-grid">
+    <div class="hub-member-cta-item"><span class="hub-member-cta-check">&#10003;</span> Enter actual payment volumes and financials</div>
+    <div class="hub-member-cta-item"><span class="hub-member-cta-check">&#10003;</span> Point estimates instead of benchmark ranges</div>
+    <div class="hub-member-cta-item"><span class="hub-member-cta-check">&#10003;</span> Fine-tune inputs for each use case</div>
+    <div class="hub-member-cta-item"><span class="hub-member-cta-check">&#10003;</span> Full dollar breakdown for every value driver</div>
+    <div class="hub-member-cta-item"><span class="hub-member-cta-check">&#10003;</span> Export branded PDFs for board presentations</div>
+    <div class="hub-member-cta-item"><span class="hub-member-cta-check">&#10003;</span> Access FPC working groups and resources</div>
+  </div>
+  <div class="hub-member-cta-actions">
+    <a href="https://fasterpaymentscouncil.org/members" target="_blank" rel="noopener" class="hub-member-cta-btn">Learn about FPC Membership &rarr;</a>
+    <a href="mailto:info@fasterpaymentscouncil.org" class="hub-member-cta-btn-ghost">Questions? Contact us &rarr;</a>
+  </div>
 </div>
 
 <!-- Progress bar -->
@@ -456,7 +493,7 @@ p.ss{margin:6px 0 1.75rem;font-size:15px;color:#3d3d3d;line-height:1.65}
   </div>
   <div id="resultCards"></div>
   <div class="rp"><div class="rpt">&#128161; Recommended next steps</div><div id="recommendations"></div></div>
-  <div id="memberCTA"></div>
+
   <div class="disc">Projections are estimates derived from industry benchmarks and the inputs you provided. Actual results will vary based on implementation approach, vendor selection, adoption rates, and market conditions. Payment processing cost savings reflect the incremental cost difference for volume processed via instant payment rails. Instant payments are intended to complement existing payment methods, not replace them. Float and working capital figures assume a 5.5% cost of funds. This tool is for strategic planning purposes only and does not constitute financial or investment advice. Provided by the U.S. Faster Payments Council &mdash; fasterpaymentscouncil.org.</div>
   <div class="ftr"><span class="ftrc">U.S. Faster Payments Council &middot; fasterpaymentscouncil.org</span><button type="button" id="btnRs" class="btnrs">&#8635; Start over</button></div>
 </div>
@@ -475,15 +512,38 @@ p.ss{margin:6px 0 1.75rem;font-size:15px;color:#3d3d3d;line-height:1.65}
 <div id="pdfEmailModal" class="pdf-modal-overlay" style="display:none" onclick="if(event.target===this)closePDFModal()">
   <div class="pdf-modal">
     <div class="pdf-modal-title">Get your results as a PDF</div>
-    <p class="pdf-modal-sub">Enter your email and we'll generate your PDF summary. We'll also send you FPC resources relevant to your results.</p>
+    <div style="font-size:11px;font-weight:700;color:#444444;margin-bottom:10px;margin-top:2px">Customize your report <span style="font-weight:400;color:#999999">(optional)</span></div>
+    <label class="pdf-modal-label" style="margin-top:0">Organization name</label>
+    <input type="text" id="pdfInstNameInput" class="pdf-modal-input" placeholder="e.g. Acme Corp" maxlength="80">
+    <label class="pdf-modal-label">Logo</label>
+    <div style="margin-bottom:14px">
+      <div class="pdf-logo-locked-btn">&#128274; Upload logo&hellip;</div>
+      <div style="font-size:11px;color:#999999;margin-top:5px">Logo upload is available to FPC members &mdash; <a href="https://fasterpaymentscouncil.org/members" target="_blank" rel="noopener" style="color:#00529B">learn more &rarr;</a></div>
+    </div>
+    <hr style="border:none;border-top:1px solid #E5E5E5;margin:4px 0 16px">
     <form name="pdf-email-capture" method="POST" data-netlify="true" netlify-honeypot="bot-field" onsubmit="handlePDFEmailSubmit(event)">
       <input type="hidden" name="form-name" value="pdf-email-capture">
       <input type="hidden" name="tool" value="Use Case Evaluator">
       <input type="hidden" name="industry" id="pdfIndustryField" value="">
       <input type="hidden" name="revenue_tier" id="pdfRevTierField" value="">
       <p style="display:none"><input name="bot-field"></p>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+        <div>
+          <label class="pdf-modal-label" style="margin-top:0">First name</label>
+          <input type="text" name="first_name" id="pdfFirstNameInput" class="pdf-modal-input" placeholder="First" maxlength="60">
+        </div>
+        <div>
+          <label class="pdf-modal-label" style="margin-top:0">Last name</label>
+          <input type="text" name="last_name" id="pdfLastNameInput" class="pdf-modal-input" placeholder="Last" maxlength="60">
+        </div>
+      </div>
+      <label class="pdf-modal-label">Email address</label>
       <input type="email" name="email" id="pdfEmailInput" class="pdf-modal-input" placeholder="you@yourorganization.com" required>
-      <p class="pdf-modal-privacy">We'll use your email to send you FPC resources related to your results. <a href="https://fasterpaymentscouncil.org/privacy-policy" target="_blank" rel="noopener">Privacy policy</a>.</p>
+      <div class="pdf-modal-consent">
+        <input type="checkbox" name="sponsor_consent" id="pdfSponsorConsent" value="yes">
+        <label for="pdfSponsorConsent">I consent to my contact information being shared with ACI Worldwide, Inc., the presenting sponsor of these tools. (optional)</label>
+      </div>
+      <p class="pdf-modal-privacy">Your email address and contact information may be used for marketing communications purposes by the <a href="https://www.fasterpaymentscouncil.org" target="_blank" rel="noopener">U.S. Faster Payments Council</a> and <a href="https://www.aciworldwide.com" target="_blank" rel="noopener">ACI Worldwide, Inc.</a></p>
       <div class="pdf-modal-actions">
         <button type="submit" class="pdf-modal-submit">Generate PDF &rarr;</button>
         <button type="button" class="pdf-modal-cancel" onclick="closePDFModal()">Cancel</button>
@@ -1113,6 +1173,7 @@ function emptyFlows() {
 
 let state = {
   step: 1,
+  instName: '',
   industry: null,
   revenue: null,   // annual revenue in millions USD
   flows: emptyFlows(),
@@ -2227,28 +2288,6 @@ function renderStep4() {
 
   document.getElementById('recommendations').innerHTML = recs.map((r,i) => `<div class="rec-item"><span class="rec-num">${i+1}</span><span>${r}</span></div>`).join('');
 
-  // Member CTA — free tier only
-  const ctaEl = document.getElementById('memberCTA');
-  if (ctaEl) {
-    if (FREE_TIER) {
-      ctaEl.innerHTML = `<div class="free-member-cta">
-        <div class="free-member-cta-title">Get the full picture with FPC membership</div>
-        <p class="free-member-cta-sub">Your results above use industry benchmarks for <strong>${industryName}</strong> organizations. FPC members unlock:</p>
-        <ul class="free-member-cta-list">
-          <li><span class="free-member-cta-check">&#10003;</span>Enter actual payment volumes for sharper, more precise estimates</li>
-          <li><span class="free-member-cta-check">&#10003;</span>See point estimates instead of ranges — and narrow uncertainty to ±5%</li>
-          <li><span class="free-member-cta-check">&#10003;</span>See the full dollar breakdown for each value driver</li>
-          <li><span class="free-member-cta-check">&#10003;</span>Fine-tune inputs for each use case individually</li>
-          <li><span class="free-member-cta-check">&#10003;</span>Export a branded PDF for board or leadership presentations</li>
-          <li><span class="free-member-cta-check">&#10003;</span>Access FPC working groups aligned to your priority use cases</li>
-        </ul>
-        <a href="${MEMBER_URL}" target="_blank" rel="noopener" class="free-member-cta-btn">Learn about FPC Membership &rarr;</a>
-        <p class="free-member-cta-contact">Questions? Contact us at <a href="mailto:info@fasterpaymentscouncil.org">info@fasterpaymentscouncil.org</a></p>
-      </div>`;
-    } else {
-      ctaEl.innerHTML = '';
-    }
-  }
 }
 
 // ─────────────────────────────────────────────────────────
@@ -2279,7 +2318,7 @@ function validate() {
 }
 
 function resetTool() {
-  state = { step:1, industry:null, revenue:null, flows:emptyFlows(), pains:new Set(), selectedUCs:new Set(), ucInputs:{}, results:[], tuningUC:null, estimatedFlowKeys:new Set(), resultSort:'value' };
+  state = { step:1, instName:'', industry:null, revenue:null, flows:emptyFlows(), pains:new Set(), selectedUCs:new Set(), ucInputs:{}, results:[], tuningUC:null, estimatedFlowKeys:new Set(), resultSort:'value' };
   if (chartInst)   { chartInst.destroy();   chartInst   = null; }
   if (s3ChartInst) { s3ChartInst.destroy(); s3ChartInst = null; }
   document.getElementById('resultsChart').style.display='';
@@ -2401,13 +2440,14 @@ function buildPDFHtml() {
         ${logoSrc?`<img src="${logoSrc}" style="height:40px;width:auto;object-fit:contain">`:'' }
         <div>
           <div style="font-size:13px;font-weight:700;color:${BLU}">U.S. Faster Payments Council</div>
-          <div style="font-size:10px;color:#666">Faster Payments Use Case Evaluator — Business Edition</div>
+          <div style="font-size:10px;color:#666">Faster Payments Value Engine</div>
         </div>
       </div>
-      <div style="text-align:right;font-size:9px;color:#888">${dateStr}</div>
+      <div style="text-align:right;font-size:9px;color:#888">${dateStr}${state.instName ? '<br>Prepared for '+state.instName : ''}</div>
     </div>
     ${sect('Organization Profile')}
     <div style="display:flex;gap:24px;font-size:10px;color:#444;margin-bottom:4px">
+      ${state.instName ? `<span><strong>Organization:</strong> ${state.instName}</span>` : ''}
       <span><strong>Industry:</strong> ${indName}</span>
       <span><strong>Annual Revenue:</strong> ${revStr}</span>
       <span><strong>Size Tier:</strong> ${tierLbl}</span>
@@ -2451,14 +2491,15 @@ function exportPDF() {
 // PDF EMAIL MODAL (free tier)
 // ─────────────────────────────────────────────────────────
 function showPDFEmailModal() {
-  // Populate hidden fields with context
   const indField = document.getElementById('pdfIndustryField');
   const revField = document.getElementById('pdfRevTierField');
   if (indField) indField.value = INDUSTRIES.find(i=>i.id===state.industry)?.name || '';
   if (revField) revField.value = state.revenue ? (TIER_LABELS[getSizeTier(state.revenue)] || '') : '';
-  // Clear previous email input
   const emailInput = document.getElementById('pdfEmailInput');
   if (emailInput) emailInput.value = '';
+  document.getElementById('pdfInstNameInput').value = state.instName || '';
+  document.getElementById('pdfFirstNameInput').value = state.firstName || '';
+  document.getElementById('pdfLastNameInput').value = state.lastName || '';
   document.getElementById('pdfEmailModal').style.display = 'flex';
 }
 
@@ -2468,15 +2509,14 @@ function closePDFModal() {
 
 function handlePDFEmailSubmit(event) {
   event.preventDefault();
+  state.instName = document.getElementById('pdfInstNameInput').value.trim();
+  state.firstName = document.getElementById('pdfFirstNameInput').value.trim();
+  state.lastName = document.getElementById('pdfLastNameInput').value.trim();
   const emailInput = document.getElementById('pdfEmailInput');
   if (!emailInput || !emailInput.value) return;
-
-  // Submit to Netlify Forms via fetch (non-blocking)
-  const formData = new FormData(event.target);
-  fetch('/', { method: 'POST', headers: {'Accept': 'application/x-www-form-urlencoded'}, body: new URLSearchParams(formData).toString() })
-    .catch(() => {}); // silent fail — PDF still generates
-
-  // Close modal and generate PDF
+  const emailVal = emailInput.value.trim();
+  const consent = document.getElementById('pdfSponsorConsent').checked ? 'Yes' : 'No';
+  fetch('https://api.web3forms.com/submit',{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},body:JSON.stringify({access_key:'8fa6073c-6e22-45e5-bd30-2d6928bf2d3a',subject:'FPC Lead | '+state.firstName+' | '+state.lastName+' | '+emailVal+' | '+(state.instName||'')+' | '+consent+' | Use Case Evaluator (Free)',from_name:'FPC Value Engine',first_name:state.firstName,last_name:state.lastName,email:emailVal,institution:state.instName||'',aci_consent:consent,tool:'Use Case Evaluator (Free)',submitted_at:new Date().toISOString()})}).catch(()=>{});
   closePDFModal();
   setTimeout(() => exportPDF(), 150);
 }
